@@ -3,6 +3,10 @@ import { API_HOST, API_ROUTE } from 'config/api';
 import { DocumentBase } from 'models';
 import { setError404 } from 'store/slices/appSlice';
 
+/*
+非同期処理の大元。
+*/
+
 /**
  * Laravelからデータの配列と共にページネーションに関する情報及びリンクをリクエストする際のレスポンスタイプ
  *
@@ -52,43 +56,44 @@ export const apiClient = (options?: ApiClientOption) => {
 
   if (isNotIntercepted()) return apiClient;
 
-//   apiClient.interceptors.response.use(
-//     (response) => response, // response = 2xx の場合は素通り
-//     async (error) => {
-//       const { default: store } =
-//         process.env.NODE_ENV === 'test'   //testモードだった時
-//           ? await import('mocks/store')
-//           : await import('store');
-//       const { setFlash, signOut } = await import('store/slices/authSlice');
+  apiClient.interceptors.response.use(
+    (response) => response, // response = 2xx の場合は素通り
+    async (error) => {
+      const { default: store } =
+      //   process.env.NODE_ENV === 'test'   //testモードだった時
+      //     ? await import('mocks/store')
+      //     :
+           await import('store');
+      const { setFlash, signOut } = await import('store/slices/authSlice');
 
-//       if (!axios.isAxiosError(error)) return Promise.reject(error);
+      if (!axios.isAxiosError(error)) return Promise.reject(error);
 
-//       switch (error.response?.status || 500) {
-//         case 401:
-//         case 419:
-//           store.dispatch(signOut()); // ->initializeAuthState()
-//           store.dispatch(
-//             setFlash({ type: 'error', message: 'ログインしてください' })
-//           );
-//           return Promise.reject(error);
-//         case 403:
-//           store.dispatch(
-//             setFlash({ type: 'error', message: '不正なリクエストです' })
-//           );
-//           return Promise.reject(error);
-//         case 404:
-//           store.dispatch(setError404());
-//           return Promise.reject(error);
-//         case 500:
-//           store.dispatch(
-//             setFlash({ type: 'error', message: 'システムエラーが発生しました' })
-//           );
-//           return Promise.reject(error);
-//         default:
-//           return Promise.reject(error); // `return`欠落 -> "response undefined"
-//       }
-//     }
-//   );
+      switch (error.response?.status || 500) {
+        case 401:
+        case 419:
+          store.dispatch(signOut()); // ->initializeAuthState()
+          store.dispatch(
+            setFlash({ type: 'error', message: 'ログインしてください' })
+          );
+          return Promise.reject(error);
+        case 403:
+          store.dispatch(
+            setFlash({ type: 'error', message: '不正なリクエストです' })
+          );
+          return Promise.reject(error);
+        case 404:
+          store.dispatch(setError404());
+          return Promise.reject(error);
+        case 500:
+          store.dispatch(
+            setFlash({ type: 'error', message: 'システムエラーが発生しました' })
+          );
+          return Promise.reject(error);
+        default:
+          return Promise.reject(error); // `return`欠落 -> "response undefined"
+      }
+    }
+  );
 
   return apiClient;
 };
