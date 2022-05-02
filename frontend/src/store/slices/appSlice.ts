@@ -1,5 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+
+/*
+errorかnotFoundに飛ばす用のSlice
+*/
 type AppState = {
   notFound: boolean;
 };
