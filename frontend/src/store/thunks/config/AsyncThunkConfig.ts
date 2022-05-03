@@ -1,6 +1,10 @@
 import { AppDispatch, RootState } from 'store';
 import { HttpException } from 'utils/api/errors';    //これは型のimportのためisはいらない
 
+/*
+型のエクスポートのみ(authSliceの各所で使う)
+*/
+
 // export type RejectValue = { error: { message: string } };
 export type RejectValue = {
   error: HttpException | { message: string };

@@ -11,7 +11,7 @@ type AppState = {
 const initialState = {} as AppState;
 
 export const appSlice = createSlice({
-  name: 'app',
+  name: 'app',   //これがActiontypeと同じ、あと以下は従来のReduxと変わらない
   initialState,
   reducers: {
     setError404(state) {
@@ -23,4 +23,5 @@ export const appSlice = createSlice({
   },
 });
 
+//redux Toolkitでは自動で同名のAction Creatorを作成する。Action Creatorを後ほど出てくるdispatchで指定するためAction Creatorをexportして他のコンポーネントからimportできるようにしておく。
 export const { setError404, releaseError404 } = appSlice.actions;

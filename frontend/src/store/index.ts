@@ -3,7 +3,7 @@ import { appSlice, authSlice } from './slices';
 
 //コードの重複を避けるためにこの形にする。名前の通りcombineする
 export const rootReducer = combineReducers({
-   // ここに`reducer`を追加する
+   // ここにslicesで作成したreducerを追加する
    app: appSlice.reducer,
    auth: authSlice.reducer,
  });

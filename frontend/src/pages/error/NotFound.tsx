@@ -1,12 +1,12 @@
 import React from 'react';
-//import { useEffect } from 'react';
+import { useEffect } from 'react';
 
 import { useHistory } from 'react-router-dom';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import { Container, Typography, Button } from '@material-ui/core';
 
-//import { useAppDispatch } from 'utils/hooks';
-//import { releaseError404 } from 'store/slices/appSlice';
+import { useAppDispatch } from 'utils/hooks';
+import { releaseError404 } from 'store/slices/appSlice';
 import BaseLayout from 'layouts/BaseLayout';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -21,13 +21,13 @@ const useStyles = makeStyles((theme: Theme) =>
 const NotFound = () => {
   const classes = useStyles();
   const history = useHistory();
-//   const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch();
 
-//   useEffect(() => {
-//     return function cleanup() {
-//       dispatch(releaseError404());
-//     };
-//   }, [dispatch, history.location]);
+  useEffect(() => {
+    return function cleanup() {
+      dispatch(releaseError404());
+    };
+  }, [dispatch, history.location]);
 
   return (
     <BaseLayout subtitle='404 Not Found'>
