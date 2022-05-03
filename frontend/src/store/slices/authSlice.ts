@@ -15,6 +15,12 @@ import {
 //   deleteAccount,
 } from 'store/thunks/auth';
 
+
+/*
+ログイン・新規登録などのAPI連携をする際のSlice。コードは複雑やけど、やってることはappSliceと同じ
+
+*/
+
 export type FlashNotificationProps = {
   type: Color;
   message: string;
@@ -28,6 +34,7 @@ export type AuthState = {
   flash: FlashNotificationProps[];
 };
 
+//＊一個めのasは型アサーション
 export const initialAuthState = {
   flash: [] as AuthState['flash'],
 } as AuthState;
