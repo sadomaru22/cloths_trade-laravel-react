@@ -3,7 +3,8 @@ import { Link as RouterLink } from 'react-router-dom';
 // import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 // import { ButtonProps, ButtonTypeMap } from '@material-ui/core';
 import React from 'react';
-import {Button, ButtonProps, ButtonTypeMap, createStyles, makeStyles, Theme} from '@mui/material';
+//import {Button, ButtonProps, ButtonTypeMap, createStyles, makeStyles, Theme} from '@mui/material';
+import {Button, ButtonProps, ButtonTypeMap } from '@mui/material';
 //import Button from '@material-ui/core';  //JSX 要素型 'Button' にはコンストラクトも呼び出しシグネチャも含まれていません。
 
 import { styled } from "@mui/material/styles";
