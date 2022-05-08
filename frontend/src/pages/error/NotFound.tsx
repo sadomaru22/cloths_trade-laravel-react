@@ -23,6 +23,7 @@ const NotFound = () => {
   const history = useHistory();
   const dispatch = useAppDispatch();
 
+  //レンダリング時にクリーンアップ
   useEffect(() => {
     return function cleanup() {
       dispatch(releaseError404());

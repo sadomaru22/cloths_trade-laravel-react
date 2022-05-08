@@ -1,3 +1,6 @@
 export { default as AlertButton } from './AlertButton';
 export { default as LinkButton } from './LinkButton';
 export { default as PopoverControl } from './PopoverControl';
+export { default as LabeledCheckbox } from './LabeledCheckbox';
+export { default as SubmitButton } from './SubmitButton';
+export { default as AlertMessage } from './AlertMessage';
