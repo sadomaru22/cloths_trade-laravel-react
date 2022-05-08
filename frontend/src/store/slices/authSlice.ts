@@ -6,10 +6,10 @@ import {
   createUser,
 //   fetchAuthUser,
 //   sendEmailVerificationLink,
-//   signInWithEmail,
+   signInWithEmail,
 //   updateProfile,
 //   updatePassword,
-//   forgotPassword,
+   forgotPassword,
 //   resetPassword,
 //   signOutFromAPI,
 //   deleteAccount,
@@ -39,6 +39,8 @@ export const initialAuthState = {
   flash: [] as AuthState['flash'],
 } as AuthState;
 
+
+//reducerについて、auth系はextraReducerにまとめ、それぞれpending, fullfilled, rejectedの時で処理を分ける。
 export const authSlice = createSlice({
   name: 'auth',
   initialState: initialAuthState,
@@ -62,20 +64,21 @@ export const authSlice = createSlice({
     builder.addCase(createUser.pending, (state, action) => {
       state.loading = true;
     });
-   //  builder.addCase(createUser.fulfilled, (state, action) => {
-   //    state.user = action.payload.user;
-   //    state.afterRegistration = true;
-   //    state.signedIn = true;
-   //    state.loading = false;
-   //    state.flash.push({
-   //      type: 'success',
-   //      message: 'ユーザー登録が完了しました',
-   //    });
-   //  });
-   //  builder.addCase(createUser.rejected, (state, action) => {
-   //    state.signedIn = false;
-   //    state.loading = false;
-   //  });
+    builder.addCase(createUser.fulfilled, (state, action) => {
+      state.user = action.payload.user;
+      state.afterRegistration = true;
+      state.signedIn = true;
+      state.loading = false;
+      state.flash.push({
+        type: 'success',
+        message: 'ユーザー登録が完了しました',
+      });
+    });
+    builder.addCase(createUser.rejected, (state, action) => {
+      state.signedIn = false;
+      state.loading = false;
+    });
+
    //  builder.addCase(fetchAuthUser.pending, (state, action) => {
    //    state.loading = true;
    //  });
@@ -110,32 +113,32 @@ export const authSlice = createSlice({
    //  builder.addCase(sendEmailVerificationLink.rejected, (state, action) => {
    //    state.loading = false;
    //  });
-   //  builder.addCase(signInWithEmail.pending, (state, action) => {
-   //    state.loading = true;
-   //  });
-   //  builder.addCase(signInWithEmail.fulfilled, (state, action) => {
-   //    state.user = action.payload.user;
-   //    state.signedIn = true;
-   //    state.loading = false;
-   //    // 認証メールリンクからのリダイレクトの場合 `true`
-   //    action.payload.verified
-   //      ? state.flash.push({ type: 'success', message: '認証に成功しました' })
-   //      : state.flash.push({ type: 'info', message: 'ログインしました' });
-   //  });
-   //  builder.addCase(signInWithEmail.rejected, (state, action) => {
-   //    state.signedIn = false;
-   //    state.loading = false;
-   //  });
+    builder.addCase(signInWithEmail.pending, (state, action) => {
+      state.loading = true;
+    });
+    builder.addCase(signInWithEmail.fulfilled, (state, action) => {
+      state.user = action.payload.user;
+      state.signedIn = true;
+      state.loading = false;
+      // 認証メールリンクからのリダイレクトの場合 `true`
+      action.payload.verified
+        ? state.flash.push({ type: 'success', message: '認証に成功しました' })
+        : state.flash.push({ type: 'info', message: 'ログインしました' });
+    });
+    builder.addCase(signInWithEmail.rejected, (state, action) => {
+      state.signedIn = false;
+      state.loading = false;
+    });
+
    //  builder.addCase(updateProfile.pending, (state, action) => {
    //    state.loading = true;
    //  });
    //  builder.addCase(updateProfile.fulfilled, (state, action) => {
    //    if (!state.user) return; // `null`を排除 (state.user?利用不可)
-
    //    state.loading = false;
    //    state.user.name = action.payload.name;
-
-   //    if (state.user.email !== action.payload.email) {
+   
+  　//    if (state.user.email !== action.payload.email) {
    //      state.user.email = action.payload.email;
    //      state.user.emailVerifiedAt = null;
    //      state.flash.push({
@@ -153,6 +156,7 @@ export const authSlice = createSlice({
    //  builder.addCase(updateProfile.rejected, (state, action) => {
    //    state.loading = false;
    //  });
+
    //  builder.addCase(updatePassword.pending, (state, action) => {
    //    state.loading = true;
    //  });
@@ -166,19 +170,21 @@ export const authSlice = createSlice({
    //  builder.addCase(updatePassword.rejected, (state, action) => {
    //    state.loading = false;
    //  });
-   //  builder.addCase(forgotPassword.pending, (state, action) => {
-   //    state.loading = true;
-   //  });
-   //  builder.addCase(forgotPassword.fulfilled, (state, action) => {
-   //    state.loading = false;
-   //    state.flash.push({
-   //      type: 'success',
-   //      message: 'パスワード再設定用のメールを送信しました',
-   //    });
-   //  });
-   //  builder.addCase(forgotPassword.rejected, (state, action) => {
-   //    state.loading = false;
-   //  });
+
+    builder.addCase(forgotPassword.pending, (state, action) => {
+      state.loading = true;
+    });
+    builder.addCase(forgotPassword.fulfilled, (state, action) => {
+      state.loading = false;
+      state.flash.push({
+        type: 'success',
+        message: 'パスワード再設定用のメールを送信しました',
+      });
+    });
+    builder.addCase(forgotPassword.rejected, (state, action) => {
+      state.loading = false;
+    });
+
    //  builder.addCase(resetPassword.pending, (state, action) => {
    //    state.loading = true;
    //  });
