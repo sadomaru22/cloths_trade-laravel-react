@@ -5,7 +5,7 @@ import { User } from 'models/User';
 import {
   createUser,
 //   fetchAuthUser,
-//   sendEmailVerificationLink,
+   sendEmailVerificationLink,
    signInWithEmail,
 //   updateProfile,
 //   updatePassword,
@@ -49,7 +49,7 @@ export const authSlice = createSlice({
       const { type, message } = action.payload;
       state.flash.push({ type, message });
     },
-    removeEmailVerificationPage(state) {
+    removeEmailVerificationPage(state) {   //EmailVerification.tsxのアンマウント時に使用
       state.afterRegistration = false;
     },
     signIn(state) {
@@ -92,27 +92,29 @@ export const authSlice = createSlice({
    //    state.signedIn = false;
    //    state.loading = false;
    //  });
-   //  builder.addCase(sendEmailVerificationLink.pending, (state, action) => {
-   //    state.loading = true;
-   //  });
-   //  builder.addCase(sendEmailVerificationLink.fulfilled, (state, action) => {
-   //    state.loading = false;
-   //    if (action.payload === 202) {
-   //      state.flash.push({
-   //        type: 'success',
-   //        message: '認証用メールを送信しました',
-   //      });
-   //    } else if (action.payload === 204) {
-   //      state.afterRegistration = false;
-   //      state.flash.push({
-   //        type: 'error',
-   //        message: '既に認証済みです',
-   //      });
-   //    }
-   //  });
-   //  builder.addCase(sendEmailVerificationLink.rejected, (state, action) => {
-   //    state.loading = false;
-   //  });
+
+    builder.addCase(sendEmailVerificationLink.pending, (state, action) => {
+      state.loading = true;
+    });
+    builder.addCase(sendEmailVerificationLink.fulfilled, (state, action) => {
+      state.loading = false;
+      if (action.payload === 202) {
+        state.flash.push({
+          type: 'success',
+          message: '認証用メールを送信しました',
+        });
+      } else if (action.payload === 204) {
+        state.afterRegistration = false;
+        state.flash.push({
+          type: 'error',
+          message: '既に認証済みです',
+        });
+      }
+    });
+    builder.addCase(sendEmailVerificationLink.rejected, (state, action) => {
+      state.loading = false;
+    });
+
     builder.addCase(signInWithEmail.pending, (state, action) => {
       state.loading = true;
     });
