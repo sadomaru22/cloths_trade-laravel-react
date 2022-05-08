@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+//import { useEffect } from 'react';
 
 import { Switch, Route as DefaultRoute, Redirect } from 'react-router-dom';
 
@@ -17,6 +17,7 @@ import NotFound from 'pages/error/NotFound';
 import { setFlash } from './store/slices/authSlice';
 import { useAppDispatch, useAppSelector, useQuery } from './utils/hooks';
 import SignIn from 'pages/auth/SignIn';
+import { SignUp } from 'pages/auth';
 //import { isAfterRegistration, isSignedIn } from './utils/auth';
 
 //useAppSelectorでstoreのstateにアクセス。notFound=notFoundになれば全て<NoyFound/>へ遷移させる
@@ -34,6 +35,7 @@ const Routes = () => {
        <Route exact path='/' component={Home} />
 
        <Route exact path='/login' component={SignIn} />
+       <Route exact path='/register' component={SignUp} />
       {/* 設定した全てのパスに該当しないアクセスを捕捉 */}
        <Route path='*' component={NotFound} />
      </Switch>
