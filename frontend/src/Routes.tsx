@@ -9,7 +9,7 @@ import Home from './pages';
 //   EmailVerification,
 //   Account,
    ForgotPassword,
-//   ResetPassword,
+   ResetPassword,
  } from 'pages/auth';
 //import * as TaskBoard from 'pages/boards';
 import NotFound from 'pages/error/NotFound';
@@ -35,6 +35,7 @@ const Routes = () => {
        <Route exact path='/login' component={SignIn} />
        <Route exact path='/register' component={SignUp} />
        <Route exact path='/forgot-password' component={ForgotPassword} />
+       <Route exact path='/reset-password' component={ResetPassword} />
       {/* 設定した全てのパスに該当しないアクセスを捕捉 */}
        <Route path='*' component={NotFound} />
      </Switch>

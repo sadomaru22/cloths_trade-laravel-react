@@ -10,7 +10,7 @@ import {
 //   updateProfile,
 //   updatePassword,
    forgotPassword,
-//   resetPassword,
+   resetPassword,
 //   signOutFromAPI,
 //   deleteAccount,
 } from 'store/thunks/auth';
@@ -185,19 +185,20 @@ export const authSlice = createSlice({
       state.loading = false;
     });
 
-   //  builder.addCase(resetPassword.pending, (state, action) => {
-   //    state.loading = true;
-   //  });
-   //  builder.addCase(resetPassword.fulfilled, (state, action) => {
-   //    state.loading = false;
-   //    state.flash.push({
-   //      type: 'success',
-   //      message: 'パスワードを再設定しました',
-   //    });
-   //  });
-   //  builder.addCase(resetPassword.rejected, (state, action) => {
-   //    state.loading = false;
-   //  });
+    builder.addCase(resetPassword.pending, (state, action) => {
+      state.loading = true;
+    });
+    builder.addCase(resetPassword.fulfilled, (state, action) => {
+      state.loading = false;
+      state.flash.push({
+        type: 'success',
+        message: 'パスワードを再設定しました',
+      });
+    });
+    builder.addCase(resetPassword.rejected, (state, action) => {
+      state.loading = false;
+    });
+
    //  builder.addCase(signOutFromAPI.pending, (state, action) => {
    //    state.loading = true;
    //  });
