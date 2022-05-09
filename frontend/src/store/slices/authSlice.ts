@@ -7,12 +7,12 @@ import {
 //   fetchAuthUser,
    sendEmailVerificationLink,
    signInWithEmail,
-//   updateProfile,
-//   updatePassword,
+   updateProfile,
+   updatePassword,
    forgotPassword,
    resetPassword,
 //   signOutFromAPI,
-//   deleteAccount,
+   deleteAccount,
 } from 'store/thunks/auth';
 
 
@@ -132,46 +132,46 @@ export const authSlice = createSlice({
       state.loading = false;
     });
 
-   //  builder.addCase(updateProfile.pending, (state, action) => {
-   //    state.loading = true;
-   //  });
-   //  builder.addCase(updateProfile.fulfilled, (state, action) => {
-   //    if (!state.user) return; // `null`を排除 (state.user?利用不可)
-   //    state.loading = false;
-   //    state.user.name = action.payload.name;
-   
-  　//    if (state.user.email !== action.payload.email) {
-   //      state.user.email = action.payload.email;
-   //      state.user.emailVerifiedAt = null;
-   //      state.flash.push({
-   //        type: 'info',
-   //        message: '認証用メールを送信しました',
-   //      });
-   //    } else {
-   //      state.user.email = action.payload.email;
-   //      state.flash.push({
-   //        type: 'success',
-   //        message: 'ユーザー情報を更新しました',
-   //      });
-   //    }
-   //  });
-   //  builder.addCase(updateProfile.rejected, (state, action) => {
-   //    state.loading = false;
-   //  });
+    builder.addCase(updateProfile.pending, (state, action) => {
+      state.loading = true;
+    });
+    builder.addCase(updateProfile.fulfilled, (state, action) => {
+      if (!state.user) return; // `null`を排除 (state.user?利用不可)
+      state.loading = false;
+      state.user.name = action.payload.name;
+      
+       if (state.user.email !== action.payload.email) {
+        state.user.email = action.payload.email;
+        state.user.emailVerifiedAt = null;
+        state.flash.push({
+          type: 'info',
+          message: '認証用メールを送信しました',
+        });
+      } else {
+        state.user.email = action.payload.email;
+        state.flash.push({
+          type: 'success',
+          message: 'ユーザー情報を更新しました',
+        });
+      }
+    });
+    builder.addCase(updateProfile.rejected, (state, action) => {
+      state.loading = false;
+    });
 
-   //  builder.addCase(updatePassword.pending, (state, action) => {
-   //    state.loading = true;
-   //  });
-   //  builder.addCase(updatePassword.fulfilled, (state, action) => {
-   //    state.flash.push({
-   //      type: 'success',
-   //      message: 'パスワードを変更しました',
-   //    });
-   //    state.loading = false;
-   //  });
-   //  builder.addCase(updatePassword.rejected, (state, action) => {
-   //    state.loading = false;
-   //  });
+    builder.addCase(updatePassword.pending, (state, action) => {
+      state.loading = true;
+    });
+    builder.addCase(updatePassword.fulfilled, (state, action) => {
+      state.flash.push({
+        type: 'success',
+        message: 'パスワードを変更しました',
+      });
+      state.loading = false;
+    });
+    builder.addCase(updatePassword.rejected, (state, action) => {
+      state.loading = false;
+    });
 
     builder.addCase(forgotPassword.pending, (state, action) => {
       state.loading = true;
@@ -214,21 +214,22 @@ export const authSlice = createSlice({
    //    state.signedIn = false;
    //    state.loading = false;
    //  });
-   //  builder.addCase(deleteAccount.pending, (state, action) => {
-   //    state.loading = true;
-   //  });
-   //  builder.addCase(deleteAccount.fulfilled, (state, action) => {
-   //    state.user = null;
-   //    state.signedIn = false;
-   //    state.loading = false;
-   //    state.flash.push({
-   //      type: 'warning',
-   //      message: 'アカウントは削除されました',
-   //    });
-   //  });
-   //  builder.addCase(deleteAccount.rejected, (state, action) => {
-   //    state.loading = false;
-   //  });
+
+    builder.addCase(deleteAccount.pending, (state, action) => {
+      state.loading = true;
+    });
+    builder.addCase(deleteAccount.fulfilled, (state, action) => {
+      state.user = null;
+      state.signedIn = false;
+      state.loading = false;
+      state.flash.push({
+        type: 'warning',
+        message: 'アカウントは削除されました',
+      });
+    });
+    builder.addCase(deleteAccount.rejected, (state, action) => {
+      state.loading = false;
+    });
   },
 });
 

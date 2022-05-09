@@ -7,7 +7,7 @@ import Home from './pages';
  import {
    SignUp,
    EmailVerification,
-//   Account,
+   Account,
    ForgotPassword,
    ResetPassword,
  } from 'pages/auth';
@@ -43,6 +43,7 @@ const Routes = () => {
 
        <Route exact path='/login' component={SignIn} />
        <Route exact path='/register' component={SignUp} />
+       <Route exact path='/account' component={Account} />
        <AuthRoute path='/email-verification' component={EmailVerification} />
        <GuestRoute exact path='/forgot-password' component={ForgotPassword} />
        <Route exact path='/reset-password' component={ResetPassword} />
