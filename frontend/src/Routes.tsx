@@ -6,7 +6,7 @@ import Home from './pages';
 // import { Privacy, Terms } from './pages/static';
  import {
    SignUp,
-//   EmailVerification,
+   EmailVerification,
 //   Account,
    ForgotPassword,
    ResetPassword,
@@ -16,13 +16,22 @@ import NotFound from 'pages/error/NotFound';
 import { setFlash } from './store/slices/authSlice';
 import { useAppDispatch, useAppSelector, useQuery } from './utils/hooks';
 import SignIn from 'pages/auth/SignIn';
-//import { isAfterRegistration, isSignedIn } from './utils/auth';
+import { isAfterRegistration, isSignedIn } from './utils/auth';
 
 //useAppSelectorでstoreのstateにアクセス。notFound=notFoundになれば全て<NoyFound/>へ遷移させる
 const Route = ({ ...rest }) => {
    const notFound = useAppSelector((state) => state.app.notFound);
    return notFound ? <NotFound /> : <DefaultRoute {...rest} />;
  };
+
+const GuestRoute = ({ ...rest }) => {
+   if (isAfterRegistration()) return <Redirect to='/email-verification' />;
+   return isSignedIn() ? <Redirect to='/' /> : <Route {...rest} />;
+ };
+ 
+const AuthRoute = ({ ...rest }) => {
+   return isSignedIn() ? <Route {...rest} /> : <Redirect to='/' />;
+ }; 
 
 
 
@@ -34,7 +43,8 @@ const Routes = () => {
 
        <Route exact path='/login' component={SignIn} />
        <Route exact path='/register' component={SignUp} />
-       <Route exact path='/forgot-password' component={ForgotPassword} />
+       <AuthRoute path='/email-verification' component={EmailVerification} />
+       <GuestRoute exact path='/forgot-password' component={ForgotPassword} />
        <Route exact path='/reset-password' component={ResetPassword} />
       {/* 設定した全てのパスに該当しないアクセスを捕捉 */}
        <Route path='*' component={NotFound} />
