@@ -11,7 +11,7 @@ import {
    updatePassword,
    forgotPassword,
    resetPassword,
-//   signOutFromAPI,
+   signOutFromAPI,
    deleteAccount,
 } from 'store/thunks/auth';
 
@@ -201,19 +201,19 @@ export const authSlice = createSlice({
       state.loading = false;
     });
 
-   //  builder.addCase(signOutFromAPI.pending, (state, action) => {
-   //    state.loading = true;
-   //  });
-   //  builder.addCase(signOutFromAPI.fulfilled, (state, action) => {
-   //    state.user = null;
-   //    state.signedIn = false;
-   //    state.loading = false;
-   //    state.flash.push({ type: 'success', message: 'ログアウトしました' });
-   //  });
-   //  builder.addCase(signOutFromAPI.rejected, (state, action) => {
-   //    state.signedIn = false;
-   //    state.loading = false;
-   //  });
+    builder.addCase(signOutFromAPI.pending, (state, action) => {
+      state.loading = true;
+    });
+    builder.addCase(signOutFromAPI.fulfilled, (state, action) => {
+      state.user = null;
+      state.signedIn = false;
+      state.loading = false;
+      state.flash.push({ type: 'success', message: 'ログアウトしました' });
+    });
+    builder.addCase(signOutFromAPI.rejected, (state, action) => {
+      state.signedIn = false;
+      state.loading = false;
+    });
 
     builder.addCase(deleteAccount.pending, (state, action) => {
       state.loading = true;
