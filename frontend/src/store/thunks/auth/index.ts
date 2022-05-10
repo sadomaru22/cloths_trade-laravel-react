@@ -7,3 +7,5 @@ export * from './deleteAccount';
 export * from './updatePassword';
 export * from './updateProfile';
 export * from './signOutFromAPI';
+export * from './fetchAuthUser';
+//
