@@ -4,7 +4,7 @@ import { Color } from '@material-ui/lab';
 import { User } from 'models/User';
 import {
   createUser,
-//   fetchAuthUser,
+   fetchAuthUser,
    sendEmailVerificationLink,
    signInWithEmail,
    updateProfile,
@@ -79,19 +79,19 @@ export const authSlice = createSlice({
       state.loading = false;
     });
 
-   //  builder.addCase(fetchAuthUser.pending, (state, action) => {
-   //    state.loading = true;
-   //  });
-   //  builder.addCase(fetchAuthUser.fulfilled, (state, action) => {
-   //    state.user = action.payload.user;
-   //    state.signedIn = true;
-   //    state.loading = false;
-   //  });
-   //  builder.addCase(fetchAuthUser.rejected, (state, action) => {
-   //    state.user = null;
-   //    state.signedIn = false;
-   //    state.loading = false;
-   //  });
+    builder.addCase(fetchAuthUser.pending, (state, action) => {
+      state.loading = true;
+    });
+    builder.addCase(fetchAuthUser.fulfilled, (state, action) => {
+      state.user = action.payload.user;
+      state.signedIn = true;
+      state.loading = false;
+    });
+    builder.addCase(fetchAuthUser.rejected, (state, action) => {
+      state.user = null;
+      state.signedIn = false;
+      state.loading = false;
+    });
 
     builder.addCase(sendEmailVerificationLink.pending, (state, action) => {
       state.loading = true;

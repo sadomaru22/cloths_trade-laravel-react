@@ -1,7 +1,7 @@
 import { Fragment } from 'react';
 
 
-//import { APP_NAME } from 'config/app';
+import { APP_NAME } from 'config/app';
 // import { Header, Footer } from 'layouts';
 import React from 'react';
 import Header from './Header';
@@ -14,8 +14,7 @@ const BaseLayout: React.FC<BaseLayoutProps> = (props) => (
   <Fragment>
     
       <title>
-{/*{props.subtitle ? `${props.subtitle} | ${APP_NAME}` : APP_NAME}*/}
-          タイトル
+        {props.subtitle ? `${props.subtitle} | ${APP_NAME}` : APP_NAME}
       </title>
 
     {!props.withoutHeaders && <Header />}
