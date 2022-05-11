@@ -17,6 +17,7 @@ import { setFlash } from './store/slices/authSlice';
 import { useAppDispatch, useAppSelector, useQuery } from './utils/hooks';
 import SignIn from 'pages/auth/SignIn';
 import { isAfterRegistration, isSignedIn } from './utils/auth';
+import TopPage from 'pages/top/TopPage';
 
 //useAppSelectorでstoreのstateにアクセス。notFound=notFoundになれば全て<NoyFound/>へ遷移させる
 const Route = ({ ...rest }) => {
@@ -47,6 +48,7 @@ const Routes = () => {
        <AuthRoute path='/email-verification' component={EmailVerification} />
        <GuestRoute exact path='/forgot-password' component={ForgotPassword} />
        <Route exact path='/reset-password' component={ResetPassword} />
+       <Route exact path='/top' component={TopPage} />
       {/* 設定した全てのパスに該当しないアクセスを捕捉 */}
        <Route path='*' component={NotFound} />
      </Switch>
