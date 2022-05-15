@@ -5,3 +5,5 @@ export { default as LabeledCheckbox } from './LabeledCheckbox';
 export { default as SubmitButton } from './SubmitButton';
 export { default as AlertMessage } from './AlertMessage';
 export { default as LinkWrapper } from './LinkWrapper';
+export { default as ScrolledDiv } from './ScrolledDiv';
+export { default as ScrolledGridContainer } from './ScrolledGridContainer';
