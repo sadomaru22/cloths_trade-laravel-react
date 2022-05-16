@@ -18,7 +18,8 @@ import { useAppDispatch, useAppSelector, useQuery } from './utils/hooks';
 import SignIn from 'pages/auth/SignIn';
 import { isAfterRegistration, isSignedIn } from './utils/auth';
 import TopPage from 'pages/top/TopPage';
-import Album from 'pages/top/Album';
+import Ichiran from 'templates/ichiran/Ichiran';
+
 
 //useAppSelectorでstoreのstateにアクセス。notFound=notFoundになれば全て<NoyFound/>へ遷移させる
 const Route = ({ ...rest }) => {
@@ -50,7 +51,7 @@ const Routes = () => {
        <GuestRoute exact path='/forgot-password' component={ForgotPassword} />
        <Route exact path='/reset-password' component={ResetPassword} />
        <Route exact path='/top' component={TopPage} />
-       <Route exact path='/album' component={Album} />
+       <Route exact path='/ichiran' component={Ichiran} />
       {/* 設定した全てのパスに該当しないアクセスを捕捉 */}
        <Route path='*' component={NotFound} />
      </Switch>
