@@ -14,8 +14,13 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 //import Link from '@mui/material/Link';
-import { createTheme } from '@mui/material/styles';
+import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import { BaseLayout } from 'layouts';
+import { LinkButton } from 'templates';
+import { Pagination } from '@mui/material';
+
+
+ //🌟一覧ページのテンプレート
 
 // function Copyright() {
 //   return (
@@ -30,28 +35,51 @@ import { BaseLayout } from 'layouts';
 //   );
 // }
 
+//DBからとってきたデータの数ぶん表示する、BackEnd実装するまでは一旦これでOK
 const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
-const theme = createTheme();
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    container: {
+      marginTop: theme.spacing(7),
+      marginBottom: theme.spacing(10),
+    },
+    button: {
+      marginTop: theme.spacing(7),
+      marginBottom: theme.spacing(10),
+      marginLeft: theme.spacing(10),
+      marginRight: theme.spacing(10),
+    },
+    card: {
+      maxWidth: 375
+    },
+    root: {
+      flexGrow: 1,
+  },
+    page: {
+      display: "block",
+      marginLeft: "auto",
+      marginRight: "auto"
+    }
+  })
+);
 
-const Album = () => {
+const Ichiran = (props: { pageTitle: string; pageDescription: string;   //ページごとのタイトル、説明
+   title: string; date: string; place: string, image: string; description: string; }) => {   //DBからとってきたタイトル、写真、説明文を入れる
+  const { pageTitle, pageDescription, title, date, place, image, description } = props;
+  const classes = useStyles();
+
   return (
       <BaseLayout subtitle='Album'>
       <AppBar position="relative">
         <Toolbar>
           <CameraIcon sx={{ mr: 2 }} />
           <Typography variant="h6" color="inherit" noWrap>
-            Album layout
+             ああああ(通知つけるならここか)
           </Typography>
         </Toolbar>
       </AppBar>
-        <Box
-          sx={{
-            bgcolor: 'background.paper',
-            pt: 8,
-            pb: 6,
-          }}
-        >
+        <Box sx={{bgcolor: 'background.paper', pt: 8, pb: 6,}}>
           <Container maxWidth="sm">
             <Typography
               component="h1"
@@ -60,12 +88,12 @@ const Album = () => {
               color="text.primary"
               gutterBottom
             >
-              Album layout
+              用途によってそれぞれ決めたい{pageTitle}
             </Typography>
             <Typography variant="h5" align="center" color="text.secondary" paragraph>
               Something short and leading about the collection below—its contents,
               the creator, etc. Make it short and sweet, but not too short so folks
-              don&apos;t simply skip over it entirely.
+              don&apos;t simply skip over it entirely.   {pageDescription}
             </Typography>
             <Stack
               sx={{ pt: 4 }}
@@ -87,37 +115,38 @@ const Album = () => {
                   sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
                 >
                   <Typography>
-                     タイトル
+                    タイトル{title}
+                  </Typography>
+                  <Typography>
+                    場所{place}
+                  </Typography>
+                  <Typography>
+                    日付{date}
                   </Typography>
                   <CardMedia
                     component="img"
-                    sx={{
-                      // 16:9
-                      pt: '56.25%',
-                    }}
+                    sx={{pt: '26.25%',}}
                     image="https://source.unsplash.com/random"
                     alt="random"
                   />
                   <CardContent sx={{ flexGrow: 1 }}>
-                    <Typography gutterBottom variant="h5" component="h2">
-                      Heading
-                    </Typography>
                     <Typography>
-                      This is a media card. You can use this section to describe the
-                      content.
+                      あああああああああああああああああああ{ description }
                     </Typography>
                   </CardContent>
                   <CardActions>
-                    <Button size="small">View</Button>
-                    <Button size="small">Edit</Button>
+                    <LinkButton size="small" to="/detail">詳細ページへ</LinkButton>
                   </CardActions>
                 </Card>
               </Grid>
             ))}
           </Grid>
         </Container>
+      <Stack spacing={2} maxWidth="md" className={classes.page}>
+        <Pagination count={10} />
+      </Stack>
     </BaseLayout>
   );
 }
 
-export default Album
+export default Ichiran
