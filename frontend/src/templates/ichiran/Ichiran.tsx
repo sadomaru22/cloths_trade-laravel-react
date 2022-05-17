@@ -57,9 +57,10 @@ const useStyles = makeStyles((theme: Theme) =>
       flexGrow: 1,
   },
     page: {
-      display: "block",
+      marginTop: 0,
+      marginBottom: 0,
       marginLeft: "auto",
-      marginRight: "auto"
+      marginRight: 0,
     }
   })
 );
@@ -88,7 +89,7 @@ const Ichiran = (props: { pageTitle: string; pageDescription: string;   //ペー
               color="text.primary"
               gutterBottom
             >
-              用途によってそれぞれ決めたい{pageTitle}
+              ページタイトル{pageTitle}
             </Typography>
             <Typography variant="h5" align="center" color="text.secondary" paragraph>
               Something short and leading about the collection below—its contents,
@@ -143,7 +144,7 @@ const Ichiran = (props: { pageTitle: string; pageDescription: string;   //ペー
           </Grid>
         </Container>
       <Stack spacing={2} maxWidth="md" className={classes.page}>
-        <Pagination count={10} />
+        <Pagination count={5} />
       </Stack>
     </BaseLayout>
   );
