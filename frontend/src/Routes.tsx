@@ -20,6 +20,7 @@ import { isAfterRegistration, isSignedIn } from './utils/auth';
 import TopPage from 'pages/top/TopPage';
 import Ichiran from 'templates/ichiran/Ichiran';
 import Detail from 'templates/detail/Detail';
+import { OtherUserDetail, OtherUserIchiran, OtheUserTop, PastDetail, PastIchiran } from 'components/4other-user';
 
 
 //useAppSelectorでstoreのstateにアクセス。notFound=notFoundになれば全て<NoyFound/>へ遷移させる
@@ -54,6 +55,13 @@ const Routes = () => {
        <Route exact path='/top' component={TopPage} />
        <Route exact path='/ichiran' component={Ichiran} />
        <Route exact path='/detail' component={Detail} />
+       {/*④他のユーザ ただしDetailに関してはパラメータ渡す必要あり*/}
+       <Route exact path='/other-user' component={OtheUserTop} />
+       <Route exact path='/trade-all' component={OtherUserIchiran} />
+       <Route exact path='/trade-detail' component={OtherUserDetail} />
+       <Route exact path='/past-trade-all' component={PastIchiran} />
+       <Route exact path='/past-trade-detail' component={PastDetail} />
+
       {/* 設定した全てのパスに該当しないアクセスを捕捉 */}
        <Route path='*' component={NotFound} />
      </Switch>
