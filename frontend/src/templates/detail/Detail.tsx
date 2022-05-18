@@ -7,7 +7,7 @@ import { Typography } from '@mui/material';
 import { Grid } from '@mui/material';
 
 const Detail = (props: { title: string; date: string; currentCapa: number; maxCapa: number; place: string, image: string; description: string; }) => {
-   const { title, date, currentCapa, maxCapa, place, image, description } = props;
+   const { title, date, currentCapa, maxCapa, place, image, description } = props;   //propsではない。
    return (
       <BaseLayout subtitle='Detail Page'>
          <Container maxWidth="md" sx={{ marginTop: 10 }}>

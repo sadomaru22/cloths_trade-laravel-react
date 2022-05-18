@@ -1,11 +1,11 @@
 // import { makeStyles, Theme, createStyles, Button, Container, Typography } from '@material-ui/core';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
-import { Container, Typography, Button, Grid, Card, CardActions, CardContent, CardMedia, AppBar } from '@material-ui/core';
+import { Container, Typography, Button, Card, CardActions, CardContent, CardMedia, AppBar } from '@material-ui/core';
 import { BaseLayout } from 'layouts';
 import React from 'react'
 import { useHistory } from 'react-router-dom';
 import { useAppDispatch } from 'utils/hooks';
-import { LinkButton } from 'templates';
+import { LinkButton2 } from 'templates';
 import Paper from '@mui/material/Paper';
 import InputBase from '@mui/material/InputBase';
 import Divider from '@mui/material/Divider';
@@ -13,6 +13,7 @@ import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import DirectionsIcon from '@mui/icons-material/Directions';
+import { Grid } from '@mui/material';
 
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -62,7 +63,7 @@ const TopPage = (props: { title: any; search: any; }) => {
         
       <Paper
       component="form"
-      sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 600, mb: 6 }}
+      sx={{ p: '2px 4px', display: 'flex', mb: 6,  justifyContent: 'center' }}
       >
          <IconButton sx={{ p: '10px' }} aria-label="menu">
             <MenuIcon />
@@ -78,9 +79,9 @@ const TopPage = (props: { title: any; search: any; }) => {
          </IconButton>
       </Paper>
 
-        <Grid container spacing={5}>
+        <Grid container spacing={5} sx={{ display: 'flex', justifyContent: 'center' }}>
          <Grid item>
-            <LinkButton color='primary' to='/tradepost'>
+            <LinkButton2 color='primary' to='/tradepost'>
                <div className={classes.card}>
                <Card>
                   <CardMedia
@@ -101,10 +102,10 @@ const TopPage = (props: { title: any; search: any; }) => {
                   </CardActions>
                </Card>
                </div>
-            </LinkButton>
+            </LinkButton2>
          </Grid>
          <Grid item>
-         <LinkButton color='primary' to='/trademanage'>
+         <LinkButton2 color='primary' to='/trademanage'>
                <div className={classes.card}>
                <Card>
                   <CardMedia
@@ -125,13 +126,13 @@ const TopPage = (props: { title: any; search: any; }) => {
                   </CardActions>
                </Card>
                </div>
-            </LinkButton>
+            </LinkButton2>
          </Grid>
         </Grid>
 
-        <Grid container spacing={5}>
+        <Grid container spacing={5} sx={{ display: 'flex', justifyContent: 'center' }}>
          <Grid item>
-         <LinkButton color='primary' to='/tradepending'>
+         <LinkButton2 color='primary' to='/tradepending'>
                <div className={classes.card}>
                <Card>
                   <CardMedia
@@ -152,10 +153,10 @@ const TopPage = (props: { title: any; search: any; }) => {
                   </CardActions>
                </Card>
                </div>
-            </LinkButton>
+            </LinkButton2>
          </Grid>
          <Grid item>
-         <LinkButton color='primary' to='/tradecomfirmed'>
+         <LinkButton2 color='primary' to='/tradecomfirmed'>
                <div className={classes.card}>
                <Card>
                   <CardMedia
@@ -177,7 +178,7 @@ const TopPage = (props: { title: any; search: any; }) => {
                   </CardActions>
                </Card>
                </div>
-            </LinkButton>
+            </LinkButton2>
          </Grid>
         </Grid>
 
