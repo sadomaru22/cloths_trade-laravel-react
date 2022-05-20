@@ -66,8 +66,10 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 const Ichiran = (props: { pageTitle: string; pageDescription: string;   //ページごとのタイトル、説明
-   title: string; date: string; place: string, image: string; description: string; }) => {   //DBからとってきたタイトル、写真、説明文を入れる
-  const { pageTitle, pageDescription, title, date, place, image, description } = props;
+    date: string; place: string, image: string; description: string; }) => {   
+  const { pageTitle, pageDescription, date, place, image, description } = props;
+
+  var title = ['title1', 'title2', 'title3', 'title4', 'title5', 'title6', 'title7', 'title8', 'title9']  //ほんとはDBからとってきたタイトル
   const classes = useStyles();
 
   return (
@@ -116,7 +118,7 @@ const Ichiran = (props: { pageTitle: string; pageDescription: string;   //ペー
                   sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
                 >
                   <Typography>
-                    タイトル{title}
+                    タイトル{title.map((fruit, i) => <li key={i}>{fruit}</li>)}
                   </Typography>
                   <Typography>
                     場所{place}

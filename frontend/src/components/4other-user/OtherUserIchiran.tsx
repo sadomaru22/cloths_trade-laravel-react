@@ -6,7 +6,6 @@ const OtherUserIchiran = () => {
       <Ichiran
       pageTitle={"他のユーザの投稿一覧ページ"}
       pageDescription={"◯◯さんの開催予定の投稿を全て確認できます。"} 
-      title={""} 
       date={""} 
       place={""} 
       image={""} 
