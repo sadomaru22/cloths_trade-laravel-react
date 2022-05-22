@@ -66,9 +66,10 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const Ichiran = () => {   
-
+const Ichiran = (props: {url: string, pageDescription: string}) => {   
+  const {url, pageDescription} = props;
   const classes = useStyles();
+  const stateA = "渡邊一真";
 
   return (
       <BaseLayout subtitle='Album'>
@@ -76,7 +77,7 @@ const Ichiran = () => {
         <Toolbar>
           <CameraIcon sx={{ mr: 2 }} />
           <Typography variant="h6" color="inherit" noWrap>
-             ああああ(通知つけるならここか)
+             {props.pageDescription}
           </Typography>
         </Toolbar>
       </AppBar>
@@ -89,7 +90,7 @@ const Ichiran = () => {
             </Grid>
             <Grid item>
                 <Typography variant='h4' color='textSecondary' sx={{ marginLeft: 8 }}>
-                  名前{ } さんの投稿一覧
+                  {stateA} さんの投稿一覧
                 </Typography>
             </Grid>
           </Grid>
@@ -121,7 +122,7 @@ const Ichiran = () => {
                     </Typography>
                   </CardContent>
                   <CardActions>
-                    <LinkButton size="small" to="/detail">詳細ページへ</LinkButton>
+                  <LinkButton size="small" to={{pathname: `/${props.url}`, state: stateA}}>詳細ページへ</LinkButton>
                   </CardActions>
                 </Card>
               </Grid>

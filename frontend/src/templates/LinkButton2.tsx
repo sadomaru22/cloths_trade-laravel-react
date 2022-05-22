@@ -20,7 +20,7 @@ const CustomButton = styled(Button)(({ theme }) => ({
  }));
 
 type LinkButtonProps = {
-  to: string;
+  to: any;
 } & ButtonProps<ButtonTypeMap<{}, 'a'>['defaultComponent']>;
 
 const LinkButton2 = (props: LinkButtonProps) => {

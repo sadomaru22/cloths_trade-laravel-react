@@ -1,19 +1,26 @@
 import React from 'react'
-import { Box, Container } from '@mui/material'
+import { Box, Button, Container } from '@mui/material'
 import { BaseLayout } from 'layouts'
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import { Typography } from '@mui/material';
 import { Grid } from '@mui/material';
 import { Description } from '@mui/icons-material';
+import { useHistory, useLocation, useParams } from 'react-router-dom';
 
 
 //API通信で使うURLは変数にする。propsでいけるかも。
 
 const Detail = () => {
+  const {state} = useLocation();
+  const history = useHistory();
+  const id = useParams();
+
+  const onClickBack = () => {
+    history.goBack();
+  }
    //const { title, date, currentCapa, maxCapa, place, image, description } = props;   //propsではない。
    return (
-      <BaseLayout subtitle='Detail Page'>
          <Container maxWidth="md" sx={{ marginTop: 10 }}>
          <Grid container sx={{marginBottom: 8}}>
             <Grid item>
@@ -23,7 +30,7 @@ const Detail = () => {
             </Grid>
             <Grid item>
                 <Typography variant='h4' color='textSecondary' sx={{ marginLeft: 8 }}>
-                  名前{ } さんの投稿詳細
+                  {state} さんの投稿詳細
                 </Typography>
             </Grid>
           </Grid>
@@ -62,8 +69,8 @@ const Detail = () => {
             </ImageListItem>
             ))}
          </ImageList>
+         <Button onClick={onClickBack}>一覧に戻る</Button>
          </Container>
-      </BaseLayout>
    )
 }
 
