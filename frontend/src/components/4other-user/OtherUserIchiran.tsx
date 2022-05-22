@@ -3,7 +3,10 @@ import Ichiran from 'templates/ichiran/Ichiran'
 
 const OtherUserIchiran = () => {
    return (
-      <Ichiran/>
+      <Ichiran 
+      url={"trade-detail"}
+      pageDescription={"開催予定のトレード一覧"}
+      />
    )
 }
 
