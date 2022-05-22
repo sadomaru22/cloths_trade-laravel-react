@@ -21,6 +21,7 @@ import { Pagination } from '@mui/material';
 
 
  //🌟一覧ページのテンプレート
+//API通信で使うURLは変数にする。propsでいけるかも。
 
 // function Copyright() {
 //   return (
@@ -65,11 +66,8 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const Ichiran = (props: { pageTitle: string; pageDescription: string;   //ページごとのタイトル、説明
-    date: string; place: string, image: string; description: string; }) => {   
-  const { pageTitle, pageDescription, date, place, image, description } = props;
+const Ichiran = () => {   
 
-  var title = ['title1', 'title2', 'title3', 'title4', 'title5', 'title6', 'title7', 'title8', 'title9']  //ほんとはDBからとってきたタイトル
   const classes = useStyles();
 
   return (
@@ -82,49 +80,34 @@ const Ichiran = (props: { pageTitle: string; pageDescription: string;   //ペー
           </Typography>
         </Toolbar>
       </AppBar>
-        <Box sx={{bgcolor: 'background.paper', pt: 8, pb: 6,}}>
-          <Container maxWidth="sm">
-            <Typography
-              component="h1"
-              variant="h2"
-              align="center"
-              color="text.primary"
-              gutterBottom
-            >
-              ページタイトル{pageTitle}
-            </Typography>
-            <Typography variant="h5" align="center" color="text.secondary" paragraph>
-              Something short and leading about the collection below—its contents,
-              the creator, etc. Make it short and sweet, but not too short so folks
-              don&apos;t simply skip over it entirely.   {pageDescription}
-            </Typography>
-            <Stack
-              sx={{ pt: 4 }}
-              direction="row"
-              spacing={2}
-              justifyContent="center"
-            >
-              <Button variant="contained">Main call to action</Button>
-              <Button variant="outlined">Secondary action</Button>
-            </Stack>
-          </Container>
-        </Box>
         <Container sx={{ py: 8 }} maxWidth="md">
+          <Grid container sx={{marginBottom: 8}}>
+            <Grid item>
+                <Box sx={{ borderColor: 'primary.main', border: 1, borderRadius: '50%', width: '6rem', height: '6rem' }}>
+                  <p>プロフィール画像{ }</p>
+                </Box>
+            </Grid>
+            <Grid item>
+                <Typography variant='h4' color='textSecondary' sx={{ marginLeft: 8 }}>
+                  名前{ } さんの投稿一覧
+                </Typography>
+            </Grid>
+          </Grid>
 
           <Grid container spacing={4}>
-            {cards.map((card) => (
-              <Grid item key={card} xs={12} sm={6} md={4}>
+            {rows.map((row, index) => (
+              <Grid item key={index} xs={12} sm={6} md={4}>
                 <Card
                   sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
                 >
                   <Typography>
-                    タイトル{title.map((fruit, i) => <li key={i}>{fruit}</li>)}
+                    {row.title}
                   </Typography>
                   <Typography>
-                    場所{place}
+                    場所：{row.place}
                   </Typography>
                   <Typography>
-                    日付{date}
+                    日付：{row.date}
                   </Typography>
                   <CardMedia
                     component="img"
@@ -134,7 +117,7 @@ const Ichiran = (props: { pageTitle: string; pageDescription: string;   //ペー
                   />
                   <CardContent sx={{ flexGrow: 1 }}>
                     <Typography>
-                      あああああああああああああああああああ{ description }
+                      あああああああああああああ
                     </Typography>
                   </CardContent>
                   <CardActions>
@@ -151,5 +134,62 @@ const Ichiran = (props: { pageTitle: string; pageDescription: string;   //ペー
     </BaseLayout>
   );
 }
+
+let rows = [   //DB入ってくる想定
+  {
+    title: 'タイトル1',
+    date: '2022/07/30',
+    place: '東京都渋谷区代々木神園町２−１',
+    image: ''
+  },
+  {
+    title: 'タイトル2',
+    date: '2022/08/01',
+    place: '東京都渋谷区代々木神園町２−１',
+    image: ''
+  },
+  {
+    title: 'タイトル3',
+    date: '2022/08/02',
+    place: '東京都渋谷区代々木神園町２−１',
+    image: ''
+  },
+  {
+    title: 'タイトル4',
+    date: '2022/08/03',
+    place: '東京都渋谷区代々木神園町２−１',
+    image: ''
+  },
+  {
+    title: 'タイトル5',
+    date: '2022/08/04',
+    place: '東京都渋谷区代々木神園町２−１',
+    image: ''
+  },
+  {
+    title: 'タイトル6',
+    date: '2022/08/05',
+    place: '東京都渋谷区代々木神園町２−１',
+    image: ''
+  },
+  {
+    title: 'タイトル7',
+    date: '2022/08/06',
+    place: '東京都渋谷区代々木神園町２−１',
+    image: ''
+  },
+  {
+    title: 'タイトル8',
+    date: '2022/08/07',
+    place: '東京都渋谷区代々木神園町２−１',
+    image: ''
+  },
+  {
+    title: 'タイトル9',
+    date: '2022/08/08',
+    place: '東京都渋谷区代々木神園町２−１',
+    image: ''
+  },
+]
 
 export default Ichiran

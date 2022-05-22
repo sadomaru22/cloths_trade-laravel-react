@@ -1,36 +1,53 @@
 import React from 'react'
-import { Container } from '@mui/material'
+import { Box, Container } from '@mui/material'
 import { BaseLayout } from 'layouts'
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import { Typography } from '@mui/material';
 import { Grid } from '@mui/material';
+import { Description } from '@mui/icons-material';
 
-const Detail = (props: { title: string; date: string; currentCapa: number; maxCapa: number; place: string, image: string; description: string; }) => {
-   const { title, date, currentCapa, maxCapa, place, image, description } = props;   //propsではない。
+
+//API通信で使うURLは変数にする。propsでいけるかも。
+
+const Detail = () => {
+   //const { title, date, currentCapa, maxCapa, place, image, description } = props;   //propsではない。
    return (
       <BaseLayout subtitle='Detail Page'>
          <Container maxWidth="md" sx={{ marginTop: 10 }}>
+         <Grid container sx={{marginBottom: 8}}>
+            <Grid item>
+                <Box sx={{ borderColor: 'primary.main', border: 1, borderRadius: '50%', width: '6rem', height: '6rem' }}>
+                  <p>プロフィール画像{ }</p>
+                </Box>
+            </Grid>
+            <Grid item>
+                <Typography variant='h4' color='textSecondary' sx={{ marginLeft: 8 }}>
+                  名前{ } さんの投稿詳細
+                </Typography>
+            </Grid>
+          </Grid>
+          
          <Grid container justifyContent="center" sx={{ marginBottom: 5 }}>
             <Grid item xs={6}>
             <Typography>
-              日付{date}
+              日付：{row.date}
             </Typography>
             </Grid>
             <Grid item xs={6}>
             <Typography>
-              現在の参加人数/上限人数:   5{currentCapa} / 20{maxCapa}
+              現在の参加人数/上限人数:   {row.currentCapa} / {row.maxCapa}
             </Typography>
             </Grid>
          </Grid>
             <Typography variant='h3' color='textSecondary' sx={{ marginBottom: 8 }}>
-            　タイトルがここにくる。{title}
+            　{row.title}
             </Typography>
             <Typography sx={{ marginBottom: 5 }}>
-              開催場所：　 東京都渋谷区代々木神園町２−１{place}
+              開催場所：　 {row.place}
             </Typography>
             <Typography sx={{ marginBottom: 8 }}>
-              概要：　代々木公園で開催します。ぜひお立ち寄りください。{ description }
+              概要：　{ row.description }
             </Typography>
 
          <ImageList sx={{ width: 800, height: 450 }} variant="woven" cols={3} gap={8}>
@@ -50,6 +67,16 @@ const Detail = (props: { title: string; date: string; currentCapa: number; maxCa
    )
 }
 
+const row = 
+   {
+   title: 'タイトル1',
+   date: '2022/07/30',
+   currentCapa: 5,
+   maxCapa: 20,
+   place: '東京都渋谷区代々木神園町２−１',
+   image: '',       //本来は合計で9枚
+   description: '代々木公園で開催します。ぜひお立ち寄りください。' 
+   }  
 
 //DB作るまではひとまずこれで行こう
 const itemData = [
