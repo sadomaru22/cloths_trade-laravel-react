@@ -37,7 +37,7 @@ import { Pagination } from '@mui/material';
 // }
 
 //DBからとってきたデータの数ぶん表示する、BackEnd実装するまでは一旦これでOK
-const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+//const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -122,7 +122,7 @@ const Ichiran = (props: {url: string, pageDescription: string}) => {
                     </Typography>
                   </CardContent>
                   <CardActions>
-                  <LinkButton size="small" to={{pathname: `/${props.url}`, state: stateA}}>詳細ページへ</LinkButton>
+                  <LinkButton size="small" to={{pathname: `/${props.url}/${row.id}`, state: stateA}}>詳細ページへ</LinkButton>
                   </CardActions>
                 </Card>
               </Grid>
@@ -138,54 +138,63 @@ const Ichiran = (props: {url: string, pageDescription: string}) => {
 
 let rows = [   //DB入ってくる想定
   {
+    id: 1,
     title: 'タイトル1',
     date: '2022/07/30',
     place: '東京都渋谷区代々木神園町２−１',
     image: ''
   },
   {
+    id: 2,
     title: 'タイトル2',
     date: '2022/08/01',
     place: '東京都渋谷区代々木神園町２−１',
     image: ''
   },
   {
+    id: 3,
     title: 'タイトル3',
     date: '2022/08/02',
     place: '東京都渋谷区代々木神園町２−１',
     image: ''
   },
   {
+    id: 4,
     title: 'タイトル4',
     date: '2022/08/03',
     place: '東京都渋谷区代々木神園町２−１',
     image: ''
   },
   {
+    id: 5,
     title: 'タイトル5',
     date: '2022/08/04',
     place: '東京都渋谷区代々木神園町２−１',
     image: ''
   },
   {
+    id: 6,
     title: 'タイトル6',
     date: '2022/08/05',
     place: '東京都渋谷区代々木神園町２−１',
     image: ''
   },
   {
+    id: 7,
     title: 'タイトル7',
     date: '2022/08/06',
     place: '東京都渋谷区代々木神園町２−１',
     image: ''
   },
   {
+    id: 8,
     title: 'タイトル8',
     date: '2022/08/07',
     place: '東京都渋谷区代々木神園町２−１',
     image: ''
   },
   {
+    id: 9,
     title: 'タイトル9',
     date: '2022/08/08',
     place: '東京都渋谷区代々木神園町２−１',
