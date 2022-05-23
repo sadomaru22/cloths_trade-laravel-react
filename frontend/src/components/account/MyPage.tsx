@@ -5,7 +5,8 @@ import Typography from '@mui/material/Typography';
 import { Box, Container, Grid } from '@mui/material';
 import { BaseLayout } from 'layouts'
 import React from 'react'
-import { LinkButton2 } from 'templates'
+import { LinkButton, LinkButton2 } from 'templates'
+import { SpaceBar } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -31,14 +32,14 @@ const commonStyles = {
    border: 1,
  };
 
-const OtheUserTop = () => {
+const MyPage = () => {
    const classes = useStyles();
 
    return (
       <BaseLayout subtitle='OtheUser Top'>
          <Container maxWidth='md' className={classes.container}>
-            <Grid container>
-               <Grid item sx={{marginBottom: 6}}>
+            <Grid container sx={{marginBottom: 6}}>
+               <Grid item>
                   <Box sx={{ borderColor: 'primary.main', border: 1, borderRadius: '50%', width: '8rem', height: '8rem' }}>
                      <p>プロフィール画像{ }</p>
                   </Box>
@@ -54,9 +55,11 @@ const OtheUserTop = () => {
                プロフィール: 
             </Typography>
          </Box>
-         <Grid container spacing={5} sx={{ display: 'flex', justifyContent: 'center' }}>
-         <Grid item>
-            <LinkButton2 color='primary' to='/trade-all'>
+
+         <LinkButton to="/update-profile" sx={{ display: 'flex', justifyContent: 'center', marginBottom: 8 }}>プロフィールの編集</LinkButton>
+         
+
+            <LinkButton2 color='primary' to='/mytrade-all' >
                <div className={classes.card}>
                <Card>
                   <CardMedia
@@ -67,10 +70,10 @@ const OtheUserTop = () => {
                   />
                   <CardContent>
                   <Typography gutterBottom variant="h5" component="div">
-                     開催予定のトレード
+                     自分が開催予定のトレード
                   </Typography>
                   <Typography color="secondary">
-                     {  }◯◯さんが開催予定のトレード一覧を表示します。
+                     自分が開催予定のトレード一覧を表示します。
                   </Typography>
                   </CardContent>
                   <CardActions>
@@ -78,35 +81,9 @@ const OtheUserTop = () => {
                </Card>
                </div>
             </LinkButton2>
-         </Grid>
-         <Grid item>
-         <LinkButton2 color='primary' to='/past-trade-all'>
-               <div className={classes.card}>
-               <Card>
-                  <CardMedia
-                  component="img"
-                  height="140"
-                  image="/static/images/cards/contemplative-reptile.jpg"
-                  alt="green iguana"
-                  />
-                  <CardContent>
-                  <Typography gutterBottom variant="h5" component="div">
-                     過去のトレード
-                  </Typography>
-                  <Typography color="secondary">
-                  過去に{  }◯◯さんが開催したトレードの一覧を表示します。
-                  </Typography>
-                  </CardContent>
-                  <CardActions>
-                  </CardActions>
-               </Card>
-               </div>
-            </LinkButton2>
-         </Grid>
-        </Grid>
         </Container>
       </BaseLayout>
    )
 }
 
-export default OtheUserTop
+export default MyPage

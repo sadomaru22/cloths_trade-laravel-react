@@ -12,9 +12,8 @@ import { useHistory, useLocation, useParams } from 'react-router-dom';
 //API通信で使うURLは変数にする。propsでいけるかも。
 
 const Detail = () => {
-  const {state} = useLocation();
+  const {state} = useLocation();   //row
   const history = useHistory();
-  const id = useParams();
 
   const onClickBack = () => {
     history.goBack();
@@ -76,6 +75,7 @@ const Detail = () => {
 
 const row = 
    {
+   id: 1,  
    title: 'タイトル1',
    date: '2022/07/30',
    currentCapa: 5,

@@ -21,6 +21,8 @@ import TopPage from 'pages/top/TopPage';
 import Ichiran from 'templates/ichiran/Ichiran';
 import Detail from 'templates/detail/Detail';
 import { OtherUserDetail, OtherUserIchiran, OtheUserTop, PastDetail, PastIchiran } from 'components/4other-user';
+import { createContext } from 'react';
+import { MyPage } from 'components/account';
 
 
 //useAppSelectorでstoreのstateにアクセス。notFound=notFoundになれば全て<NoyFound/>へ遷移させる
@@ -37,8 +39,6 @@ const GuestRoute = ({ ...rest }) => {
 const AuthRoute = ({ ...rest }) => {
    return isSignedIn() ? <Route {...rest} /> : <Redirect to='/' />;
  }; 
-
-
 
 const Routes = () => {
    return (
@@ -58,9 +58,11 @@ const Routes = () => {
        {/*④他のユーザ ただしDetailに関してはパラメータ渡す必要あり*/}
        <Route exact path='/other-user' component={OtheUserTop} />
        <Route exact path='/trade-all' component={OtherUserIchiran} />
-       <Route exact path='/trade-detail' component={OtherUserDetail} />
+       <Route exact path='/trade-detail/:id' component={OtherUserDetail} />
        <Route exact path='/past-trade-all' component={PastIchiran} />
-       <Route exact path='/past-trade-detail' component={PastDetail} />
+       <Route exact path='/past-trade-detail/:id' component={PastDetail} />
+
+       <Route exact path='/mypage' component={MyPage} />
 
       {/* 設定した全てのパスに該当しないアクセスを捕捉 */}
        <Route path='*' component={NotFound} />
