@@ -61,7 +61,7 @@ const Transition = React.forwardRef(function Transition(
    return <Slide direction="up" ref={ref} {...props} />;
  });
 
-const PendingIchiran = () => {
+const ConfirmedIchiran = () => {
 　const history = useHistory();    
   const classes = useStyles();
   const state = "渡邊一真";
@@ -81,12 +81,12 @@ const PendingIchiran = () => {
    }
 
   return (
-      <BaseLayout subtitle='Album'>
+      <BaseLayout subtitle='ConfirmedIchiran'>
       <AppBar position="relative">
         <Toolbar>
           <CameraIcon sx={{ mr: 2 }} />
           <Typography variant="h6" color="inherit" noWrap>
-            開催が確定していないトレード一覧 &emsp; &emsp; *申請が受理されるまでもう少しお待ちください。
+            参加が確定したトレード一覧
           </Typography>
         </Toolbar>
       </AppBar>
@@ -132,7 +132,7 @@ const PendingIchiran = () => {
                   </CardContent>
                   <CardActions>
                   <LinkButton size="small" to={{pathname: `/pending-detail/${row.id}`, state: state}}>詳細ページへ</LinkButton>
-                  <Button size="small" onClick={handleClickOpen}>申請取り消し</Button>
+                  <Button size="small" onClick={handleClickOpen}>参加取り消し</Button>
                   </CardActions>
                 </Card>
               </Grid>
@@ -149,15 +149,15 @@ const PendingIchiran = () => {
       onClose={handleClose}
       aria-describedby="alert-dialog-slide-description"
       >
-         <DialogTitle>{`参加申請取り消し申請を${state}さんに送ります。よろしいですか?`}</DialogTitle>
+         <DialogTitle>{`参加取り消し申請を${state}さんに送ります。よろしいですか?`}</DialogTitle>
          <DialogContent>
             <DialogContentText id="alert-dialog-slide-description">
-               参加申請を取り消すと、主催者に通知が行きます。申請を取り消したトレードに再度参加することはできません。
+               参加を取り消すと、主催者に通知が行きます。申請を取り消したトレードに再度参加することはできません。
             </DialogContentText>
          </DialogContent>
          <DialogActions>
             <Button onClick={handleClose}>やっぱりやめる</Button>
-            <Button onClick={handleGo}>申請を取り消す</Button>
+            <Button onClick={handleGo}>参加を取り消す</Button>
          </DialogActions>
       </Dialog>
     </BaseLayout>
@@ -230,4 +230,4 @@ let rows = [   //DB入ってくる想定
   },
 ]
 
-export default PendingIchiran
+export default ConfirmedIchiran

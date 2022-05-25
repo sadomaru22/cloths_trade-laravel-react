@@ -23,6 +23,7 @@ import { OtherUserDetail, OtherUserIchiran, OtheUserTop, PastDetail, PastIchiran
 import { createContext } from 'react';
 import { MyPage } from 'components/account';
 import { PendingDetail, PendingIchiran } from 'components/6pending-trade';
+import { ConfirmedIchiran, ConfirmedDetail } from 'components/7confirmed-trade';
 
 
 //useAppSelectorでstoreのstateにアクセス。notFound=notFoundになれば全て<NoyFound/>へ遷移させる
@@ -66,6 +67,8 @@ const Routes = () => {
 
        <Route exact path='/pending-ichiran' component={PendingIchiran} />
        <Route exact path='/pending-detail' component={PendingDetail} />
+       <Route exact path='/confirmed-ichiran' component={ConfirmedIchiran} />
+       <Route exact path='/confirmed-detail' component={ConfirmedDetail} />
 
       {/* 設定した全てのパスに該当しないアクセスを捕捉 */}
        <Route path='*' component={NotFound} />
