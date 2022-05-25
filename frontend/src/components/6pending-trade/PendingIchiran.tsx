@@ -1,6 +1,5 @@
 import * as React from 'react';
 import AppBar from '@mui/material/AppBar';
-import Button from '@mui/material/Button';
 import CameraIcon from '@mui/icons-material/PhotoCamera';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
@@ -17,26 +16,14 @@ import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import { BaseLayout } from 'layouts';
 import { LinkButton } from 'templates';
 import { Pagination } from '@mui/material';
-
-
- //🌟一覧ページのテンプレート
-//API通信で使うURLは変数にする。propsでいけるかも。
-
-// function Copyright() {
-//   return (
-//     <Typography variant="body2" color="text.secondary" align="center">
-//       {'Copyright © '}
-//       <Link color="inherit" href="https://mui.com/">
-//         Your Website
-//       </Link>{' '}
-//       {new Date().getFullYear()}
-//       {'.'}
-//     </Typography>
-//   );
-// }
-
-//DBからとってきたデータの数ぶん表示する、BackEnd実装するまでは一旦これでOK
-//const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+import { useHistory } from 'react-router-dom';
+import { Button, Slide } from '@mui/material';
+import { TransitionProps } from '@mui/material/transitions';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -65,10 +52,33 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const Ichiran = (props: {url: string, pageDescription: string}) => {   
-  const {url, pageDescription} = props;
+const Transition = React.forwardRef(function Transition(
+   props: TransitionProps & {
+     children: React.ReactElement<any, any>;
+   },
+   ref: React.Ref<unknown>,
+ ) {
+   return <Slide direction="up" ref={ref} {...props} />;
+ });
+
+const PendingIchiran = () => {
+　const history = useHistory();    
   const classes = useStyles();
-  const stateA = "渡邊一真";
+  const state = "渡邊一真";
+
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+     setOpen(true);
+   };
+ 
+   const handleClose = () => {
+     setOpen(false);
+   };
+
+   const handleGo = () => {
+     history.push('/top');    //この関数に参加取り消し処理を追加する
+   }
 
   return (
       <BaseLayout subtitle='Album'>
@@ -76,7 +86,7 @@ const Ichiran = (props: {url: string, pageDescription: string}) => {
         <Toolbar>
           <CameraIcon sx={{ mr: 2 }} />
           <Typography variant="h6" color="inherit" noWrap>
-             {props.pageDescription}
+            開催が確定していないトレード一覧 <span/>         *申請が受理されるまでもう少しお待ちください。
           </Typography>
         </Toolbar>
       </AppBar>
@@ -89,7 +99,7 @@ const Ichiran = (props: {url: string, pageDescription: string}) => {
             </Grid>
             <Grid item>
                 <Typography variant='h4' color='textSecondary' sx={{ marginLeft: 8 }}>
-                  {stateA} さんの投稿一覧
+                  {state} さんの投稿一覧
                 </Typography>
             </Grid>
           </Grid>
@@ -121,7 +131,8 @@ const Ichiran = (props: {url: string, pageDescription: string}) => {
                     </Typography>
                   </CardContent>
                   <CardActions>
-                  <LinkButton size="small" to={{pathname: `/${props.url}/${row.id}`, state: stateA}}>詳細ページへ</LinkButton>
+                  <LinkButton size="small" to={{pathname: `/pending-detail/${row.id}`, state: state}}>詳細ページへ</LinkButton>
+                  <Button size="small" onClick={handleClickOpen}>申請取り消し</Button>
                   </CardActions>
                 </Card>
               </Grid>
@@ -131,6 +142,24 @@ const Ichiran = (props: {url: string, pageDescription: string}) => {
       <Stack spacing={2} maxWidth="md" className={classes.page}>
         <Pagination count={5} />
       </Stack>
+      <Dialog
+      open={open}
+      TransitionComponent={Transition}
+      keepMounted
+      onClose={handleClose}
+      aria-describedby="alert-dialog-slide-description"
+      >
+         <DialogTitle>{`参加申請を${state}さんに送ります。よろしいですか?`}</DialogTitle>
+         <DialogContent>
+            <DialogContentText id="alert-dialog-slide-description">
+               参加申請を取り消すと、主催者に通知が行きます。申請を取り消したトレードに再度参加することはできません。
+            </DialogContentText>
+         </DialogContent>
+         <DialogActions>
+            <Button onClick={handleClose}>やっぱりやめる</Button>
+            <Button onClick={handleGo}>申請を取り消す</Button>
+         </DialogActions>
+      </Dialog>
     </BaseLayout>
   );
 }
@@ -201,4 +230,4 @@ let rows = [   //DB入ってくる想定
   },
 ]
 
-export default Ichiran
+export default PendingIchiran

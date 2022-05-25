@@ -11,7 +11,6 @@ import Home from './pages';
    ForgotPassword,
    ResetPassword,
  } from 'pages/auth';
-//import * as TaskBoard from 'pages/boards';
 import NotFound from 'pages/error/NotFound';
 import { setFlash } from './store/slices/authSlice';
 import { useAppDispatch, useAppSelector, useQuery } from './utils/hooks';
@@ -23,6 +22,7 @@ import Detail from 'templates/detail/Detail';
 import { OtherUserDetail, OtherUserIchiran, OtheUserTop, PastDetail, PastIchiran } from 'components/4other-user';
 import { createContext } from 'react';
 import { MyPage } from 'components/account';
+import { PendingDetail, PendingIchiran } from 'components/6pending-trade';
 
 
 //useAppSelectorでstoreのstateにアクセス。notFound=notFoundになれば全て<NoyFound/>へ遷移させる
@@ -63,6 +63,9 @@ const Routes = () => {
        <Route exact path='/past-trade-detail/:id' component={PastDetail} />
 
        <Route exact path='/mypage' component={MyPage} />
+
+       <Route exact path='/pending-ichiran' component={PendingIchiran} />
+       <Route exact path='/pending-detail' component={PendingDetail} />
 
       {/* 設定した全てのパスに該当しないアクセスを捕捉 */}
        <Route path='*' component={NotFound} />

@@ -2,7 +2,7 @@ import { BaseLayout } from 'layouts'
 import React from 'react'
 import Detail from 'templates/detail/Detail'
 
-const PastDetail = () => {
+const PendingDetail = () => {
    return (
       <BaseLayout subtitle="pastDetail">
          <Detail/>
@@ -10,4 +10,4 @@ const PastDetail = () => {
    )
 }
 
-export default PastDetail
+export default PendingDetail
