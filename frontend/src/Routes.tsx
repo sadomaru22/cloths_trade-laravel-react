@@ -24,6 +24,10 @@ import { createContext } from 'react';
 import { MyPage } from 'components/account';
 import { PendingDetail, PendingIchiran } from 'components/6pending-trade';
 import { ConfirmedIchiran, ConfirmedDetail } from 'components/7confirmed-trade';
+import { DatePickers } from 'templates/DatePickers';
+import TradePost from 'components/8trade-post/TradePost';
+import ImageTest from 'components/8trade-post/ImageTest';
+import MaxCapa from 'components/8trade-post/MaxCapa';
 
 
 //useAppSelectorでstoreのstateにアクセス。notFound=notFoundになれば全て<NoyFound/>へ遷移させる
@@ -69,6 +73,10 @@ const Routes = () => {
        <Route exact path='/pending-detail' component={PendingDetail} />
        <Route exact path='/confirmed-ichiran' component={ConfirmedIchiran} />
        <Route exact path='/confirmed-detail' component={ConfirmedDetail} />
+
+       <Route exact path='/trade-post' component={TradePost} />
+       <Route exact path='/test' component={ImageTest} />
+       <Route exact path='/test2' component={MaxCapa} />
 
       {/* 設定した全てのパスに該当しないアクセスを捕捉 */}
        <Route path='*' component={NotFound} />
