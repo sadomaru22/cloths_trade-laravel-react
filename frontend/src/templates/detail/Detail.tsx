@@ -1,11 +1,9 @@
 import React from 'react'
-import { Box, Button, Container } from '@mui/material'
-import { BaseLayout } from 'layouts'
+import { Avatar, Box, Button, Container } from '@mui/material'
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import { Typography } from '@mui/material';
 import { Grid } from '@mui/material';
-import { Description } from '@mui/icons-material';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 
 
@@ -23,9 +21,7 @@ const Detail = () => {
          <Container maxWidth="md" sx={{ marginTop: 10 }}>
          <Grid container sx={{marginBottom: 8}}>
             <Grid item>
-                <Box sx={{ borderColor: 'primary.main', border: 1, borderRadius: '50%', width: '6rem', height: '6rem' }}>
-                  <p>プロフィール画像{ }</p>
-                </Box>
+            <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" sx={{width: '6rem', height: '6rem'}} />
             </Grid>
             <Grid item>
                 <Typography variant='h4' color='textSecondary' sx={{ marginLeft: 8 }}>

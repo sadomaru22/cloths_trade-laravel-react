@@ -2,7 +2,7 @@ import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 
 import { Card, CardMedia, CardContent, CardActions } from '@material-ui/core'
 import Typography from '@mui/material/Typography';
-import { Box, Container, Grid } from '@mui/material';
+import { Avatar, Box, Container, Grid } from '@mui/material';
 import { BaseLayout } from 'layouts'
 import React from 'react'
 import { LinkButton2 } from 'templates'
@@ -39,9 +39,7 @@ const OtheUserTop = () => {
          <Container maxWidth='md' className={classes.container}>
             <Grid container>
                <Grid item sx={{marginBottom: 6}}>
-                  <Box sx={{ borderColor: 'primary.main', border: 1, borderRadius: '50%', width: '8rem', height: '8rem' }}>
-                     <p>プロフィール画像{ }</p>
-                  </Box>
+               <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" sx={{width: '6rem', height: '6rem'}} />
                </Grid>
                <Grid item>
                   <Typography variant='h4' color='textSecondary' sx={{ marginLeft: 8 }}>
