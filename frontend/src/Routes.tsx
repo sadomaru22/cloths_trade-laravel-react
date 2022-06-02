@@ -24,10 +24,8 @@ import { createContext } from 'react';
 import { MyPage } from 'components/account';
 import { PendingDetail, PendingIchiran } from 'components/6pending-trade';
 import { ConfirmedIchiran, ConfirmedDetail } from 'components/7confirmed-trade';
-import { DatePickers } from 'templates/DatePickers';
 import TradePost from 'components/8trade-post/TradePost';
-import ImageTest from 'components/8trade-post/ImageTest';
-import MaxCapa from 'components/8trade-post/MaxCapa';
+import { MyTradeDetail, MyTradeIchiran, SankaIchiran, SankaJuri, TradeEdit } from 'components/9my-trade-manage';
 
 
 //useAppSelectorでstoreのstateにアクセス。notFound=notFoundになれば全て<NoyFound/>へ遷移させる
@@ -75,8 +73,12 @@ const Routes = () => {
        <Route exact path='/confirmed-detail' component={ConfirmedDetail} />
 
        <Route exact path='/trade-post' component={TradePost} />
-       <Route exact path='/test' component={ImageTest} />
-       <Route exact path='/test2' component={MaxCapa} />
+
+       <Route exact path='/mytrade-detail' component={MyTradeDetail} />
+       <Route exact path='/mytrade-ichiran' component={MyTradeIchiran} />
+       <Route exact path='/sanka-ichiran' component={SankaIchiran} />
+       <Route exact path='/mytrade-edit' component={TradeEdit} />
+       <Route exact path='/mytrade-juri' component={SankaJuri} />
 
       {/* 設定した全てのパスに該当しないアクセスを捕捉 */}
        <Route path='*' component={NotFound} />

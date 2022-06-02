@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { BaseLayout } from 'layouts'
 import { AppBar, Button, Container, TextField, Toolbar, Typography } from '@mui/material'
 import CameraIcon from '@mui/icons-material/PhotoCamera'
-import { DatePickers } from 'templates/DatePickers'
+import { DatePickers } from 'components/8trade-post/DatePickers'
 import { useAppDispatch } from 'utils/hooks'
 import * as yup from 'yup';
 import { useForm } from 'react-hook-form';
@@ -10,7 +10,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import MaxCapa from "./MaxCapa";
 import ImageTest from "./ImageTest";
 import Place from "./Place";
-import { makeStyles } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";   //問題の箇所
 
 // const useStyles = makeStyles(() => ({
 //   input1: {

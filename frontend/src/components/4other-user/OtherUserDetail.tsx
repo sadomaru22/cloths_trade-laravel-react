@@ -1,6 +1,5 @@
 import React from 'react'
 import { BaseLayout } from 'layouts'
-import { LinkButton } from 'templates'
 import Detail from 'templates/detail/Detail'
 import { Button, Slide } from '@mui/material';
 import { TransitionProps } from '@mui/material/transitions';
@@ -39,7 +38,7 @@ const OtherUserDetail = () => {
     }
    
    return (
-      <BaseLayout subtitle="other-user-ddetail">
+      <BaseLayout subtitle="other-user-detail">
       <Detail/>
       <Button variant="outlined" sx={{ display: 'flex', justifyContent: 'center' }} onClick={handleClickOpen}>参加申請</Button>
 

@@ -15,7 +15,7 @@ import Container from '@mui/material/Container';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import { BaseLayout } from 'layouts';
 import { LinkButton } from 'templates';
-import { Pagination } from '@mui/material';
+import { Avatar, Pagination } from '@mui/material';
 import { useHistory } from 'react-router-dom';
 import { Button, Slide } from '@mui/material';
 import { TransitionProps } from '@mui/material/transitions';
@@ -42,13 +42,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     root: {
       flexGrow: 1,
-  },
-    page: {
-      marginTop: 0,
-      marginBottom: 0,
-      marginLeft: "auto",
-      marginRight: 0,
-    }
+  }
   })
 );
 
@@ -93,9 +87,7 @@ const ConfirmedIchiran = () => {
         <Container sx={{ py: 8 }} maxWidth="md">
           <Grid container sx={{marginBottom: 8}}>
             <Grid item>
-                <Box sx={{ borderColor: 'primary.main', border: 1, borderRadius: '50%', width: '6rem', height: '6rem' }}>
-                  <p>プロフィール画像{ }</p>
-                </Box>
+            <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" sx={{width: '6rem', height: '6rem'}} />
             </Grid>
             <Grid item>
                 <Typography variant='h4' color='textSecondary' sx={{ marginLeft: 8 }}>
@@ -139,9 +131,7 @@ const ConfirmedIchiran = () => {
             ))}
           </Grid>
         </Container>
-      <Stack spacing={2} maxWidth="md" className={classes.page}>
-        <Pagination count={5} />
-      </Stack>
+        <Pagination count={5} sx={{ display: 'flex', justifyContent: 'center', mt: 5 }} />
       <Dialog
       open={open}
       TransitionComponent={Transition}
