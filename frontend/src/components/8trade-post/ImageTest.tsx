@@ -6,7 +6,7 @@ import CancelIcon from "@mui/icons-material/Cancel";
 import { FormControl } from "@mui/material";
 
 
-const ImageTest = () => {
+const ImageTest = (props: {id: any, label: string}) => {
 	const [isCommentSending, setIsCommentSending] = useState(false);
 	const [images, setImages] = useState<File[]>([]);
 	const maxImagesUpload = 10; // 画像を最大4枚まで選択・アップロード
@@ -48,7 +48,7 @@ const ImageTest = () => {
 	};
 
 	return (
-      <FormControl sx={{ m: 1, minWidth: 120 }}>
+      <FormControl sx={{ minWidth: 120 }}>
       {/* 1つのボタンで画像を選択する */}
 			<label htmlFor={inputId}>
 				<Button

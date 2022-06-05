@@ -13,7 +13,7 @@ var roop = () => {
  return { items };
 };
 
-export default function MaxCapa() {
+export default function MaxCapa(props: {id: any, label: string}) {
   const [age, setAge] = React.useState('');
 
   const handleChange = (event: SelectChangeEvent) => {
@@ -22,7 +22,7 @@ export default function MaxCapa() {
 
   return (
     <div>
-      <FormControl sx={{ m: 1, minWidth: 120 }}>
+      <FormControl sx={{ mb: 3, minWidth: 120 }}>
         <InputLabel id="demo-simple-select-helper-label">上限人数</InputLabel>
         <Select
           labelId="demo-simple-select-helper-label"

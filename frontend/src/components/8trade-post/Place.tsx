@@ -11,7 +11,7 @@ const pref = [
    '香川県', '愛媛県', '高知県', '福岡県', '佐賀県', '長崎県', '熊本県', '大分県', '宮崎県', '鹿児島県', '沖縄県'
 ]
 
-export default function Place() {
+export default function Place(props: {id: any, label: string}) {
   const [age, setAge] = React.useState('');
 
   const handleChange = (event: SelectChangeEvent) => {
@@ -20,7 +20,7 @@ export default function Place() {
 
   return (
     <div>
-      <FormControl sx={{ m: 1, minWidth: 120 }}>
+      <FormControl sx={{ mb: 3, marginTop: 3, minWidth: 120 }}>
         <InputLabel id="demo-simple-select-helper-label">都道府県</InputLabel>
         <Select
           labelId="demo-simple-select-helper-label"

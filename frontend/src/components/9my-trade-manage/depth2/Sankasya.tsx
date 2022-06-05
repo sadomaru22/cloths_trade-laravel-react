@@ -21,7 +21,7 @@ const SankaIchiran = () => {
       <Container sx={{ py: 15 }} maxWidth="md">
       <List>
       {rows.map(example => (
-       <Link color="inherit" sx={{textDecoration: "none"}}>
+       <Link color="inherit" href="/other-user" sx={{textDecoration: "none"}}>
         <ListItem button>
          <ListItemAvatar>
           <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" sx={{width: '6rem', height: '6rem'}} />
