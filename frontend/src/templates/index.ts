@@ -8,3 +8,5 @@ export { default as AlertMessage } from './AlertMessage';
 export { default as LinkWrapper } from './LinkWrapper';
 export { default as ScrolledDiv } from './ScrolledDiv';
 export { default as ScrolledGridContainer } from './ScrolledGridContainer';
+export { default as yup } from './yup.locale';
+

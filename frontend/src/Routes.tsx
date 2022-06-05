@@ -25,7 +25,7 @@ import { MyPage } from 'components/account';
 import { PendingDetail, PendingIchiran } from 'components/6pending-trade';
 import { ConfirmedIchiran, ConfirmedDetail } from 'components/7confirmed-trade';
 import TradePost from 'components/8trade-post/TradePost';
-import { MyTradeDetail, MyTradeIchiran, SankaIchiran, SankaJuri, TradeEdit } from 'components/9my-trade-manage';
+import { MyTradeDetail, MyTradeIchiran, Sankasya, SankaJuri, TradeEdit } from 'components/9my-trade-manage';
 
 
 //useAppSelectorでstoreのstateにアクセス。notFound=notFoundになれば全て<NoyFound/>へ遷移させる
@@ -76,7 +76,7 @@ const Routes = () => {
 
        <Route exact path='/mytrade-detail' component={MyTradeDetail} />
        <Route exact path='/mytrade-ichiran' component={MyTradeIchiran} />
-       <Route exact path='/sanka-ichiran' component={SankaIchiran} />
+       <Route exact path='/sanka-ichiran' component={Sankasya} />
        <Route exact path='/mytrade-edit' component={TradeEdit} />
        <Route exact path='/mytrade-juri' component={SankaJuri} />
 
