@@ -4,21 +4,29 @@ import MenuItem from '@mui/material/MenuItem';
 import FormHelperText from '@mui/material/FormHelperText';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
+import { ComponentPropsWithoutRef } from 'react';
 
-var roop = () => {
-   const items = [];
- for (let i = 0; i <21; i++) {
-   items.push(<MenuItem value={i}>{ i }</MenuItem>)
- }
- return { items };
-};
+// var roop = () => {
+//    const items = [];
+//  for (let i = 0; i <21; i++) {
+//    items.push(<MenuItem value={i}>{ i }</MenuItem>)
+//  }
+//  return { items };
+// };
 
-export default function MaxCapa(props: {id: any, label: string}) {
-  const [age, setAge] = React.useState('');
+type LabelProps = {
+  label: string;
+}
 
-  const handleChange = (event: SelectChangeEvent) => {
-    setAge(event.target.value);
-  };
+type ChildProps = ComponentPropsWithoutRef<'input'> & LabelProps;
+
+const MaxCapa = React.forwardRef<HTMLInputElement, ChildProps>(
+  ({ label, ...props }, ref) => { 
+  // const [age, setAge] = React.useState('');
+
+  // const handleChange = (event: SelectChangeEvent) => {
+  //   setAge(event.target.value);
+  // };
 
   return (
     <div>
@@ -27,11 +35,11 @@ export default function MaxCapa(props: {id: any, label: string}) {
         <Select
           labelId="demo-simple-select-helper-label"
           id="demo-simple-select-helper"
-          value={age}
-          label="maxCapa"
-          onChange={handleChange}
+          //value={age}
+          //onChange={handleChange}
+          label={label}
+          ref={ref}
         >
-          <MenuItem value={1}>1</MenuItem>
           <MenuItem value={2}>2</MenuItem>
           <MenuItem value={3}>3</MenuItem>
           <MenuItem value={4}>4</MenuItem>
@@ -56,5 +64,7 @@ export default function MaxCapa(props: {id: any, label: string}) {
       </FormControl>
     </div>
   );
-}
+});
+
+export default MaxCapa;
 

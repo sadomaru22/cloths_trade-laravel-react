@@ -1,25 +1,27 @@
+import { TextField } from '@material-ui/core';
 import React from 'react'
-import { Box, FormControl, FormHelperText, StandardTextFieldProps, TextField } from '@mui/material'
-import { id } from 'date-fns/locale'
-import { Control, Path, RegisterOptions, useController } from 'react-hook-form'
+import { ComponentPropsWithoutRef } from 'react';
 
-export const CustomTextField: React.VFC<CustomTextFieldProps> = (props) => {
-   const { name, control, rules, ...textFieldProps } = props
-   const {
-     field: { ref, ...rest },
-   } = useController({ name, control, rules })
- 
-   return (
-     <TextField
-       inputRef={ref}
-       {...rest}
-       {...textFieldProps}
-     />
-   )
- }
- 
- interface CustomTextFieldProps extends StandardTextFieldProps {
-   control: Control<any>
-   name: Path<any>
-   rules?: Omit<RegisterOptions, 'valueAsNumber' | 'valueAsDate' | 'setValueAs'>
- }
+type LabelProps = {
+  id: string,
+  label: string,
+  helperText: any,
+  error: any;
+}
+
+type ChildProps = ComponentPropsWithoutRef<'input'> & LabelProps;
+
+const CustomTextField = React.forwardRef<HTMLInputElement, ChildProps>(
+({ id, label, helperText, error, ...props }, ref) => {
+  return (
+    <TextField 
+    variant='outlined'
+    id={id}
+    label={label}
+    helperText={helperText}
+    error={error}
+    inputRef={ref}/>
+  )
+});
+
+export default CustomTextField

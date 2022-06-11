@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { BaseLayout } from 'layouts'
 import { AppBar, Box, Button, Container, TextField, Toolbar, Typography, FormControl, FormHelperText } from '@mui/material'
 import CameraIcon from '@mui/icons-material/PhotoCamera'
-import { DatePickers } from './DatePickers'
+
 import { useAppDispatch } from 'utils/hooks'
 import yup from 'templates/yup.locale';  //日本語化対応済み
 import { useForm } from 'react-hook-form';
@@ -11,7 +11,9 @@ import MaxCapa from "./MaxCapa";
 import ImageTest from "./ImageTest";
 import Place from "./Place";
 import { makeStyles } from "@material-ui/core";   //問題の箇所
-import { CustomTextField } from "./textTest";
+
+import DatePickers from "./DatePickers";
+import CustomTextField from "./textTest";
 
 // import TextTest from "./TextTest";
 
@@ -42,7 +44,7 @@ const formdata: Record<keyof FormData, { id: string; label: string }> = {
    },
    date: {
      id: 'date',
-     label: '日付',
+     label: '開催日時を選択',
    },
    photos: {
      id: 'photos',
@@ -117,6 +119,7 @@ const TradePost = () => {
       <Container maxWidth='md' sx={{ py: 10 }}>
       <form onSubmit={handleSubmit(onSubmit)}>
       <DatePickers
+        required
         id={formdata.date.id}
         label={formdata.date.label} 
         {...register('date')}/>
@@ -136,23 +139,26 @@ const TradePost = () => {
             InputProps={{ style: { marginBottom: 3 } }}
           /> 
 
-    <CustomTextField
-            label={formdata.textTest.label}
-            type="text"
-            id={formdata.textTest.id}
-            control={control}
-            {...register('textTest')}
-          />
+      {/*<CustomTextField
+        id={formdata.textTest.id}
+        label={formdata.textTest.label}
+        {...register('textTest', { required: true })}
+        helperText={errors?.textTest?.message}
+        error={!!errors?.textTest} 
+      />*/}
 
-      <MaxCapa 
+      <MaxCapa
+        required 
         id={formdata.maxCapa.id}
         label={formdata.maxCapa.label} 
         {...register('maxCapa')}/>
       <Place
+        required
         id={formdata.place.id}
         label={formdata.place.label} 
         {...register('place')}/>
       <ImageTest
+        required
         id={formdata.photos.id}
         label={formdata.photos.label} 
         {...register('photos')}/>
