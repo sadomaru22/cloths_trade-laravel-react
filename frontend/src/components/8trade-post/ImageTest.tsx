@@ -4,9 +4,16 @@ import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import CancelIcon from "@mui/icons-material/Cancel";
 import { FormControl } from "@mui/material";
+import { ComponentPropsWithoutRef } from 'react';
 
+type LabelProps = {
+	label: string;
+ }
+ 
+ type ChildProps = ComponentPropsWithoutRef<'input'> & LabelProps;
 
-const ImageTest = (props: {id: any, label: string}) => {
+const ImageTest = React.forwardRef<HTMLInputElement, ChildProps>(
+	({ label, ...props }, ref) => {
 	const [isCommentSending, setIsCommentSending] = useState(false);
 	const [images, setImages] = useState<File[]>([]);
 	const maxImagesUpload = 10; // 画像を最大4枚まで選択・アップロード
@@ -66,6 +73,7 @@ const ImageTest = (props: {id: any, label: string}) => {
 					onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
 						handleOnAddImage(e)
 					}
+					ref={ref}
 					style={{ display: "none" }}
 				/>
 			</label>
@@ -102,6 +110,6 @@ const ImageTest = (props: {id: any, label: string}) => {
       <br />
       </FormControl>
 	);
-};
+});
 
 export default ImageTest;
