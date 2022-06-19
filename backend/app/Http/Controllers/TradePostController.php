@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreTradePostRequest;
 use App\Http\Requests\UpdateTradePostRequest;
 use App\Models\TradePost;
+use App\Models\User;
 
 class TradePostController extends Controller
 {
@@ -13,9 +14,10 @@ class TradePostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(User $user)
     {
-        //
+        // Viewの代わりにJSONとして返却
+        return TradePost::where('user_id', $user->id)->paginate(20);
     }
 
     /**
