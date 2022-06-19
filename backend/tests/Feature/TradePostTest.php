@@ -29,7 +29,7 @@ class TradePostTest extends TestCase
 
     public function test_20_items_in_one_page()
     {
-        $response = $this->get('/api/v1/users/1/task_cards');
+        $response = $this->get('/api/v1/users/1/trade_posts');
         $response->assertStatus(200);
 
         // $response->assertJson(fn (AssertableJson $json) =>   //使えない、、
