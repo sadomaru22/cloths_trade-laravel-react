@@ -79,8 +79,8 @@ jobs:
         if: steps.yarn-cache.outputs.cache-hit != 'true'
         run: yarn --frozen-lockfile
 
-      - name: Set environment variables
-        run: mv .env.example .env
+      #- name: Set environment variables
+      #  run: mv .env.example .env
 
       - run: yarn build --if-present
       - run: yarn test
