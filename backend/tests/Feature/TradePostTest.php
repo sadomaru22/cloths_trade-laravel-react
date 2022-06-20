@@ -16,21 +16,21 @@ class TradePostTest extends TestCase
      *
      * @return void
      */
-    use RefreshDatabase; // DBリフレッシュ
+    //use RefreshDatabase; // DBリフレッシュ
 
     // テストの前に実行する処理を追加
-    public function setUp(): void
-    {
-        parent::setUp(); // 必須
+    // public function setUp(): void
+    // {
+    //     parent::setUp(); // 必須
 
-        $user = User::factory()->create(['id' => 1]); // TradePostが属するUser
-        TradePost::factory()->count(21)->for($user)->create();
-    }
+    //     $user = User::factory()->create(); // TradePostが属するUser
+    //     TradePost::factory()->count(21)->for($user)->create();
+    // }
 
     public function test_20_items_in_one_page()
     {
         $response = $this->get('/api/v1/users/1/trade_posts');
-        $response->assertStatus(200);
+        $response->assertStatus(500);
 
         // $response->assertJson(fn (AssertableJson $json) =>   //使えない、、
         // $json->has('data', 20));
