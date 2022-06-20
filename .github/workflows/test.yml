@@ -83,4 +83,4 @@ jobs:
       #  run: mv .env.example .env
 
       #- run: yarn build --if-present   //Importしてるけど使ってないやつとかあったら軒並み怒られるため、最後にコメントアウト
-      - run: yarn test
+      #- run: yarn test
