@@ -26,8 +26,8 @@ return new class extends Migration
             $table->timestamps();
 
             $table->foreign('user_id')
-                ->constrained('users') // 外部キー制約
-                //->references('id')->on('users')
+                //->constrained('users') // 外部キー制約
+                ->references('id')->on('users')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
         });
