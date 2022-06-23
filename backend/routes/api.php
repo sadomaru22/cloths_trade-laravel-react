@@ -19,7 +19,8 @@ Route::group([
     'namespace' => 'App\Http\Controllers',
     'prefix' => 'v1',
 ], function () {
-    Route::apiResource('users.trade_posts', TradePostController::class)
+    Route::middleware('auth:sanctum')
+        ->apiResource('users.trade_posts', TradePostController::class)
         ->only('index');
 });
 
