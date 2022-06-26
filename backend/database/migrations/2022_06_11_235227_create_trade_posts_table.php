@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('trade_posts', function (Blueprint $table) {
             //$table->id();
             $table->bigIncrements('id');   //unique
-            $table->unsignedBigInteger('user_id')->unique();
+            $table->unsignedBigInteger('user_id');
             $table->string('title', 190);
             $table->dateTime('date')->default(date('Y-m-d'));
             $table->integer('maxCapa')->default(0);
