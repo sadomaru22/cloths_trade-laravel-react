@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class TradePost extends Model
 {
     use HasFactory;
+    //id以外は自由にupdate、insertしてOK
+    protected $guarded = ['id'];
 
     // アプリ上の操作で変更可能にしたいカラムを追加
     protected $fillable = [
