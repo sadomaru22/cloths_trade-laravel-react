@@ -53,10 +53,10 @@ Route::group([
     | TradePost2  過去、予定、確定、検索
     |--------------------------------------------------------------
     */
-    // Route::get('/users/{user}/trade_posts/past', [TradePost2Controller::class, 'past']);
-    // Route::get('/users/{user}/trade_posts/pending', [TradePost2Controller::class, 'pending']);
-    // Route::get('/users/{user}/trade_posts/confirmed', [TradePost2Controller::class, 'confirmed']);
-    // Route::get('/users/{user}/trade_posts/search', [TradePost2Controller::class, 'search']);
+    Route::get('/users/{user}/trade_posts/past', [TradePost2Controller::class, 'past']);
+    Route::get('/users/{user}/trade_posts/pending', [TradePost2Controller::class, 'pending']);
+    Route::get('/users/{user}/trade_posts/confirmed', [TradePost2Controller::class, 'confirmed']);
+    Route::get('/users/{user}/trade_posts/search', [TradePost2Controller::class, 'search']);
 });
 
 /*

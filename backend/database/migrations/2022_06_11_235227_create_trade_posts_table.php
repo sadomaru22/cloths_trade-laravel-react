@@ -19,6 +19,7 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->string('title', 190);
             $table->dateTime('date')->default(date('Y-m-d'));
+            $table->integer('sankasya')->default(0);
             $table->integer('maxCapa')->default(0);
             $table->string('place', 10)->default('東京都');
             $table->text('description');

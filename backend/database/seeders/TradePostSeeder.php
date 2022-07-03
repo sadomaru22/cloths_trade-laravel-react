@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\SankaFlag;
 use App\Models\TradePost;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -20,6 +21,8 @@ class TradePostSeeder extends Seeder
         $user = User::factory()->create();
 
         // 'User'に属するデータを10件生成
-        TradePost::factory()->count(10)->for($user)->create();
+        //1対多のSankaFlagも同時に3件
+        TradePost::factory()->has(SankaFlag::factory()->count(3))
+            ->count(10)->for($user)->create();
     }
 }
