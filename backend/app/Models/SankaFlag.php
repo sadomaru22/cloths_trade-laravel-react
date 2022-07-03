@@ -5,29 +5,21 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class TradePost extends Model
+class SankaFlag extends Model
 {
     use HasFactory;
-    //id以外は自由にupdate、insertしてOK
+
     protected $guarded = ['id'];
 
     // アプリ上の操作で変更可能にしたいカラムを追加
     protected $fillable = [
-        'title',
-        'date',
-        'maxCapa',
-        'place',
-        'description'
+        'pending_flag',
+        'confirmed_flag'
     ];
 
     // リレーション設定
-    public function user()
+    public function tradepost()
     {
-        return $this->belongsTo(User::class);
-    }
-
-    public function sankaflag()
-    {
-        return $this->hasMany(SankaFlag::class);
+        return $this->belongsTo(TradePost::class);
     }
 }
