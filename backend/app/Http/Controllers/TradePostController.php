@@ -38,33 +38,29 @@ class TradePostController extends Controller
      */
     public function store(StoreTradePostRequest $request)
     {
-        $tradeposts = TradePost::create($request->all());
-
-        return response()->json([
-            'success' => true,
-            'message' => 'Insert Success!',
-            'details' => $tradeposts
-        ]);
+        $tradeposts = TradePost::create($request->all());   //responseでtradepostを返しても、画面で使うわけではない
+        return response()->json(
+            $tradeposts,
+            201
+        );
     }
 
     //一件表示
-    public function show(string $user, TradePost $tradePost, Request $request)
+    public function show(Request $request)
     {
         $id = $request->id;
         // 存在しないレコードIDだったら
-        if (TradePost::where('id', $id)->exists() == false) {
+        if (TradePost::where('id', $id)->exists()) {
+            $result = TradePost::find($id);
+            return response()->json(
+                $result,
+                200
+            );
+        } else {
             return response()->json([
-                'success' => false,
                 'message' => 'Show failed...',
-                'details' => 'Invalid ID'
-            ]);
+            ], 404);
         }
-        // 問題なければjsonで結果を返す
-        return response()->json([
-            'success' => true,
-            'message' => 'Insert Success!',
-            'details' => TradePost::find($id)
-        ]);
     }
 
     /**
@@ -74,17 +70,23 @@ class TradePostController extends Controller
      * @param  \App\Models\TradePost  $tradePost
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateTradePostRequest $request, TradePost $tradePost)
+    public function update(UpdateTradePostRequest $request)
     {
         $id = $request->id;
         $result = TradePost::find($id);
         $result->update($request->all());
+        $results = $request->all();
 
-        return response()->json([
-            'success' => true,
-            'message' => 'Update Success!',
-            'details' => $request->all()
-        ]);
+        if ($result) {
+            return response()->json(
+                $results,
+                200
+            );
+        } else {
+            response()->json([
+                'message' => 'Post was not found',
+            ], 404);
+        }
     }
 
     /**
@@ -93,7 +95,7 @@ class TradePostController extends Controller
      * @param  \App\Models\TradePost  $tradePost
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request, TradePost $tradePost)
+    public function destroy(Request $request)  //
     {
         $id = $request->id;
         if (TradePost::where('id', $id)->exists()) {
@@ -101,16 +103,12 @@ class TradePostController extends Controller
             $result->delete();
 
             return response()->json([
-                'success' => true,
                 'message' => 'Delete Success!',
-                'details' => $result
-            ]);
+            ], 200);
         } else {
             return response()->json([
-                'success' => false,
                 'message' => 'Delete failed...',
-                'details' => 'Invalid ID'
-            ]);
+            ], 404);
         }
     }
 }
