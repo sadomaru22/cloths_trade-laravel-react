@@ -1,5 +1,5 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import { appSlice, authSlice } from './slices';
+import { appSlice, authSlice, tradePostSlice } from './slices';
 
 //コードの重複を避けるためにこの形にする。名前の通りcombineする
 export const rootReducer = combineReducers({
