@@ -8,23 +8,23 @@ use App\Models\SankaFlag;
 
 class SinseiController extends Controller
 {
-    public function sanka()
+    public function sanka()  //post
     {
         $sanka = SankaFlag::create();
         return;
     }
 
-    public function delsan()
+    public function delsan()   //delete
     {
         return;
     }
 
-    public function juri()
+    public function juri()    //update
     {
         return;
     }
 
-    public function delsyu()
+    public function delsyu()    //delete
     {
         return;
     }

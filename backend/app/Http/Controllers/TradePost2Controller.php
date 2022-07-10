@@ -71,8 +71,8 @@ class TradePost2Controller extends Controller
         $sflag = SankaFlag::where([
             ['tradepost_id', '=', $id],
         ]);
-        $result = TradePost::where([
-            ['user_id', '=', $sflag->user_id],
+        $result = User::where([
+            ['id', '=', $sflag->user_id],
         ]);
         if ($result) {
             return response()->json(
