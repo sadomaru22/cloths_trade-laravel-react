@@ -15,5 +15,4 @@ export interface CollectionBase<T extends DocumentBase> {
    index?: number;
  }
  
- export * from './Task';
  export * from './TradePost';

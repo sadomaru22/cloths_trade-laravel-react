@@ -1,34 +1,56 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import {createTradePost} from 'store/thunks/trade_post';
+import {
+   FetchTradePostResponse,
+   createTradePost,
+   showallTradePost
+} from 'store/thunks/trade_post';
 
 
-type AppState = {
-   notFound: boolean;
- };
+type TradePostState = {
+   loading: boolean;
+   //infoBox: { open: boolean } & InfoBoxAction;
+   //docs: TaskBoardsCollection;
+ } & FetchTradePostResponse;
  
- const initialState = {} as AppState;
+ const initialState = {      
+    loading: false,
+    data: [],
+    error: false,
+    links: {} as TradePostState['links'],
+    meta: {} as TradePostState['meta'],
+} as TradePostState;
 
  export const tradePostSlice = createSlice({
    name: 'tradePost',   //これがActiontypeと同じ、あと以下は従来のReduxと変わらない
-   initialState: {
-      users: [],
-      loading: false,
-      error: false,
-   },
+   initialState,
    reducers: {},
    extraReducers: (builder) =>{
+      builder.addCase(showallTradePost.pending, (state) => {
+         state.loading = true;
+      });
+      builder.addCase(showallTradePost.fulfilled, (state, action) => {
+         state.data = action.payload.data || [];
+         state.links = action.payload.links || {};
+         state.meta = action.payload.meta || {};
+         state.loading = false;
+      });
+      builder.addCase(showallTradePost.rejected, (state) => {
+         state.loading = false;
+      });
       builder.addCase(createTradePost.pending, (state) => {
          state.loading = true;
       });
       
       builder.addCase(createTradePost.fulfilled, (state, action) => {
          state.loading = false;
-         state.users = action.payload;
+         const newDoc = action.payload.data;
+         state.data = [...state.data, { ...newDoc }];     //🌟ここのエラーはとりあえず消えた！！！
+        // state.data = action.payload;
       });
       builder.addCase(createTradePost.pending, (state) => {
          state.loading = false;
-         state.error = true;
+         //state.error = true;   //errorはFetchTradePostResponseにないらしい
       });
 
    }
