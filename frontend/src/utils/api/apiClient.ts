@@ -4,7 +4,7 @@ import { DocumentBase } from 'models';
 import { setError404 } from 'store/slices/appSlice';
 
 /*
-非同期処理の大元。
+非同期処理の大元。API処理の頭の部分の設定。
 */
 
 /**
@@ -51,11 +51,12 @@ export const apiClient = (options?: ApiClientOption) => {
 
   const apiClient = axios.create({
     baseURL: isNonApiRoute() ? API_HOST : API_ROUTE,   //可変にする
-    withCredentials: true,
+    withCredentials: true,  //これによってDefaultでbaseURLを通るようにしているぽい
   });
 
   if (isNotIntercepted()) return apiClient;
 
+  //responseのケースごとにメッセージを挟む処理。
   apiClient.interceptors.response.use(
     (response) => response, // response = 2xx の場合は素通り
     async (error) => {
