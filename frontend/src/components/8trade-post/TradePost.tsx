@@ -15,7 +15,7 @@ import DatePickers from "./DatePickers";
 
 import { CreateTradePostRequest, createTradePost } from 'store/thunks/trade_post'
 
-type FormData = CreateTradePostRequest;
+type FormData = CreateTradePostRequest;   //これでいいの？
 
 const formdata: Record<keyof FormData, { id: string; label: string }> = {
    title: {

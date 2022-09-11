@@ -1,7 +1,5 @@
 //import { useEffect } from 'react';
-
 import { Switch, Route as DefaultRoute, Redirect } from 'react-router-dom';
-
 import Home from './pages';
 // import { Privacy, Terms } from './pages/static';
  import {
@@ -61,9 +59,9 @@ const Routes = () => {
        {/*④他のユーザ ただしDetailに関してはパラメータ渡す必要あり*/}
        <Route exact path='/other-user' component={OtheUserTop} />
        <Route exact path='/trade-all' component={OtherUserIchiran} />
-       <Route exact path='/trade-detail/:id' component={OtherUserDetail} />
+       <Route path='/trade-detail/:id' component={OtherUserDetail} />   {/*URLによって表示ページが変わる(Dynamic Route)の場合、exactはいらない*/}
        <Route exact path='/past-trade-all' component={PastIchiran} />
-       <Route exact path='/past-trade-detail/:id' component={PastDetail} />
+       <Route path='/past-trade-detail/:id' component={PastDetail} />
 
        <Route exact path='/mypage' component={MyPage} />
 

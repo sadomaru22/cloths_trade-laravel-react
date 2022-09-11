@@ -27,7 +27,7 @@ export type CreateTradePostResponse =
 export const createTradePost = createAsyncThunk
 <
 CreateTradePostResponse,  //payloadCreator の返り値の型
-CreateTradePostRequest,  // payloadCreator の第1引数(arg)の型
+CreateTradePostRequest,  // payloadCreator の第1引数(arg)の型、ここでいうpayload
 AsyncThunkConfig>        //payloadCreator の第2引数(thunkApi)のための型
 ('tradePost/createTradePost', async (payload, thunkApi) => {   
    const userId = String(thunkApi.getState().auth.user?.id);   //ログイン中のuseridは常にこれで取れる。

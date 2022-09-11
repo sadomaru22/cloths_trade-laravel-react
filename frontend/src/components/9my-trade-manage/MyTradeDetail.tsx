@@ -3,6 +3,8 @@ import { BaseLayout } from 'layouts'
 import React from 'react'
 import { LinkButton } from 'templates'
 import Detail from 'templates/detail/Detail'
+import { useParams } from 'react-router-dom';
+import { showoneTradePost, ShowOneTradePostRequest } from 'store/thunks/trade_post';
 
 const MyTradeDetail = () => {
    return (

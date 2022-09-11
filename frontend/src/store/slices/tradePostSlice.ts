@@ -1,9 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 import {
-   FetchTradePostResponse,
+   ShowAllTradePostResponse,
    createTradePost,
-   showallTradePost
+   showallTradePost,
+   showoneTradePost
 } from 'store/thunks/trade_post';
 
 
@@ -11,14 +12,14 @@ type TradePostState = {
    loading: boolean;
    //infoBox: { open: boolean } & InfoBoxAction;
    //docs: TaskBoardsCollection;
- } & FetchTradePostResponse;
+ } & ShowAllTradePostResponse;
  
  const initialState = {      
     loading: false,
     data: [],
     error: false,
-    links: {} as TradePostState['links'],
-    meta: {} as TradePostState['meta'],
+    links: {} as TradePostState['links'],  //必須
+    meta: {} as TradePostState['meta'],    //必須
 } as TradePostState;
 
  export const tradePostSlice = createSlice({
@@ -38,22 +39,34 @@ type TradePostState = {
       builder.addCase(showallTradePost.rejected, (state) => {
          state.loading = false;
       });
+
+      builder.addCase(showoneTradePost.pending, (state) => {
+         state.loading = true;
+      });
+      builder.addCase(showoneTradePost.fulfilled, (state, action) => {
+         state.data.push(action.payload.data); //= action.payload.data;   これでいけるのか？？
+         state.loading = false;
+      });
+      builder.addCase(showoneTradePost.rejected, (state) => {
+         state.loading = false;
+      });
+
       builder.addCase(createTradePost.pending, (state) => {
          state.loading = true;
       });
-      
       builder.addCase(createTradePost.fulfilled, (state, action) => {
          state.loading = false;
          const newDoc = action.payload.data;
-         state.data = [...state.data, { ...newDoc }];     //🌟ここのエラーはとりあえず消えた！！！
+         state.data = [...state.data, { ...newDoc }];   //配列
         // state.data = action.payload;
       });
-      builder.addCase(createTradePost.pending, (state) => {
+      builder.addCase(createTradePost.rejected, (state) => {
          state.loading = false;
-         //state.error = true;   //errorはFetchTradePostResponseにないらしい
+         //state.error = true;   //errorはShowAllTradePostResponseにないらしい
       });
 
    }
  });
 
+ //redux Toolkitでは自動で同名のAction Creatorを作成するため、dispatchで指定するためreducerと同じ名前のものをexportする
  export const { } = tradePostSlice.actions;  //もしあれば

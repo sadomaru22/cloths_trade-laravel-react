@@ -4,22 +4,23 @@ import { TradePost } from 'models';
 import { makeRejectValue } from 'store/thunks/utils';
 import { apiClient, makePath, ResponseWithPagination } from 'utils/api';
 
-export type FetchTradePostResponse = ResponseWithPagination<TradePost>;
+export type ShowAllTradePostResponse = ResponseWithPagination<TradePost>;
 
-export type FetchTradePostRequest = {
-   userId: string;
-   page?: string;
+export type ShowAllTradePostRequest = {
+   userId: any;
+   //page?: string;
    //data :[]
  };
 
 
 export const showallTradePost = createAsyncThunk
    <
-   FetchTradePostResponse,
-   FetchTradePostRequest,
+   ShowAllTradePostResponse,
+   ShowAllTradePostRequest,
    AsyncThunkConfig>
-   ('tradePost/showallTradePost', async (_, thunkApi) => {  //ここでpayloadに渡せてないのでは？
-      const userId = String(thunkApi.getState().auth.user?.id); 
+   ('tradePost/showallTradePost', async (payload, thunkApi) => {  //ここでpayloadに渡せてないのでは？
+      //const userId = String(thunkApi.getState().auth.user?.id);   //一覧表示なので、これでいいはず、これってtsx側で宣言して引数で渡してるのでは？
+      const {userId} = payload;
       const path = makePath(['users', userId], ['trade_posts']);
 
       try {
@@ -29,3 +30,5 @@ export const showallTradePost = createAsyncThunk
          return thunkApi.rejectWithValue(makeRejectValue(error.response.data));
       }
 });
+
+export default showallTradePost;
