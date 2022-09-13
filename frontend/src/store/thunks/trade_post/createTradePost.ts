@@ -33,7 +33,7 @@ AsyncThunkConfig>        //payloadCreator の第2引数(thunkApi)のための型
    const userId = String(thunkApi.getState().auth.user?.id);   //ログイン中のuseridは常にこれで取れる。
    const path = makePath(['users', userId], ['trade_posts']);
 
-   const config = {  //いけるかわからん
+   const config = {  //多分いける(https://zenn.dev/luvmini511/articles/c9cdb77a145f4d)ここでやってた
       headers: {
         'Content-type': 'application/json',  //APIと認識させるためにつける。Postmanでやったやつ。
       },
@@ -42,7 +42,7 @@ AsyncThunkConfig>        //payloadCreator の第2引数(thunkApi)のための型
       const response = await apiClient().post(path, payload, config);
       return response?.data;
    } catch(error) {
-      return thunkApi.rejectWithValue(makeRejectValue(error));
+      return thunkApi.rejectWithValue(makeRejectValue(error));  //この時、slice側ではrejectedに行く
    }
  });
 
