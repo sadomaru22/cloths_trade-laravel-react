@@ -57,7 +57,8 @@ return [
     |
     | Here you may configure the path where users will get redirected during
     | authentication or password reset when the operations are successful
-    | and the user is authenticated. You are free to change this value.
+    | and the user is authenticated. You are free to change this value. 
+    新規登録完了後に/homeにリダイレクトさせる。
     |
     */
 
@@ -134,14 +135,14 @@ return [
     'features' => [
         Features::registration(),
         Features::resetPasswords(),
-        // Features::emailVerification(),
+        Features::emailVerification(),
         Features::updateProfileInformation(),
         Features::updatePasswords(),
-        Features::twoFactorAuthentication([
-            'confirm' => true,
-            'confirmPassword' => true,
-            // 'window' => 0,
-        ]),
+        // Features::twoFactorAuthentication([
+        //     'confirm' => true,
+        //     'confirmPassword' => true,
+        //     // 'window' => 0,
+        // ]),
     ],
 
 ];

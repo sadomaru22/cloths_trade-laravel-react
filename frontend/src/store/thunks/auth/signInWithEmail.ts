@@ -25,9 +25,9 @@ export const signInWithEmail = createAsyncThunk<
   AsyncThunkConfig
 >('auth/signInWithEmail', async (payload, thunkApi) => {
   const { email, password, remember } = payload;
-  try {
-    await apiClient({ apiRoute: false }).get(GET_CSRF_TOKEN_PATH);
-    const response = await apiClient().post(SIGNIN_PATH, {
+  try {  //2つのawaitどっちかでこけたときに拾う必要があるからtry&catchは必須
+    await apiClient({ apiRoute: false }).get(GET_CSRF_TOKEN_PATH);  //まずはsanctumの認証を挟んで
+    const response = await apiClient().post(SIGNIN_PATH, {  //それがOKだったら第二引数に指定された3つを元にLaravel側でログイン処理
       email,
       password,
       remember,
@@ -36,7 +36,7 @@ export const signInWithEmail = createAsyncThunk<
   } catch (error) {
     // 認証用メールから遷移して、認証リンクが無効だった場合
     if (isHttpException(error) && error.response.status === 403) {
-      const { setFlash } = await import('store/slices/authSlice');
+      const { setFlash } = await import('store/slices/authSlice');   //これだけ意味わからん
       thunkApi.dispatch(fetchAuthUser());
       thunkApi.dispatch(
         setFlash({ type: 'warning', message: '認証に失敗しました' })

@@ -48,7 +48,7 @@ const schema = yup.object().shape({
 
 const SignIn = () => {
   const dispatch = useAppDispatch();
-  const [visiblePassword, setVisiblePassword] = useState(false);
+  const [visiblePassword, setVisiblePassword] = useState(false);  //パスワード見れたり隠したりするtoggle
   const [message, setMessage] = useState<string | undefined>('');
   const history = useHistory();
   const {

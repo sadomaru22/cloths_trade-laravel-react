@@ -27,7 +27,7 @@ export const showoneTradePost = createAsyncThunk
       try {
          const response = await apiClient().get(path);
          return response?.data;
-      } catch (error) {
+      } catch (error: any) {
          return thunkApi.rejectWithValue(makeRejectValue(error.response.data));
       }
 });
