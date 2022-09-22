@@ -67,6 +67,7 @@ const SignUp = () => {
     }
   };
 
+  
   return (
     <BaseLayout subtitle='Registration' withoutHeaders>
       <FormLayout title={'ユーザ新規登録'} message={message}>

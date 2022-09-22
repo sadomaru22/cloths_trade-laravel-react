@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+//9/22 とりあえず使わない。登録処理などでどうしても問題があってUserテーブルを分割しなければならないときに使う。
+
 class UserInfo extends Model
 {
     use HasFactory;
@@ -19,8 +21,8 @@ class UserInfo extends Model
     ];
 
     // リレーション設定
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
+    // public function user()
+    // {
+    //     return $this->belongsTo(User::class);
+    // }
 }

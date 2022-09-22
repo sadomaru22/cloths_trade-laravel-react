@@ -19,7 +19,8 @@ class TradePostSeeder extends Seeder
     public function run()
     {
         // 作成する`TradePost`が属する`User`を事前に作成(UserInfoは必ずセットで作成)
-        $user = User::factory()->has(UserInfo::factory()->count(1))->create();
+        //$user = User::factory()->has(UserInfo::factory()->count(1))->create();
+        $user = User::factory()->create();
 
         // 'User'に属するデータを10件生成
         //1対多のSankaFlagも同時に3件
