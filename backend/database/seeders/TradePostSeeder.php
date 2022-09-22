@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\SankaFlag;
 use App\Models\TradePost;
 use App\Models\User;
+use App\Models\UserInfo;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -17,8 +18,8 @@ class TradePostSeeder extends Seeder
      */
     public function run()
     {
-        // 作成する`TradePost`が属する`User`を事前に作成
-        $user = User::factory()->create();
+        // 作成する`TradePost`が属する`User`を事前に作成(UserInfoは必ずセットで作成)
+        $user = User::factory()->has(UserInfo::factory()->count(1))->create();
 
         // 'User'に属するデータを10件生成
         //1対多のSankaFlagも同時に3件

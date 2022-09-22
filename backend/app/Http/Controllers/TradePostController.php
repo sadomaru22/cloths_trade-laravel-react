@@ -38,7 +38,7 @@ class TradePostController extends Controller
      */
     public function store(StoreTradePostRequest $request)
     {
-        $tradeposts = TradePost::create($request->all());   //responseでtradepostを返しても、画面で使うわけではない
+        $tradeposts = TradePost::create($request->all());   //responseでtradepostを返しても、画面で使うわけではないから適当でいい
         return response()->json(
             $tradeposts,
             201

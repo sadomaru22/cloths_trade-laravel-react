@@ -46,4 +46,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(TradePost::class);
     }
+
+    public function userInfo()
+    {
+        return $this->hasOne(UserInfo::class);
+    }
 }

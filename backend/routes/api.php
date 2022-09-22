@@ -26,17 +26,18 @@ Route::get('/home', function () {
 Route::group([
     'namespace' => 'App\Http\Controllers',
     'prefix' => 'v1',
-    //'middleware' => 'auth:sanctum',
+    'middleware' => 'auth:sanctum',
 ], function () {
     /*
     |--------------------------------------------------------------
     | Auth
     |--------------------------------------------------------------
     */
-    Route::get('/user', function (Request $request) {  //これでいいの？
+    Route::get('/user', function (Request $request) {  //いらんかも
         return $request->user();
     });
-    //Route::get('/users/auth', fn () => new UserResource(Auth::user()));  //謎のエラー
+    Route::get('/users/auth', fn () => new UserResource(Auth::user()));  //謎のエラー
+
     Route::delete('/users/auth', function (Request $request) {
         $request->user()->delete();
         return response()->json([], 204);
