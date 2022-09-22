@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 class UserInfoFactory extends Factory
 {
 
-    protected $model = UserInfo::class;
+    //protected $model = UserInfo::class;
 
     public function definition()
     {
