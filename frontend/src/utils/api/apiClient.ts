@@ -51,7 +51,7 @@ export const apiClient = (options?: ApiClientOption) => {
 
   const apiClient = axios.create({
     baseURL: isNonApiRoute() ? API_HOST : API_ROUTE,   //可変にする
-    withCredentials: true,  //これによってDefaultでbaseURLを通るようにしているぽい
+    withCredentials: true,  //これによってSanctumのCORSに対応する。
   });
 
   if (isNotIntercepted()) return apiClient;

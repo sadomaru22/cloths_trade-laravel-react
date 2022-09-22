@@ -69,7 +69,7 @@ const SignUp = () => {
 
   return (
     <BaseLayout subtitle='Registration' withoutHeaders>
-      <FormLayout title={'Create an account'} message={message}>
+      <FormLayout title={'ユーザ新規登録'} message={message}>
         <form onSubmit={handleSubmit(onSubmit)}>
           <TextField
             variant='outlined'
