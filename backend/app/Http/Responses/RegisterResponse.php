@@ -21,6 +21,6 @@ class RegisterResponse implements RegisterResponseContract
         // `201`の他、Userを返却
         return $request->wantsJson()
             ? new JsonResponse(['user' => new UserResource(Auth::user())], 201)
-            : redirect()->intended(config('fortify.home'));   //そうでない場合、元のURLにリダイレクト
+            : redirect()->intended(config('fortify.home'));   // 新規登録後に遷移させたいリダイレクト先を指定
     }
 }

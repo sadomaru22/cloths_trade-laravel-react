@@ -8,7 +8,7 @@ use App\Actions\Fortify\UpdateUserPassword;
 use App\Actions\Fortify\UpdateUserProfileInformation;
 use App\Http\Responses\RegisterResponse;
 use App\Http\Responses\LoginResponse;
-//use App\Http\Controllers\VerifyEmailController as VerifyEmailControllerOverride;
+use App\Http\Controllers\VerifyEmailController as VerifyEmailControllerOverride;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
