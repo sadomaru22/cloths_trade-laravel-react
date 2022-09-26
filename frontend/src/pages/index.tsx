@@ -26,7 +26,7 @@ const Home = () => {
   const userId = useAppSelector((state) => state.auth.user?.id);
 
   useEffect(() => {
-    isSignedIn() && history.replace(`users/${userId}/boards`);
+    isSignedIn() && history.replace(`users/${userId}/top`);
   }, [history, userId]);
 
   return <BaseLayout subtitle=''>{renderHome()}</BaseLayout>;

@@ -19,10 +19,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/home', function () {
-    return Auth::user();
-});
+Route::get('/home', fn () => Auth::user());
 
+/*
+|--------------------------------------------------------------
+|  Version 1.0
+|--------------------------------------------------------------
+*/
 Route::group([
     'namespace' => 'App\Http\Controllers',
     'prefix' => 'v1',
