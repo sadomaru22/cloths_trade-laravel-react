@@ -12,9 +12,8 @@ import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
-import DirectionsIcon from '@mui/icons-material/Directions';
+//import DirectionsIcon from '@mui/icons-material/Directions';
 import { Grid } from '@mui/material';
-
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -39,8 +38,6 @@ const useStyles = makeStyles((theme: Theme) =>
     }
   })
 );
-
-
 
 const TopPage = (props: { title: any; search: any; }) => {
    const { title, search } = props;
@@ -81,7 +78,7 @@ const TopPage = (props: { title: any; search: any; }) => {
 
         <Grid container spacing={5} sx={{ display: 'flex', justifyContent: 'center' }}>
          <Grid item>
-            <LinkButton2 color='primary' to='/tradepost'>
+            <LinkButton2 color='primary' to='/trade-post'>
                <div className={classes.card}>
                <Card>
                   <CardMedia
@@ -105,7 +102,7 @@ const TopPage = (props: { title: any; search: any; }) => {
             </LinkButton2>
          </Grid>
          <Grid item>
-         <LinkButton2 color='primary' to='/trademanage'>
+         <LinkButton2 color='primary' to='/mytrade-ichiran'>
                <div className={classes.card}>
                <Card>
                   <CardMedia
@@ -132,7 +129,7 @@ const TopPage = (props: { title: any; search: any; }) => {
 
         <Grid container spacing={5} sx={{ display: 'flex', justifyContent: 'center' }}>
          <Grid item>
-         <LinkButton2 color='primary' to='/tradepending'>
+         <LinkButton2 color='primary' to='/pending-ichiran'>
                <div className={classes.card}>
                <Card>
                   <CardMedia
@@ -156,7 +153,7 @@ const TopPage = (props: { title: any; search: any; }) => {
             </LinkButton2>
          </Grid>
          <Grid item>
-         <LinkButton2 color='primary' to='/tradecomfirmed'>
+         <LinkButton2 color='primary' to='/confirmed-ichiran'>
                <div className={classes.card}>
                <Card>
                   <CardMedia

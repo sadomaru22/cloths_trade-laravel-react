@@ -29,7 +29,7 @@ Route::get('/home', fn () => Auth::user());
 Route::group([
     'namespace' => 'App\Http\Controllers',
     'prefix' => 'v1',
-    'middleware' => 'auth:sanctum',
+    //'middleware' => 'auth:sanctum',
 ], function () {
     /*
     |--------------------------------------------------------------

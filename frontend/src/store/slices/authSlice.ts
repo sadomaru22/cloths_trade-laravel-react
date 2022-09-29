@@ -27,6 +27,7 @@ export type FlashNotificationProps = {
 };
 
 export type AuthState = {
+  //user: User | null;
   user: User | null;
   afterRegistration: boolean;
   signedIn: boolean;
@@ -66,6 +67,8 @@ export const authSlice = createSlice({
     });
     builder.addCase(createUser.fulfilled, (state, action) => {
       state.user = action.payload.user;
+      console.log("登録できてるか確認");
+      console.log(state.user);
       state.afterRegistration = true;
       state.signedIn = true;
       state.loading = false;
@@ -120,6 +123,9 @@ export const authSlice = createSlice({
     });
     builder.addCase(signInWithEmail.fulfilled, (state, action) => {
       state.user = action.payload.user;
+      //state.user?.push(action.payload.user); //= action.payload.user;
+      console.log(state.user + "と" + action.payload.user);
+      console.log("フルフィルど");
       state.signedIn = true;
       state.loading = false;
       // 認証メールリンクからのリダイレクトの場合 `true`
