@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useEffect } from 'react';
 import AppBar from '@mui/material/AppBar';
 import CameraIcon from '@mui/icons-material/PhotoCamera';
 import Card from '@mui/material/Card';
@@ -23,6 +24,8 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import { useAppDispatch, useAppSelector } from 'utils/hooks';
+import { useSelector } from 'react-redux';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -55,9 +58,13 @@ const Transition = React.forwardRef(function Transition(
  });
 
 const PendingIchiran = () => {
+  const dispatch = useAppDispatch();
 　const history = useHistory();    
   const classes = useStyles();
   const state = "渡邊一真";
+  const userId = useAppSelector((state) => state.auth.user?.id);
+  //const data = useSelector((state) => state);
+  const posts = useAppSelector((state) => state.tradePost.data);
 
   const [open, setOpen] = React.useState(false);
 

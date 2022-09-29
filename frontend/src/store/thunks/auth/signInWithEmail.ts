@@ -34,7 +34,7 @@ export const signInWithEmail = createAsyncThunk<
     });
     return response?.data;
   } catch (error) {
-    // 認証用メールから遷移して、認証リンクが無効だった場合
+    // 認証用メールから遷移して、認証リンクが無効だった場合、(9/28)今のところ無視で
     if (isHttpException(error) && error.response.status === 403) {
       const { setFlash } = await import('store/slices/authSlice');   //これだけ意味わからん
       thunkApi.dispatch(fetchAuthUser());
