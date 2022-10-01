@@ -30,6 +30,7 @@ const MyTradeIchiran = () => {
    //const params = useParams<{ userId: string }>();
    const params = useParams();
    const userId = useAppSelector((state) => state.auth.user?.id);
+   const user = useAppSelector((state) => state.auth.user);  //名前の表示に使う予定
    const posts = useAppSelector((state) => state.tradePost.data);  //ここからmapなどで展開、かずぶん。
    useEffect(() => {
       dispatch(showallTradePost(userId));

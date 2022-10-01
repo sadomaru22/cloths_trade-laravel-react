@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateTradePostRequest;
 use App\Models\TradePost;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class TradePostController extends Controller
 {
@@ -24,6 +25,7 @@ class TradePostController extends Controller
      */
     public function index(User $user)
     {
+        Log::debug($user);  //テスト用
         // Viewの代わりにJSONとして返却
         return TradePost::where('user_id', $user->id)
             ->orderBy('date', 'desc')   //日付降順

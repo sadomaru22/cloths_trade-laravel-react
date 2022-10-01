@@ -12,6 +12,7 @@ use App\Http\Controllers\VerifyEmailController as VerifyEmailControllerOverride;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Fortify\Fortify;
 use Laravel\Fortify\Contracts\RegisterResponse as RegisterResponseContract;
@@ -37,6 +38,9 @@ class FortifyServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        Fortify::ignoreRoutes();
+        $this->configureRoutes();
+
         $this->app->singleton(RegisterResponseContract::class, RegisterResponse::class);
         $this->app->singleton(LoginResponseContract::class, LoginResponse::class);
         $this->app->singleton(VerifyEmailController::class, VerifyEmailControllerOverride::class);
@@ -55,5 +59,20 @@ class FortifyServiceProvider extends ServiceProvider
         RateLimiter::for('two-factor', function (Request $request) {
             return Limit::perMinute(5)->by($request->session()->get('login.id'));
         });
+    }
+
+    /**
+     * Configure the routes offered by the application.
+     *
+     * @return void
+     * @see \Laravel\Fortify\FortifyServiceProvider configureRoutes
+     * @see \App\Providers\RouteServiceProvider
+     */
+    protected function configureRoutes()
+    {
+        Route::namespace('Laravel\Fortify\Http\Controllers')
+            ->domain(config('fortify.domain', null))
+            ->prefix(config('fortify.prefix'))
+            ->group(base_path('routes/auth.php'));
     }
 }
