@@ -39,7 +39,7 @@ Route::group([
     Route::get('/user', function (Request $request) {  //いらんかも
         return $request->user();
     });
-    Route::get('/users/auth', fn () => new UserResource(Auth::user()));  //謎のエラー
+    Route::get('/get-user', fn () => new UserResource(Auth::user()));  //謎のエラー
 
     Route::delete('/users/auth', function (Request $request) {
         $request->user()->delete();

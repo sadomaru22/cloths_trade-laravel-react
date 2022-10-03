@@ -27,11 +27,13 @@ export const signInWithEmail = createAsyncThunk<
   const { email, password, remember } = payload;
   try {  //2つのawaitどっちかでこけたときに拾う必要があるからtry&catchは必須
     await apiClient({ apiRoute: false }).get(GET_CSRF_TOKEN_PATH);  //まずはsanctumの認証を挟んで
-    const response = await apiClient().post(SIGNIN_PATH, {  //それがOKだったら第二引数に指定された3つを元にLaravel側でログイン処理
+    //const response = 
+    await apiClient().post(SIGNIN_PATH, {  //それがOKだったら第二引数に指定された3つを元にLaravel側でログイン処理
       email,
       password,
       remember,
     });
+    const response = await apiClient().get("/get-user");
     return response?.data;
   } catch (error) {
     // 認証用メールから遷移して、認証リンクが無効だった場合、(9/28)今のところ無視で

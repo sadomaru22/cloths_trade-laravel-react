@@ -19,6 +19,8 @@ use Laravel\Fortify\Contracts\RegisterResponse as RegisterResponseContract;
 use Laravel\Fortify\Contracts\LoginResponse as LoginResponseContract;
 use Laravel\Fortify\Http\Controllers\VerifyEmailController;
 
+use Illuminate\Support\Facades\Log;
+
 class FortifyServiceProvider extends ServiceProvider
 {
     /**
@@ -42,7 +44,9 @@ class FortifyServiceProvider extends ServiceProvider
         $this->configureRoutes();
 
         $this->app->singleton(RegisterResponseContract::class, RegisterResponse::class);
+        //Log::debug("message1from FortifySP");
         $this->app->singleton(LoginResponseContract::class, LoginResponse::class);
+        //Log::debug("message2from FortifySP");
         $this->app->singleton(VerifyEmailController::class, VerifyEmailControllerOverride::class);
 
         Fortify::createUsersUsing(CreateNewUser::class);
