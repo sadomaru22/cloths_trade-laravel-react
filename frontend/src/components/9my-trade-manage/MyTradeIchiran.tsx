@@ -1,7 +1,6 @@
 import React from 'react'
 import Ichiran from 'templates/ichiran/Ichiran'
 import AppBar from '@mui/material/AppBar';
-import Button from '@mui/material/Button';
 import CameraIcon from '@mui/icons-material/PhotoCamera';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
@@ -12,7 +11,7 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 //import Link from '@mui/material/Link';
-import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
+//import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import { BaseLayout } from 'layouts';
 import { LinkButton } from 'templates';
 import { Avatar, Pagination } from '@mui/material';
@@ -22,7 +21,7 @@ import {
    useAppSelector,
  } from 'utils/hooks';
 import { useParams } from 'react-router-dom';
-import { showallTradePost, ShowAllTradePostRequest } from 'store/thunks/trade_post';
+import { showallTradePost } from 'store/thunks/trade_post';
 
 //一覧画面
 const MyTradeIchiran = () => {
