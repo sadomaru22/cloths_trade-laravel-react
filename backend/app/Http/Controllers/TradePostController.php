@@ -25,7 +25,7 @@ class TradePostController extends Controller
      */
     public function index(User $user)
     {
-        Log::debug($user);  //テスト用
+        //Log::debug($user);  //テスト用
         // Viewの代わりにJSONとして返却
         return TradePost::where('user_id', $user->id)
             ->orderBy('date', 'desc')   //日付降順
@@ -51,7 +51,7 @@ class TradePostController extends Controller
     public function show(Request $request)
     {
         $id = $request->id;
-        // 存在しないレコードIDだったら
+        // 存在するレコードIDだったら
         if (TradePost::where('id', $id)->exists()) {
             $result = TradePost::find($id);
             return response()->json(

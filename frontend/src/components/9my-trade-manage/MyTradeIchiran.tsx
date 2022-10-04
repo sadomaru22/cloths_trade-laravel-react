@@ -1,5 +1,5 @@
 import React from 'react'
-import Ichiran from 'templates/ichiran/Ichiran'
+//import Ichiran from 'templates/ichiran/Ichiran'
 import AppBar from '@mui/material/AppBar';
 import CameraIcon from '@mui/icons-material/PhotoCamera';
 import Card from '@mui/material/Card';
@@ -15,25 +15,25 @@ import Container from '@mui/material/Container';
 import { BaseLayout } from 'layouts';
 import { LinkButton } from 'templates';
 import { Avatar, Pagination } from '@mui/material';
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import {
    useAppDispatch,
    useAppSelector,
  } from 'utils/hooks';
-import { useParams } from 'react-router-dom';
 import { showallTradePost } from 'store/thunks/trade_post';
 
 //一覧画面
 const MyTradeIchiran = () => {
    const dispatch = useAppDispatch();
    //const params = useParams<{ userId: string }>();
-   const params = useParams();
+   //const params = useParams();
    const userId = useAppSelector((state) => state.auth.user?.id);
-   const user = useAppSelector((state) => state.auth.user);  //名前の表示に使う予定
+   const userName = useAppSelector((state) => state.auth.user?.name);  //名前の表示に使う予定
    const posts = useAppSelector((state) => state.tradePost.data);  //ここからmapなどで展開、かずぶん。
    useEffect(() => {
       dispatch(showallTradePost(userId));
-    }, [dispatch]);
+    }, [dispatch, userId]);
+    console.log(posts);
    return (
       // <Ichiran 
       // url={"mytrade-detail"}
@@ -55,8 +55,8 @@ const MyTradeIchiran = () => {
             </Grid>
             <Grid item>
                 <Typography variant='h4' color='textSecondary' sx={{ marginLeft: 8 }}>
-                  {/* {user.name} さんの投稿一覧 userのundefined問題が解決したらちゃんと実装 */}
-                  渡邊さんの投稿一覧
+                  {userName} さんの投稿一覧
+                  {/* 渡邊さんの投稿一覧 */}
                 </Typography>
             </Grid>
           </Grid>

@@ -74,7 +74,7 @@ const Routes = () => {
       <Route exact path='/confirmed-ichiran' component={ConfirmedIchiran} />
       <Route exact path='/confirmed-detail' component={ConfirmedDetail} />
       <Route exact path='/trade-post' component={TradePost} />
-      <Route exact path='/mytrade-detail' component={MyTradeDetail} />
+      <Route exact path='/mytrade-detail/:id' component={MyTradeDetail} />
       <Route exact path='/mytrade-ichiran' component={MyTradeIchiran} />
       <Route exact path='/sanka-ichiran' component={Sankasya} />
       <Route exact path='/mytrade-edit' component={TradeEdit} />
