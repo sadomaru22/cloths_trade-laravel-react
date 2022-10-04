@@ -1,6 +1,6 @@
 import * as React from 'react';
 import AppBar from '@mui/material/AppBar';
-import Button from '@mui/material/Button';
+//import Button from '@mui/material/Button';
 import CameraIcon from '@mui/icons-material/PhotoCamera';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
@@ -58,7 +58,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 const Ichiran = (props: {url: string, pageDescription: string}) => {   
-  const {url, pageDescription} = props;
+  //const {url, pageDescription} = props;
   const classes = useStyles();
   const stateA = "渡邊一真";
 

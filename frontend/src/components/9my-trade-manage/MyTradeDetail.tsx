@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+//import { useEffect } from "react";
 import { useHistory, useParams } from 'react-router-dom';
 import { Grid, Typography, Avatar, Button, Container } from '@mui/material';
 import ImageList from '@mui/material/ImageList';
@@ -6,17 +6,18 @@ import ImageListItem from '@mui/material/ImageListItem';
 import { BaseLayout } from 'layouts'
 import React from 'react'
 import { LinkButton } from 'templates'
-import Detail from 'templates/detail/Detail'
-import { showoneTradePost, ShowOneTradePostRequest } from 'store/thunks/trade_post';
-import { useAppDispatch, useAppSelector } from 'utils/hooks'
+//import Detail from 'templates/detail/Detail'
+//import { showoneTradePost, ShowOneTradePostRequest } from 'store/thunks/trade_post';
+import { useAppSelector } from 'utils/hooks'
 
 const MyTradeDetail = () => {
-   const dispatch = useAppDispatch();
-   const post = useAppSelector((state) => state.tradePost.data[1]);
+   //const dispatch = useAppDispatch();
    const userName = useAppSelector((state) => state.auth.user?.name);  //名前の表示に使う
    const history = useHistory();
-   const params: {trade_post_id: string} = useParams();
-   const trade_post_id = params.trade_post_id;
+   const params: {id: string} = useParams();
+   const tpi_number = Number(params.id);
+
+   const post = useAppSelector((state) => state.tradePost.data[tpi_number]);
 
    const onClickBack = () => {
       history.goBack();
@@ -60,7 +61,7 @@ const MyTradeDetail = () => {
             </Grid>
          </Grid>
             <Typography variant='h3' color='textSecondary' sx={{ marginBottom: 8 }}>
-            　{post.title}
+              {post.title}
             </Typography>
             <Typography sx={{ marginBottom: 5 }}>
               開催場所：　 {post.place}

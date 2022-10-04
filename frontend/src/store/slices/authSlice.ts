@@ -123,9 +123,8 @@ export const authSlice = createSlice({
     });
     builder.addCase(signInWithEmail.fulfilled, (state, action) => {
       state.user = action.payload.user;
-      //state.user?.push(action.payload.user); //= action.payload.user;
-      console.log(action.payload.user);
-      console.log("from authSlice.ts");
+      // console.log(action.payload.user);
+      // console.log("from authSlice.ts");
       state.signedIn = true;
       state.loading = false;
       // 認証メールリンクからのリダイレクトの場合 `true`
