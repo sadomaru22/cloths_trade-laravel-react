@@ -69,4 +69,5 @@ type TradePostState = {
  });
 
  //redux Toolkitでは自動で同名のAction Creatorを作成するため、dispatchで指定するためreducerと同じ名前のものをexportする
+ // eslint-disable-next-line no-empty-pattern
  export const { } = tradePostSlice.actions;  //もしあれば
