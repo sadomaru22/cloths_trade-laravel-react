@@ -1,10 +1,10 @@
 import React from 'react'
-import { Avatar, Box, Button, Container } from '@mui/material'
+import { Avatar, Button, Container } from '@mui/material'
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import { Typography } from '@mui/material';
 import { Grid } from '@mui/material';
-import { useHistory, useLocation, useParams } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 
 
 //API通信で使うURLは変数にする。propsでいけるかも。
