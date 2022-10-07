@@ -25,10 +25,11 @@ import { showallTradePost } from 'store/thunks/trade_post';
 //一覧画面
 const MyTradeIchiran = () => {
    const dispatch = useAppDispatch();
-   //const params = useParams<{ userId: string }>();
-   //const params = useParams();
-   const userId = useAppSelector((state) => state.auth.user?.id);
-   const userName = useAppSelector((state) => state.auth.user?.name);  //名前の表示に使う予定
+   
+   //const userId = useAppSelector((state) => state.auth.user?.id);
+   const userId = localStorage.getItem('userId');
+   //const userName = useAppSelector((state) => state.auth.user?.name);
+   const userName = localStorage.getItem('userName');
    const posts = useAppSelector((state) => state.tradePost.data);  //ここからmapなどで展開、かずぶん。
    useEffect(() => {
       dispatch(showallTradePost(userId));
@@ -88,7 +89,7 @@ const MyTradeIchiran = () => {
                     </Typography>
                   </CardContent>
                   <CardActions>
-                  <LinkButton size="small" to={{pathname: `mytrade-detail/${row.id}`,}}>詳細ページへ</LinkButton>
+                  <LinkButton size="small" to={{pathname: `mytrade-detail/${row.id}`}}>詳細ページへ</LinkButton>
                   </CardActions>
                 </Card>
               </Grid>
