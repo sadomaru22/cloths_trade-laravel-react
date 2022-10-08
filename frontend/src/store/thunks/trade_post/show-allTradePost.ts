@@ -14,7 +14,7 @@ export const showallTradePost = createAsyncThunk
    ShowAllTradePostResponse,
    ShowAllTradePostRequest,
    AsyncThunkConfig>
-   ('tradePost/showallTradePost', async (payload, thunkApi) => {  //ここでpayloadに渡せてないのでは？
+   ('tradePost/showallTradePost', async (payload, thunkApi) => {
       //const userId = String(thunkApi.getState().auth.user?.id);   //一覧表示なので、これでいいはず、これってtsx側で宣言して引数で渡してるのでは？
       const userId = payload;
       console.log(userId);

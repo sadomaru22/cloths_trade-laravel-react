@@ -62,11 +62,11 @@ const Routes = () => {
       <Route exact path='/users/:userId/top' component={TopPage} />
       <Route exact path='/ichiran' component={Ichiran} />
       <Route exact path='/detail' component={Detail} />
-      {/*④他のユーザ ただしDetailに関してはパラメータ渡す必要あり*/}
+      
       <Route exact path='/other-user' component={OtheUserTop} />
-      <Route exact path='/trade-all' component={OtherUserIchiran} />
-      <Route path='/trade-detail/:id' component={OtherUserDetail} />   {/*URLによって表示ページが変わる(Dynamic Route)の場合、exactはいらない*/}
-      <Route exact path='/past-trade-all' component={PastIchiran} />
+      <Route exact path='/trade-ichiran/:userId' component={OtherUserIchiran} />
+      <Route path='/trade-ichiran/trade-detail/:id' component={OtherUserDetail} />   {/*URLによって表示ページが変わる(Dynamic Route)の場合、exactはいらない*/}
+      <Route exact path='/past-trade-ichiran' component={PastIchiran} />
       <Route path='/past-trade-detail/:id' component={PastDetail} />
       <Route exact path='/mypage' component={MyPage} />
       <Route exact path='/pending-ichiran' component={PendingIchiran} />

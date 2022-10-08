@@ -12,7 +12,7 @@ import { useAppSelector } from 'utils/hooks'
 
 const MyTradeDetail = () => {
    //const dispatch = useAppDispatch();
-   const userName = useAppSelector((state) => state.auth.user?.name);  //名前の表示に使う
+   const userName = useAppSelector((state) => state.auth.user?.name);  //これもuseLocationでいいのでは？
    const history = useHistory();
    const params: {id: string} = useParams();
    const tpi_number = Number(params.id);
