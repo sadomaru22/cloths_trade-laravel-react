@@ -85,7 +85,7 @@ const MyTradeIchiran = () => {
                   />
                   <CardContent sx={{ flexGrow: 1 }}>
                     <Typography>
-                      あああああああああああああ
+                      {row.description.substring(0, 45)}...
                     </Typography>
                   </CardContent>
                   <CardActions>

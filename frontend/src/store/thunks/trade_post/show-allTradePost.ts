@@ -6,7 +6,7 @@ import { apiClient, makePath, ResponseWithPagination } from 'utils/api';
 
 export type ShowAllTradePostResponse = ResponseWithPagination<TradePost>;
 
-export type ShowAllTradePostRequest = any;
+export type ShowAllTradePostRequest = any;   //いろんなとこで使うので
 
 
 export const showallTradePost = createAsyncThunk
