@@ -34,7 +34,7 @@ const MyTradeIchiran = () => {
    useEffect(() => {
       dispatch(showallTradePost(userId));
     }, [dispatch, userId]);
-    console.log(posts);
+    //console.log(posts);
    return (
       // <Ichiran 
       // url={"mytrade-detail"}
