@@ -62,7 +62,7 @@ Route::group([
     Route::get('/users/{user}/trade_posts/pending', [TradePost2Controller::class, 'pending']);
     Route::get('/users/{user}/trade_posts/confirmed', [TradePost2Controller::class, 'confirmed']);
     Route::get('/users/{user}/trade_posts/sankasya', [TradePost2Controller::class, 'sankasya']);
-    Route::get('/users/{user}/trade_posts/search', [TradePost2Controller::class, 'search']);
+    Route::get('/trade_posts/search', [TradePost2Controller::class, 'search']);
 
     /*
     |--------------------------------------------------------------

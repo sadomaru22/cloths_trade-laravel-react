@@ -2,7 +2,8 @@
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import { Container, Typography, Button, Card, CardActions, CardContent, CardMedia, AppBar } from '@material-ui/core';
 import { BaseLayout } from 'layouts';
-import React from 'react'
+import React from 'react';
+//import Select from 'react-select';
 import { useHistory } from 'react-router-dom';
 import { useAppDispatch } from 'utils/hooks';
 import { LinkButton2 } from 'templates';
@@ -67,7 +68,7 @@ const TopPage = (props: { title: any; search: any; }) => {
          </IconButton>
          <InputBase
          sx={{ ml: 1, flex: 1 }}
-         placeholder="都道府県で検索"
+         placeholder="フリーワードで検索"
          inputProps={{ 'aria-label': 'search google maps' }}
          />
          <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
@@ -75,6 +76,8 @@ const TopPage = (props: { title: any; search: any; }) => {
             <SearchIcon />
          </IconButton>
       </Paper>
+      <p>または</p>
+
 
         <Grid container spacing={5} sx={{ display: 'flex', justifyContent: 'center' }}>
          <Grid item>
