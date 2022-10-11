@@ -25,6 +25,7 @@ import { PendingDetail, PendingIchiran } from 'components/6pending-trade';
 import { ConfirmedIchiran, ConfirmedDetail } from 'components/7confirmed-trade';
 import TradePost from 'components/8trade-post/TradePost';
 import { MyTradeDetail, MyTradeIchiran, Sankasya, SankaJuri, TradeEdit } from 'components/9my-trade-manage';
+import SearchResultIchiran from 'pages/top/SearchResultIchiran';
 
 
 //useAppSelectorでstoreのstateにアクセス。notFound=notFoundになれば全て<NoyFound/>へ遷移させる
@@ -60,6 +61,7 @@ const Routes = () => {
       <GuestRoute exact path='/forgot-password' component={ForgotPassword} />
       <Route exact path='/reset-password' component={ResetPassword} />
       <Route exact path='/users/:userId/top' component={TopPage} />
+      <Route exact path='/searchResult' component={SearchResultIchiran} />
       <Route exact path='/ichiran' component={Ichiran} />
       <Route exact path='/detail' component={Detail} />
       

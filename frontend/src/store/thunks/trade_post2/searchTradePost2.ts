@@ -30,6 +30,3 @@ export const searchTradePost2 = createAsyncThunk
 });
 
 export default searchTradePost2;
-
-
-export {}

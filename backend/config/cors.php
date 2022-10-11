@@ -19,7 +19,10 @@ return [
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => ['*'],
+    'allowed_origins' => [env('SPA_URL')],  //これやと何故かワイルドカードという判定になる
+    //'allowed_origins' => ['http://localhost:3000/*'],
+    //'allowed_origins' => true,
+    //'allowed_origins' => ['*'],
 
     'allowed_origins_patterns' => [],
 
@@ -29,6 +32,7 @@ return [
 
     'max_age' => 0,
 
+    //'supports_credentials' => true,
     'supports_credentials' => true,
 
 ];

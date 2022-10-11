@@ -1,15 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
-
+import {ShowAllTradePostResponse} from 'store/thunks/trade_post';
 import {
-   ShowAllTradePostResponse,
-   showallTradePost,
-} from 'store/thunks/trade_post';
+   searchBySbTradePost2,
+} from 'store/thunks/trade_post2';
 
+//🌟使わない！！
 
 type TradePostState = {
    loading: boolean;
-   //infoBox: { open: boolean } & InfoBoxAction;
-   //docs: TaskBoardsCollection;
  } & ShowAllTradePostResponse;
  
  const initialState = {      
@@ -25,16 +23,17 @@ type TradePostState = {
    initialState,
    reducers: {},
    extraReducers: (builder) =>{
-      builder.addCase(showallTradePost.pending, (state) => {
+      builder.addCase(searchBySbTradePost2.pending, (state) => {
          state.loading = true;
       });
-      builder.addCase(showallTradePost.fulfilled, (state, action) => {
+      builder.addCase(searchBySbTradePost2.fulfilled, (state, action) => {
          state.data = action.payload.data || [];
          state.links = action.payload.links || {};
          state.meta = action.payload.meta || {};
          state.loading = false;
+         console.log(state.data);
       });
-      builder.addCase(showallTradePost.rejected, (state) => {
+      builder.addCase(searchBySbTradePost2.rejected, (state) => {
          state.loading = false;
       });
 
@@ -42,4 +41,5 @@ type TradePostState = {
    }
  });
 
- export const { } = tradePostSlice.actions;
+ // eslint-disable-next-line no-empty-pattern
+ export const {} = tradePostSlice.actions;
