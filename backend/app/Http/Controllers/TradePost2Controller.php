@@ -5,7 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\SankaFlag;
 use App\Models\TradePost;
 use App\Models\User;
+use Illuminate\Http\Response;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use App\Providers\RouteServiceProvider;
+
 
 class TradePost2Controller extends Controller
 {
@@ -98,5 +102,32 @@ class TradePost2Controller extends Controller
             $result,
             200
         );
+    }
+
+    public function searchBySb(Request $request, $place)
+    {
+        Log::debug($place);
+        // 渡ってきた都道府県名と一致するものを探す
+        $result = TradePost::where('place', 'like', "%$place%")->get();
+
+        //Log::debug("messagefrom searchBySb" . $request);
+        // 該当のトレードがあればjsonで結果を返す  //とりあえずこの実装でresponseは返せる
+        Log::debug($result);
+        return $result
+            ? response()->json(
+                $result,
+                200
+            )
+            : response()->json(['message' => '該当のトレードはありませんでした。']);
+
+        // $path = $request->session()->get('url.intended');
+        // $url = $path
+        //     ? url($path . '/searchResult')
+        //     : url(env('SPA_URL') . '/login');
+
+        //return redirect(RouteServiceProvider::HOME);;
+
+        //response()->header('Access-Control-Allow-Origin', '*');
+        //return redirect(env('SPA_URL') . "/searchResult");
     }
 }

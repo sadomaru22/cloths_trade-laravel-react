@@ -1,11 +1,11 @@
 // import { makeStyles, Theme, createStyles, Button, Container, Typography } from '@material-ui/core';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
-import { Container, Typography, Button, Card, CardActions, CardContent, CardMedia, AppBar } from '@material-ui/core';
+import { Container, Typography, Button, Card, CardActions, CardContent, CardMedia } from '@material-ui/core';
 import { BaseLayout } from 'layouts';
-import React from 'react';
-//import Select from 'react-select';
+import React, { useEffect } from 'react';
+import Select, { ActionMeta, SingleValue } from 'react-select';
 import { useHistory } from 'react-router-dom';
-import { useAppDispatch } from 'utils/hooks';
+import { useAppDispatch, useAppSelector } from 'utils/hooks';
 import { LinkButton2 } from 'templates';
 import Paper from '@mui/material/Paper';
 import InputBase from '@mui/material/InputBase';
@@ -15,6 +15,8 @@ import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 //import DirectionsIcon from '@mui/icons-material/Directions';
 import { Grid } from '@mui/material';
+import {PREF_OPTIONS} from 'templates/todouhuken';
+import {searchBySbTradePost2} from 'store/thunks/trade_post2'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -36,18 +38,43 @@ const useStyles = makeStyles((theme: Theme) =>
   },
     flex: {
       flexGrow: 1,
+    },
+    select: {
+      ml: 1,
+      flex: 1
     }
   })
 );
 
-const TopPage = (props: { title: any; search: any; }) => {
-   const { title, search } = props;
+const TopPage = () => {
+   
    const classes = useStyles();
    const history = useHistory();
    const dispatch = useAppDispatch();
+   //let posts = useAppSelector((state) => state.tradePost.data);
+   // if (posts) {
+   //    console.log("あ");
+   //    history.replace('searchResult');
+   // } else {return}
+   // useEffect(() => {
+   //    history.replace('searchResult');
+   //  }, [posts]);
+   const onLoad = () => {
+      console.log("onLoad準備完了");
+   }
+   //function onSubmit(newValue: SingleValue<{ value: string; label: string; }>, actionMeta: ActionMeta<{ value: string; label: string; }>){
+   // function onSubmit(event: FormEvent<HTMLFormElement>){
+   //    dispatch(searchBySbTradePost2(event));
+   // }
+   function onChange(newValue: SingleValue<{ value: string; label: string; }>, actionMeta: ActionMeta<{ value: string; label: string; }>){
+   //function onSubmit(event: FormEvent<HTMLFormElement>){
+      dispatch(searchBySbTradePost2(newValue?.label));
+   }
    
    return (
+      <div onLoad={onLoad}>
       <BaseLayout subtitle='Top Page'>
+         
       <Container component='main' maxWidth='md' className={classes.container}>
         <Typography variant='h1' gutterBottom>
           Topページです。
@@ -55,20 +82,44 @@ const TopPage = (props: { title: any; search: any; }) => {
         <Typography variant='h2' gutterBottom color='textSecondary'>
          　Topページです！
         </Typography>
-        <Typography color='textSecondary' paragraph>
-        Topページです
-        </Typography>
         
+      <Typography color='textSecondary' paragraph>
+        都道府県で検索
+        </Typography>
+      <Paper>
+         <Select 
+      options={PREF_OPTIONS}
+      onChange={onChange} 
+      //isMulti //複数にすると
+      /></Paper>
+      {/* <Paper
+      //component="form"
+      //sx={{ display: 'flex', justifyContent: 'center' }}
+      >
+         <form onSubmit={onSubmit}>
+         <Select 
+            className={classes.container}
+            options={PREF_OPTIONS}
+            //onChange={onChange} 
+            //isMulti //複数にすると複雑になるので一旦単数
+         />
+         <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
+         <IconButton type="submit" sx={{ p: '10px' }} aria-label="search">
+            <SearchIcon />
+         </IconButton>
+         </form>
+      </Paper> */}
+
       <Paper
       component="form"
-      sx={{ p: '2px 4px', display: 'flex', mb: 6,  justifyContent: 'center' }}
+      sx={{ p: '2px 4px', display: 'flex', mt: 3, mb: 6,  justifyContent: 'center' }}
       >
          <IconButton sx={{ p: '10px' }} aria-label="menu">
             <MenuIcon />
          </IconButton>
          <InputBase
          sx={{ ml: 1, flex: 1 }}
-         placeholder="フリーワードで検索"
+         placeholder="または、フリーワードで検索"
          inputProps={{ 'aria-label': 'search google maps' }}
          />
          <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
@@ -76,7 +127,6 @@ const TopPage = (props: { title: any; search: any; }) => {
             <SearchIcon />
          </IconButton>
       </Paper>
-      <p>または</p>
 
 
         <Grid container spacing={5} sx={{ display: 'flex', justifyContent: 'center' }}>
@@ -208,6 +258,7 @@ const TopPage = (props: { title: any; search: any; }) => {
     </div>
       </Container>
     </BaseLayout>
+    </div>
    )
 }
 

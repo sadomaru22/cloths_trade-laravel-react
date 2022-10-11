@@ -6,6 +6,9 @@ import {
    showallTradePost,
    showoneTradePost
 } from 'store/thunks/trade_post';
+import {
+   searchBySbTradePost2,
+} from 'store/thunks/trade_post2';
 
 
 type TradePostState = {
@@ -64,6 +67,20 @@ type TradePostState = {
          state.loading = false;
          //state.error = true;   //errorはShowAllTradePostResponseにないらしい
       });
+
+      builder.addCase(searchBySbTradePost2.pending, (state) => {
+         state.loading = true;
+      });
+      builder.addCase(searchBySbTradePost2.fulfilled, (state, action) => {
+         state.data = action.payload.data || [];
+         state.links = action.payload.links || {};
+         state.meta = action.payload.meta || {};
+         state.loading = false;
+         console.log(state.data);
+      });
+      builder.addCase(searchBySbTradePost2.rejected, (state) => {
+         state.loading = false;
+      });      
 
    }
  });

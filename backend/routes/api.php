@@ -29,7 +29,7 @@ Route::get('/home', fn () => Auth::user());
 Route::group([
     'namespace' => 'App\Http\Controllers',
     'prefix' => 'v1',
-    //'middleware' => 'auth:sanctum',
+    'middleware' => 'auth:sanctum',
 ], function () {
     /*
     |--------------------------------------------------------------
@@ -63,6 +63,7 @@ Route::group([
     Route::get('/users/{user}/trade_posts/confirmed', [TradePost2Controller::class, 'confirmed']);
     Route::get('/users/{user}/trade_posts/sankasya', [TradePost2Controller::class, 'sankasya']);
     Route::get('/trade_posts/search', [TradePost2Controller::class, 'search']);
+    Route::get('/trade_posts/searchBySb/{place}', [TradePost2Controller::class, 'searchBySb']);
 
     /*
     |--------------------------------------------------------------
