@@ -14,7 +14,8 @@ return new class extends Migration
     public function up()
     {
         Schema::create('users', function (Blueprint $table) {
-            $table->id();
+            $table->id('id');
+            //$table->uuid('id')->primary();
             $table->string('name');
             $table->string('icon')->default('http://profile-icon.jpeg');
             $table->string('email')->unique();

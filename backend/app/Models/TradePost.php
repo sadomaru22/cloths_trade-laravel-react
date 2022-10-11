@@ -17,7 +17,8 @@ class TradePost extends Model
         'date',
         'maxCapa',
         'place',
-        'description'
+        'description',
+        'thumbnail'
     ];
 
     // リレーション設定
@@ -29,5 +30,9 @@ class TradePost extends Model
     public function sankaflag()
     {
         return $this->hasMany(SankaFlag::class);
+    }
+    public function image()
+    {
+        return $this->hasMany(Image::class);
     }
 }
