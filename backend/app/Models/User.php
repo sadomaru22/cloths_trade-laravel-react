@@ -13,11 +13,12 @@ class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    //確実にここが関与してる
     protected static function booted()
     {
-        static::creating(function ($user) {
-            $user->id = (string)Str::uuid();
-        });
+        // static::creating(function ($user) {
+        //     $user->id = (string)Str::uuid();
+        // });
     }
 
     /**

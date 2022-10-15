@@ -16,7 +16,7 @@ class ImageFactory extends Factory
     public function definition()
     {
         return [
-            'trade_post_id' => 2,
+            'trade_post_id' => 1,
             'file_name' => 'https://source.unsplash.com/random'
         ];
     }
