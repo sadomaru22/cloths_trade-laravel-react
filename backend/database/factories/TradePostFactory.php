@@ -21,7 +21,7 @@ class TradePostFactory extends Factory
     public function definition()
     {
         return [
-            'user_id' => 1,
+            'user_id' => 3,
             'title' => $this->faker->sentence,
             'description' => $this->faker->paragraph,
         ];
