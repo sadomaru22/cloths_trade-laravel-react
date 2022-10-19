@@ -14,26 +14,26 @@ class User extends Authenticatable implements MustVerifyEmail
     use HasApiTokens, HasFactory, Notifiable;
 
     //確実にここが関与してる
-    protected static function booted()
-    {
-        // static::creating(function ($user) {
-        //     $user->id = (string)Str::uuid();
-        // });
-    }
+    // protected static function booted()
+    // {
+    //     // static::creating(function ($user) {
+    //     //     $user->id = (string)Str::uuid();
+    //     // });
+    // }
 
-    /**
-     * Indicates if the model's ID is auto-incrementing.
-     *
-     * @var bool
-     */
-    public $incrementing = false;
+    // /**
+    //  * Indicates if the model's ID is auto-incrementing.
+    //  *
+    //  * @var bool
+    //  */
+    // public $incrementing = false;
 
-    /**
-     * The data type of the auto-incrementing ID.
-     *
-     * @var string
-     */
-    protected $keyType = 'string';
+    // /**
+    //  * The data type of the auto-incrementing ID.
+    //  *
+    //  * @var string
+    //  */
+    // protected $keyType = 'string';
 
     /**
      * The attributes that are mass assignable.

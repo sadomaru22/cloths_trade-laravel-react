@@ -40,8 +40,8 @@ class FortifyServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Fortify::ignoreRoutes();
-        $this->configureRoutes();
+        // Fortify::ignoreRoutes();
+        // $this->configureRoutes();
 
         $this->app->singleton(RegisterResponseContract::class, RegisterResponse::class);
         //Log::debug("message1from FortifySP");
@@ -72,11 +72,11 @@ class FortifyServiceProvider extends ServiceProvider
      * @see \Laravel\Fortify\FortifyServiceProvider configureRoutes
      * @see \App\Providers\RouteServiceProvider
      */
-    protected function configureRoutes()
-    {
-        Route::namespace('Laravel\Fortify\Http\Controllers')
-            ->domain(config('fortify.domain', null))
-            ->prefix(config('fortify.prefix'))
-            ->group(base_path('routes/auth.php'));
-    }
+    // protected function configureRoutes()
+    // {
+    //     Route::namespace('Laravel\Fortify\Http\Controllers')
+    //         ->domain(config('fortify.domain', null))
+    //         ->prefix(config('fortify.prefix'))
+    //         ->group(base_path('routes/auth.php'));
+    // }
 }
