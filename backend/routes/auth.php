@@ -7,6 +7,7 @@
 | The original content is defined in `vendor/laravel/fortify/routes/routes.php`.
 |----------------------------------------------------------------------
 */
+//最後消す
 
 use App\Http\Controllers\Auth\ProfileInformationController;
 use App\Http\Controllers\Auth\RegisteredUserController;

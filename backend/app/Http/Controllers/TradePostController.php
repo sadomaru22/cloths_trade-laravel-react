@@ -23,11 +23,11 @@ class TradePostController extends Controller
      * ユーザーに紐づく値全件表示
      * @param string $user パラメータの値 (ユーザーID)
      */
-    public function index(User $user)
+    public function index($user)
     {
         //Log::debug($user);  //テスト用
         // Viewの代わりにJSONとして返却
-        return TradePost::where('user_id', $user->id)
+        return TradePost::where('user_id', $user)
             ->orderBy('date', 'desc')   //日付降順
             ->paginate(20);
     }
