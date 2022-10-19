@@ -18,7 +18,8 @@ Partial<Pick<TradePost, 'date'>> &
 Partial<Pick<TradePost, 'photos'>> &
 Partial<Pick<TradePost, 'maxCapa'>> &
 Partial<Pick<TradePost, 'place'>> &
-Partial<Pick<TradePost, 'description'>>; 
+Partial<Pick<TradePost, 'description'>>&
+Partial<Pick<TradePost, 'photos'>>; 
 
 export type CreateTradePostResponse = 
 //CreateTradePostRequest;

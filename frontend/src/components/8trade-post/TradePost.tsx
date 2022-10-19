@@ -97,7 +97,7 @@ const TradePost = () => {
         </Toolbar>
       </AppBar>
       <Container maxWidth='md' sx={{ py: 10 }}>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data">
       <DatePickers
         required
         id={formdata.date.id}
