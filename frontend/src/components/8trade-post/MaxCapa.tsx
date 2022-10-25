@@ -13,6 +13,7 @@ import { ComponentPropsWithoutRef } from 'react';
 //  }
 //  return { items };
 // };
+const maxCapa: number[] = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
 
 type LabelProps = {
   label: string;
@@ -20,9 +21,9 @@ type LabelProps = {
 
 type ChildProps = ComponentPropsWithoutRef<'input'> & LabelProps;
 
+//refはDOMの参照として使用されているため、抜くわけにはいかない
 const MaxCapa = React.forwardRef<HTMLInputElement, ChildProps>(
-  ({ label, ...props }, ref) => { 
-  // const [age, setAge] = React.useState('');
+  ({ label, value, ...props }, ref) => { 
 
   // const handleChange = (event: SelectChangeEvent) => {
   //   setAge(event.target.value);
@@ -35,30 +36,15 @@ const MaxCapa = React.forwardRef<HTMLInputElement, ChildProps>(
         <Select
           labelId="demo-simple-select-helper-label"
           id="demo-simple-select-helper"
-          //value={age}
+          value={value}
+          //defaultValue={value}
           //onChange={handleChange}
           label={label}
           ref={ref}
         >
-          <MenuItem value={2}>2</MenuItem>
-          <MenuItem value={3}>3</MenuItem>
-          <MenuItem value={4}>4</MenuItem>
-          <MenuItem value={5}>5</MenuItem>
-          <MenuItem value={6}>6</MenuItem>
-          <MenuItem value={7}>7</MenuItem>
-          <MenuItem value={8}>8</MenuItem>
-          <MenuItem value={9}>9</MenuItem>
-          <MenuItem value={10}>10</MenuItem>
-          <MenuItem value={11}>11</MenuItem>
-          <MenuItem value={12}>12</MenuItem>
-          <MenuItem value={13}>13</MenuItem>
-          <MenuItem value={14}>14</MenuItem>
-          <MenuItem value={15}>15</MenuItem>
-          <MenuItem value={16}>16</MenuItem>
-          <MenuItem value={17}>17</MenuItem>
-          <MenuItem value={18}>18</MenuItem>
-          <MenuItem value={19}>19</MenuItem>
-          <MenuItem value={20}>20</MenuItem>
+      {maxCapa.map((val) => 
+      <MenuItem value={val} key={val}>{val}</MenuItem>
+      )}
         </Select>
         <FormHelperText>最大20人まで選択できます。</FormHelperText>
       </FormControl>

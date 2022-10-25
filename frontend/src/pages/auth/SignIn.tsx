@@ -48,7 +48,7 @@ const schema = yup.object().shape({
 
 const SignIn = () => {
   const dispatch = useAppDispatch();
-  const [visiblePassword, setVisiblePassword] = useState(false);  //パスワード見れたり隠したりするtoggle
+  const [visiblePassword, setVisiblePassword] = useState(false); //パスワード見れたり隠したりするtoggle
   const [message, setMessage] = useState<string | undefined>('');
   const history = useHistory();
   const {
@@ -59,6 +59,7 @@ const SignIn = () => {
 
   // エラー発生時はメッセージを表示する
   const onSubmit = async (data: FormData) => {
+    console.log('確認');
     const response = await dispatch(signInWithEmail(data));
     if (signInWithEmail.rejected.match(response)) {
       setMessage(response.payload?.error?.message);
@@ -66,12 +67,12 @@ const SignIn = () => {
   };
 
   return (
-    <BaseLayout subtitle='Sign In' withoutHeaders>
+    <BaseLayout subtitle="Sign In" withoutHeaders>
       <FormLayout title={`Sign in to ${APP_NAME}`} message={message}>
         <form onSubmit={handleSubmit(onSubmit)}>
           <TextField
-            variant='outlined'
-            margin='normal'
+            variant="outlined"
+            margin="normal"
             required
             fullWidth
             id={formdata.email.id}
@@ -82,8 +83,8 @@ const SignIn = () => {
             error={!!errors?.email}
           />
           <TextField
-            variant='outlined'
-            margin='normal'
+            variant="outlined"
+            margin="normal"
             required
             fullWidth
             id={formdata.password.id}
@@ -96,7 +97,7 @@ const SignIn = () => {
           />
           <Box ml={1} mb={2}>
             <LabeledCheckbox
-              label='Show Password'
+              label="Show Password"
               checked={visiblePassword}
               setChecked={setVisiblePassword}
             />
@@ -105,16 +106,16 @@ const SignIn = () => {
             id={formdata.remember.id}
             label={formdata.remember.label}
             control={
-              <Checkbox {...register('remember')} value='on' color='primary' />
+              <Checkbox {...register('remember')} value="on" color="primary" />
             }
           />
           <Box my={4}>
-            <SubmitButton fullWidth>{'Sign In'}</SubmitButton>
+            <SubmitButton fullWidth>{'ログイン'}</SubmitButton>
           </Box>
           <AlertButton
-            color='info'
-            variant='text'
-            size='small'
+            color="info"
+            variant="text"
+            size="small"
             onClick={() => history.push('/forgot-password')}
           >
             {'Forgot password?'}
@@ -122,13 +123,13 @@ const SignIn = () => {
           <Box my={2}>
             <Divider />
           </Box>
-          <Grid container justifyContent='flex-end'>
+          <Grid container justifyContent="flex-end">
             <Grid item>
               {`New to ${APP_NAME}? `}
               <AlertButton
-                color='info'
-                variant='text'
-                size='small'
+                color="info"
+                variant="text"
+                size="small"
                 onClick={() => history.push('/register')}
               >
                 {'Create an account'}

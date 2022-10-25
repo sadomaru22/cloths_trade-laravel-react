@@ -41,10 +41,11 @@ class TradePostController extends Controller
     public function store(StoreTradePostRequest $request)
     {
         $tradeposts = TradePost::create($request->all());   //responseでtradepostを返しても、画面で使うわけではないから適当でいい
-        return response()->json(
-            $tradeposts,
-            201
-        );
+        // return response()->json(
+        //     $tradeposts,
+        //     201
+        // );
+        return response()->json(['success' => true, 'url' => '/users/:userId/top', 'success' => 'トレードの投稿が完了しました!'], 201);
     }
 
     //一件表示
