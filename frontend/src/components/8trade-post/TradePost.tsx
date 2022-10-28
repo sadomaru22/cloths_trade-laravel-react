@@ -21,7 +21,7 @@ import DateFnsUtils from '@date-io/date-fns';
 import IconButton from '@mui/material/IconButton';
 import CancelIcon from '@mui/icons-material/Cancel';
 
-import { useAppDispatch } from 'utils/hooks';
+import { useAppDispatch, useAppSelector } from 'utils/hooks';
 import yup from 'templates/yup.locale'; //日本語化対応済み
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -35,7 +35,6 @@ import {
   createTradePost,
 } from 'store/thunks/trade_post';
 import { PREF_OPTIONS } from 'templates/todouhuken';
-import axios from 'axios';
 
 type FormData = CreateTradePostRequest; //これでいいの？
 
@@ -84,8 +83,8 @@ const schema = yup.object().shape({
 
   //title: yup.string().label(formdata.title.label).required().max(30),
   title: yup.string().required('タイトルは必須項目です！！').max(30),
-  //date: yup.date().required(),
-  place: yup.string().required('選択してください'),
+  date: yup.string().required('日付の入力は必須です'),
+  place: yup.string().required('選択してください'), //dateじゃないことが判明
   maxCapa: yup.number().required('選択してください'),
   description: yup
     .string()
@@ -97,6 +96,9 @@ const schema = yup.object().shape({
 
 const TradePost = () => {
   const dispatch = useAppDispatch();
+  const success = useAppSelector((state) => state.tradePost.success);
+  const messageFromState = useAppSelector((state) => state.tradePost.message);
+  const url = useAppSelector((state) => state.tradePost.url);
   const [message, setMessage] = useState<string | undefined>('');
   const {
     register,
@@ -142,6 +144,10 @@ const TradePost = () => {
     //data.photos = imageData;
 
     const response = await dispatch(createTradePost(data));
+    if (success) {
+      window.location.href = url; //もしかしたらこれで自在にリダイレクトできる
+      alert(messageFromState);
+    }
     // await axios.post('/api/v1/imageSave', imageData);
 
     if (createTradePost.rejected.match(response)) {
@@ -162,32 +168,37 @@ const TradePost = () => {
       <Container maxWidth="md" sx={{ py: 10 }}>
         <form onSubmit={handleSubmit(onSubmit)}>
           {/* 日付 */}
-          <FormControl sx={{ mb: 3, minWidth: 120 }}>
+          <FormControl
+            sx={{ mb: 2, minWidth: 120 }}
+            error={!!errors?.date?.message}
+          >
             <LocalizationProvider dateAdapter={DateFnsUtils}>
-              <Box sx={{ width: '25ch' }}>
-                <DatePicker
-                  label={formdata.date.label}
-                  value={value}
-                  onChange={handleChange}
-                  inputFormat="yyyy/MM/dd"
-                  mask="____/__/__"
-                  renderInput={(params) => (
-                    <TextField {...params} {...register('date')} />
-                  )}
-                  minDate={referenceDate}
-                />
-              </Box>
+              {/* <Box sx={{ width: '25ch' }}> */}
+              <DatePicker
+                label={formdata.date.label}
+                value={value}
+                onChange={handleChange}
+                inputFormat="yyyy/MM/dd"
+                mask="____/__/__"
+                renderInput={(params) => (
+                  <TextField {...params} {...register('date')} />
+                )}
+                minDate={referenceDate}
+              />
+              {/* </Box> */}
             </LocalizationProvider>
             <FormHelperText>
-              現在日時から1週間後以降の日付を入力してください。
+              {errors?.date?.message
+                ? errors?.date?.message
+                : '現在日時から1週間後以降の日付を入力してください。'}
             </FormHelperText>
           </FormControl>
 
           {/* タイトル */}
           <TextField
+            sx={{ mb: 3 }}
             variant="outlined"
             margin="normal"
-            required
             fullWidth
             id={formdata.title.id}
             label={formdata.title.label}
@@ -196,7 +207,7 @@ const TradePost = () => {
             helperText={errors?.title?.message}
             error={!!errors?.title}
             multiline
-            InputProps={{ style: { marginBottom: 3 } }}
+            //InputProps={{ style: { marginBottom: 3 } }}
           />
 
           {/* 上限人数 */}
@@ -230,6 +241,7 @@ const TradePost = () => {
           <FormControl
             id={''} //これはいいけどlabelを追加するとエラーになる。。
             fullWidth
+            sx={{ mb: 3 }}
             error={!!errors?.place?.message}
           >
             <InputLabel id="area-label">都道府県</InputLabel>
@@ -269,8 +281,9 @@ const TradePost = () => {
                 id={inputId}
                 type="file"
                 multiple
+                //name="photos[]"
                 accept="image/*,.png,.jpg,.jpeg,.gif"
-                {...register('photos')}
+                {...register('photos')} //ここにnameも含まれてる
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                   handleOnAddImage(e)
                 }

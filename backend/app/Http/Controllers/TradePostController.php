@@ -6,8 +6,10 @@ use App\Http\Requests\StoreTradePostRequest;
 use App\Http\Requests\UpdateTradePostRequest;
 use App\Models\TradePost;
 use App\Models\User;
+use App\Models\Image;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
 
 class TradePostController extends Controller
 {
@@ -40,12 +42,31 @@ class TradePostController extends Controller
      */
     public function store(StoreTradePostRequest $request)
     {
-        $tradeposts = TradePost::create($request->all());   //responseでtradepostを返しても、画面で使うわけではないから適当でいい
+        //$tradeposts = TradePost::create($request->all());   //responseでtradepostを返しても、画面で使うわけではないから適当でいい
         // return response()->json(
         //     $tradeposts,
         //     201
         // );
-        return response()->json(['success' => true, 'url' => '/users/:userId/top', 'success' => 'トレードの投稿が完了しました!'], 201);
+        $id = Auth::id();
+        Log::debug($id . "=ユーザID");
+        Log::debug($request->all());
+
+        $files = $request->file('photos');
+        Log::debug($files);
+        TradePost::create(
+            [
+                `user_id` => $id,
+                `title` => $request->title,
+                `maxCapa` => $request->maxCapa,
+                `place` => $request->place,
+                `description` => $request->description,
+                `date` => $request->date,
+                `thumbnail` => $files[0]->getClientOriginalName(),
+            ]
+        );
+
+
+        return response()->json(['success' => true, 'url' => "/users/$id/top", 'message' => 'トレードの投稿が完了しました!'], 201);
     }
 
     //一件表示
