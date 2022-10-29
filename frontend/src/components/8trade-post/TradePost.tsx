@@ -38,60 +38,43 @@ import { PREF_OPTIONS } from 'templates/todouhuken';
 
 type FormData = CreateTradePostRequest; //これでいいの？
 
-const formdata: Record<keyof FormData, { id: string; label: string }> = {
-  title: {
-    id: 'title',
-    label: 'タイトル',
-  },
-  date: {
-    id: 'date',
-    label: '開催日時を選択',
-  },
-  photos: {
-    id: 'photos',
-    label: '写真',
-  },
-  maxCapa: {
-    id: 'maxCapa',
-    label: '上限人数',
-  },
-  place: {
-    id: 'place',
-    label: '開催場所',
-  },
-  description: {
-    id: 'description',
-    label: '説明文',
-  },
-};
+// const formdata: Record<keyof FormData, { id: string; label: string }> = {
+//   title: {
+//     id: 'title',
+//     label: 'タイトル',
+//   },
+//   date: {
+//     id: 'date',
+//     label: '開催日時を選択',
+//   },
+//   photos: {
+//     id: 'photos',
+//     label: '写真',
+//   },
+//   maxCapa: {
+//     id: 'maxCapa',
+//     label: '上限人数',
+//   },
+//   place: {
+//     id: 'place',
+//     label: '開催場所',
+//   },
+//   description: {
+//     id: 'description',
+//     label: '説明文',
+//   },
+// };
 
 const maxCapa: number[] = [
   2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
 ];
 
-//var dt: Date = new Date();
-//var dtmin = dt.setDate(dt.getDate() + 10);
-
 const schema = yup.object().shape({
-  //  email: yup.string().label(formdata.email.label).email().required(),
-  //  password: yup
-  //    .string()
-  //    .label(formdata.password.label)
-  //    .required()
-  //    .min(8)
-  //    .max(20),
-
-  //title: yup.string().label(formdata.title.label).required().max(30),
-  title: yup.string().required('タイトルは必須項目です！！').max(30),
-  date: yup.string().required('日付の入力は必須です'),
-  place: yup.string().required('選択してください'), //dateじゃないことが判明
+  title: yup.string().required('タイトルは必須項目です。').max(30),
+  date: yup.string().required('日付の入力は必須です'), //dateじゃないことが判明
+  place: yup.string().required('選択してください'),
   maxCapa: yup.number().required('選択してください'),
-  description: yup
-    .string()
-    .label(formdata.description.label)
-    .required()
-    .min(30)
-    .max(300),
+  description: yup.string().required().min(30).max(300),
 });
 
 const TradePost = () => {
@@ -139,8 +122,8 @@ const TradePost = () => {
     data.photos = [...images];
     // var imageData: [] = [];
     // images.map((image) => {
-    //   imageData.append('images[]', image);
-    //   });
+    //   data.photos?.append('photos[]', image);
+    // });
     //data.photos = imageData;
 
     const response = await dispatch(createTradePost(data));
@@ -148,7 +131,6 @@ const TradePost = () => {
       window.location.href = url; //もしかしたらこれで自在にリダイレクトできる
       alert(messageFromState);
     }
-    // await axios.post('/api/v1/imageSave', imageData);
 
     if (createTradePost.rejected.match(response)) {
       setMessage(response.payload?.error?.message);
@@ -175,7 +157,7 @@ const TradePost = () => {
             <LocalizationProvider dateAdapter={DateFnsUtils}>
               {/* <Box sx={{ width: '25ch' }}> */}
               <DatePicker
-                label={formdata.date.label}
+                label="開催日時を選択"
                 value={value}
                 onChange={handleChange}
                 inputFormat="yyyy/MM/dd"
@@ -200,13 +182,12 @@ const TradePost = () => {
             variant="outlined"
             margin="normal"
             fullWidth
-            id={formdata.title.id}
-            label={formdata.title.label}
-            autoComplete={formdata.title.id}
+            id="title"
+            label="タイトル"
+            //autoComplete={formdata.title.id}
             {...register('title')} //yupがここで紐付けてる
             helperText={errors?.title?.message}
             error={!!errors?.title}
-            multiline
             //InputProps={{ style: { marginBottom: 3 } }}
           />
 
@@ -328,9 +309,9 @@ const TradePost = () => {
           <TextField
             variant="outlined"
             //required
-            id={formdata.description.id}
-            label={formdata.description.label}
-            autoComplete={formdata.description.id}
+            id="description"
+            label="説明文(開催場所の詳細などお書きください)"
+            //autoComplete={formdata.description.id}
             {...register('description')}
             helperText={errors?.description?.message}
             error={!!errors?.description}

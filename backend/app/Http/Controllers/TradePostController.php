@@ -34,12 +34,7 @@ class TradePostController extends Controller
             ->paginate(20);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \App\Http\Requests\StoreTradePostRequest  $request
-     * @return \Illuminate\Http\Response
-     */
+    //新規投稿
     public function store(StoreTradePostRequest $request)
     {
         //$tradeposts = TradePost::create($request->all());   //responseでtradepostを返しても、画面で使うわけではないから適当でいい
@@ -51,20 +46,29 @@ class TradePostController extends Controller
         Log::debug($id . "=ユーザID");
         Log::debug($request->all());
 
-        $files = $request->file('photos');
-        Log::debug($files);
-        TradePost::create(
-            [
-                `user_id` => $id,
-                `title` => $request->title,
-                `maxCapa` => $request->maxCapa,
-                `place` => $request->place,
-                `description` => $request->description,
-                `date` => $request->date,
-                `thumbnail` => $files[0]->getClientOriginalName(),
-            ]
-        );
-
+        //$files = $request->file('photos');
+        $thumbnail = $request->file('photos_0')->getClientOriginalName();
+        Log::debug($thumbnail);
+        // TradePost::create(
+        //     [
+        //         `user_id` => $id,
+        //         `title` => $request->get('title'),
+        //         `maxCapa` => $request->get('maxCapa'),
+        //         `place` => $request->get('place'),
+        //         `description` => $request->get('description'),
+        //         `date` => $request->get('date'),
+        //         `thumbnail` => $thumbnail,
+        //     ]
+        // );
+        $tradePost = new TradePost();
+        $tradePost->user_id = $id;
+        $tradePost->title = $request->get('title');
+        $tradePost->maxCapa = $request->get('maxCapa');
+        $tradePost->place = $request->get('place');
+        $tradePost->description = $request->get('description');
+        $tradePost->date = $request->get('date');
+        $tradePost->thumbnail = $thumbnail;
+        $tradePost->save();
 
         return response()->json(['success' => true, 'url' => "/users/$id/top", 'message' => 'トレードの投稿が完了しました!'], 201);
     }
