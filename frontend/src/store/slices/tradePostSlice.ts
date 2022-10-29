@@ -64,6 +64,7 @@ export const tradePostSlice = createSlice({
       state.loading = false;
       //const newDoc = action.payload.data;
       //state.data = [...state.data, { ...newDoc }]; //配列
+      console.log(action.payload.message);
       state.success = action.payload.success;
       state.message = action.payload.message;
       state.url = action.payload.url;
