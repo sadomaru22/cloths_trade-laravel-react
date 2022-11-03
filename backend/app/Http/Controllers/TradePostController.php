@@ -10,6 +10,8 @@ use App\Models\Image;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Exception;
 
 class TradePostController extends Controller
 {
@@ -45,21 +47,9 @@ class TradePostController extends Controller
         $id = Auth::id();
         Log::debug($id . "=ユーザID");
         Log::debug($request->all());
-
-        //$files = $request->file('photos');
-        $thumbnail = $request->file('photos_0')->getClientOriginalName();
+        $thumbnail = $request->file('photos_0')->getClientOriginalName();  //1枚目の画像
         Log::debug($thumbnail);
-        // TradePost::create(
-        //     [
-        //         `user_id` => $id,
-        //         `title` => $request->get('title'),
-        //         `maxCapa` => $request->get('maxCapa'),
-        //         `place` => $request->get('place'),
-        //         `description` => $request->get('description'),
-        //         `date` => $request->get('date'),
-        //         `thumbnail` => $thumbnail,
-        //     ]
-        // );
+        //投稿の保存
         $tradePost = new TradePost();
         $tradePost->user_id = $id;
         $tradePost->title = $request->get('title');
@@ -67,13 +57,35 @@ class TradePostController extends Controller
         $tradePost->place = $request->get('place');
         $tradePost->description = $request->get('description');
         $tradePost->date = $request->get('date');
-        $tradePost->thumbnail = $thumbnail;
+        $tradePost->thumbnail = 'storage/app/public' . $thumbnail;
         $tradePost->save();
 
+        //残りの画像の保存
+        //73行目で既にTradePostTへの保存が完了しているため、一番若いidがここで入れるtrade_post_idに該当するため、この取り方でいい。
+        //$trade_post_id = DB::select('select max(id) as id from trade_posts');
+        $trade_post_id = TradePost::max('id'); //こっちはどう？
+        try {
+            for ($i = 0; $i < 10; $i++) {
+                //Laravelのstorage/app/publicに全画像を保存
+                $index = $request->file('photos_' . $i);
+                if ($index) {
+                    $file_name = $index->getClientOriginalName();
+                    $index->storeAs('public', $file_name);  //まずはstorage/app/publicに画像を保存
+
+                    $images = new Image();   //ここでnewしないと最初の1件しかsave()されない
+                    //画像のパスをImagesTに保存
+                    $images->trade_post_id = $trade_post_id;
+                    Log::debug('89行目');
+                    $images->file_name = 'storage/app/public' . $file_name;
+                    $images->save();
+                };
+            };
+        } catch (\Exception $e) { //3枚の画像のリクエストが来た場合、4枚目以降はreturnに走るのでこれでいいはず。
+        };
         return response()->json(['success' => true, 'url' => "/users/$id/top", 'message' => 'トレードの投稿が完了しました!'], 201);
     }
 
-    //一件表示
+    //一件表示  //投稿に結びつく画像を取ってくるメソッドにする
     public function show(Request $request)
     {
         $id = $request->id;

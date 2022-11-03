@@ -3,7 +3,6 @@ import { AsyncThunkConfig } from 'store/thunks/config';
 import { TradePost } from 'models';
 import { apiClient, makePath } from 'utils/api';
 import { makeRejectValue } from 'store/thunks/utils';
-import { GET_CSRF_TOKEN_PATH } from 'config/api';
 
 // export type  CreateTradePostRequest = {
 //    title: string;
@@ -46,8 +45,6 @@ export const createTradePost = createAsyncThunk<
     },
   };
   try {
-    //await apiClient({ apiRoute: false }).get(GET_CSRF_TOKEN_PATH);
-
     const response = await apiClient().post(path, payload, config);
     return response?.data;
   } catch (error) {

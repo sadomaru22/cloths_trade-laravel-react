@@ -12,7 +12,6 @@ import {
   InputLabel,
   MenuItem,
   Select,
-  Box,
 } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -21,7 +20,7 @@ import DateFnsUtils from '@date-io/date-fns';
 import IconButton from '@mui/material/IconButton';
 import CancelIcon from '@mui/icons-material/Cancel';
 
-import { useAppDispatch, useAppSelector } from 'utils/hooks';
+import { useAppDispatch } from 'utils/hooks';
 import yup from 'templates/yup.locale'; //日本語化対応済み
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -35,35 +34,9 @@ import {
   createTradePost,
 } from 'store/thunks/trade_post';
 import { PREF_OPTIONS } from 'templates/todouhuken';
+import { store } from 'store';
 
-type FormData = CreateTradePostRequest; //これでいいの？
-
-// const formdata: Record<keyof FormData, { id: string; label: string }> = {
-//   title: {
-//     id: 'title',
-//     label: 'タイトル',
-//   },
-//   date: {
-//     id: 'date',
-//     label: '開催日時を選択',
-//   },
-//   photos: {
-//     id: 'photos',
-//     label: '写真',
-//   },
-//   maxCapa: {
-//     id: 'maxCapa',
-//     label: '上限人数',
-//   },
-//   place: {
-//     id: 'place',
-//     label: '開催場所',
-//   },
-//   description: {
-//     id: 'description',
-//     label: '説明文',
-//   },
-// };
+type FormData = CreateTradePostRequest;
 
 const maxCapa: number[] = [
   2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
@@ -79,9 +52,6 @@ const schema = yup.object().shape({
 
 const TradePost = () => {
   const dispatch = useAppDispatch();
-  const success = useAppSelector((state) => state.tradePost.success);
-  const messageFromState = useAppSelector((state) => state.tradePost.message);
-  const url = useAppSelector((state) => state.tradePost.url);
   const [message, setMessage] = useState<string | undefined>('');
   const {
     register,
@@ -127,8 +97,12 @@ const TradePost = () => {
     //data.photos = imageData;
 
     const response = await dispatch(createTradePost(data));
+    //const success = useAppSelector((state) => state.tradePost.success);
+    const success = store.getState().tradePost.success;
+    const messageFromState = store.getState().tradePost.message;
+    const url = store.getState().tradePost.url;
     if (success) {
-      window.location.href = url; //もしかしたらこれで自在にリダイレクトできる
+      window.location.href = url; //これで自在にリダイレクトできる
       alert(messageFromState);
     }
 
