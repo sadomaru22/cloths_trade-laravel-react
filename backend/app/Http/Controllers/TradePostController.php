@@ -57,7 +57,7 @@ class TradePostController extends Controller
         $tradePost->place = $request->get('place');
         $tradePost->description = $request->get('description');
         $tradePost->date = $request->get('date');
-        $tradePost->thumbnail = 'storage/app/public' . $thumbnail;
+        $tradePost->thumbnail = 'http://localhost/storage/' . $thumbnail;
         $tradePost->save();
 
         //残りの画像の保存
@@ -76,7 +76,7 @@ class TradePostController extends Controller
                     //画像のパスをImagesTに保存
                     $images->trade_post_id = $trade_post_id;
                     Log::debug('89行目');
-                    $images->file_name = 'storage/app/public' . $file_name;
+                    $images->file_name = 'http://localhost/storage/' . $file_name;
                     $images->save();
                 };
             };
