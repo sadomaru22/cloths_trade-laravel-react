@@ -12,7 +12,7 @@ import {
 } from 'pages/auth';
 import NotFound from 'pages/error/NotFound';
 //import { setFlash } from './store/slices/authSlice';
-import { useAppDispatch, useAppSelector, useQuery } from './utils/hooks';
+import { useAppSelector } from './utils/hooks';
 import SignIn from 'pages/auth/SignIn';
 import { isAfterRegistration, isSignedIn } from './utils/auth';
 import TopPage from 'pages/top/TopPage';
