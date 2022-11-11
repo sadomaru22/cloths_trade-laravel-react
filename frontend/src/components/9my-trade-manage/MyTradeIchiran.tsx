@@ -17,12 +17,12 @@ import { LinkButton } from 'templates';
 import { Avatar, Pagination } from '@mui/material';
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from 'utils/hooks';
-import { showallTradePost } from 'store/thunks/trade_post';
+import { showallTradePost, showoneTradePost } from 'store/thunks/trade_post';
 
 //一覧画面
 const MyTradeIchiran = () => {
   const dispatch = useAppDispatch();
-
+  console.log('25行目');
   //const userId = useAppSelector((state) => state.auth.user?.id);
   const userId = localStorage.getItem('userId');
   //const userName = useAppSelector((state) => state.auth.user?.name);
@@ -31,7 +31,12 @@ const MyTradeIchiran = () => {
   useEffect(() => {
     dispatch(showallTradePost(userId));
   }, [dispatch, userId]);
-  //console.log(posts);
+
+  //「詳細」ボタン押下時に投稿に紐づく画像をとる。
+  const onGetPhotos = async (id: string) => {
+    await dispatch(showoneTradePost(id));
+  };
+
   return (
     // <Ichiran
     // url={"mytrade-detail"}
@@ -91,8 +96,9 @@ const MyTradeIchiran = () => {
                 </CardContent>
                 <CardActions>
                   <LinkButton
+                    //onClick={() => onGetPhotos(row.id)}
                     size="small"
-                    to={{ pathname: `mytrade-detail/${row.id}` }}
+                    to={{ pathname: `mytrade-detail/${index}/${row.id}` }}
                   >
                     詳細ページへ
                   </LinkButton>

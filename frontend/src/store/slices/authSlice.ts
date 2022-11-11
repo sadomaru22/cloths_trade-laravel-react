@@ -4,17 +4,16 @@ import { Color } from '@material-ui/lab';
 import { User } from 'models/User';
 import {
   createUser,
-   fetchAuthUser,
-   sendEmailVerificationLink,
-   signInWithEmail,
-   updateProfile,
-   updatePassword,
-   forgotPassword,
-   resetPassword,
-   signOutFromAPI,
-   deleteAccount,
+  fetchAuthUser,
+  sendEmailVerificationLink,
+  signInWithEmail,
+  updateProfile,
+  updatePassword,
+  forgotPassword,
+  resetPassword,
+  signOutFromAPI,
+  deleteAccount,
 } from 'store/thunks/auth';
-
 
 /*
 ログイン・新規登録などのAPI連携をする際のSlice。コードは複雑やけど、やってることはappSliceと同じ
@@ -27,7 +26,6 @@ export type FlashNotificationProps = {
 };
 
 export type AuthState = {
-  //user: User | null;
   user: User | null;
   afterRegistration: boolean;
   signedIn: boolean;
@@ -40,7 +38,6 @@ export const initialAuthState = {
   flash: [] as AuthState['flash'],
 } as AuthState;
 
-
 //reducerについて、auth系はextraReducerにまとめ、それぞれpending, fullfilled, rejectedの時で処理を分ける。
 export const authSlice = createSlice({
   name: 'auth',
@@ -50,7 +47,8 @@ export const authSlice = createSlice({
       const { type, message } = action.payload;
       state.flash.push({ type, message });
     },
-    removeEmailVerificationPage(state) {   //EmailVerification.tsxのアンマウント時に使用
+    removeEmailVerificationPage(state) {
+      //EmailVerification.tsxのアンマウント時に使用
       state.afterRegistration = false;
     },
     signIn(state) {
@@ -67,7 +65,7 @@ export const authSlice = createSlice({
     });
     builder.addCase(createUser.fulfilled, (state, action) => {
       state.user = action.payload.user;
-      console.log("登録できてるか確認");
+      console.log('登録できてるか確認');
       console.log(state.user);
       state.afterRegistration = true;
       state.signedIn = true;
@@ -145,8 +143,8 @@ export const authSlice = createSlice({
       if (!state.user) return; // `null`を排除 (state.user?利用不可)
       state.loading = false;
       state.user.name = action.payload.name;
-      
-       if (state.user.email !== action.payload.email) {
+
+      if (state.user.email !== action.payload.email) {
         state.user.email = action.payload.email;
         state.user.emailVerifiedAt = null;
         state.flash.push({
