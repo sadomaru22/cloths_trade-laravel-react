@@ -10,6 +10,7 @@ use App\Models\Image;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
+use Intervention\Image\Facades\Image as InterventionImage;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Exception;
 
@@ -39,11 +40,6 @@ class TradePostController extends Controller
     //新規投稿
     public function store(StoreTradePostRequest $request)
     {
-        //$tradeposts = TradePost::create($request->all());   //responseでtradepostを返しても、画面で使うわけではないから適当でいい
-        // return response()->json(
-        //     $tradeposts,
-        //     201
-        // );
         $id = Auth::id();
         Log::debug($id . "=ユーザID");
         Log::debug($request->all());
@@ -70,17 +66,22 @@ class TradePostController extends Controller
                 $index = $request->file('photos_' . $i);
                 if ($index) {
                     $file_name = $index->getClientOriginalName();
-                    $index->storeAs('public', $file_name);  //まずはstorage/app/publicに画像を保存
-
-                    $images = new Image();   //ここでnewしないと最初の1件しかsave()されない
+                    //$index->storeAs('public', $file_name);  //まずはstorage/app/publicに画像を保存
+                    InterventionImage::make($index)->resize(510, 809, function ($constraint) {
+                        // 縦横比を保持したままにする
+                        $constraint->aspectRatio();
+                        // 小さい画像は大きくしない
+                        $constraint->upsize();
+                    })->save(storage_path('/app/public/' . $file_name));;
                     //画像のパスをImagesTに保存
+                    $images = new Image();   //ここでnewしないと最初の1件しかsave()されない
                     $images->trade_post_id = $trade_post_id;
                     Log::debug('89行目');
                     $images->file_name = 'http://localhost/storage/' . $file_name;
                     $images->save();
                 };
             };
-        } catch (\Exception $e) { //3枚の画像のリクエストが来た場合、4枚目以降はreturnに走るのでこれでいいはず。
+        } catch (\Exception $e) { //3枚の画像のリクエストが来た場合、4枚目以降はreturnに走るようにする。
         };
         return response()->json(['success' => true, 'url' => "/users/$id/top", 'message' => 'トレードの投稿が完了しました!'], 201);
     }
@@ -88,14 +89,15 @@ class TradePostController extends Controller
     //一件表示  //投稿に結びつく画像を取ってくるメソッドにする
     public function show(Request $request)
     {
-        $id = $request->id;
+        $id = $request->trade_post;
+        Log::debug($id);
         // 存在するレコードIDだったら
         if (TradePost::where('id', $id)->exists()) {
-            $result = TradePost::find($id);
-            return response()->json(
-                $result,
-                200
-            );
+            //$dataOne = TradePost::find($id);
+            $photos = Image::where('trade_post_id', $id)->pluck('file_name');
+            Log::debug($photos);
+            return response()->json(['photos' => $photos], 200);
+            //return Image::where('trade_post_id', $id)->pluck('file_name');
         } else {
             return response()->json([
                 'message' => 'Show failed...',

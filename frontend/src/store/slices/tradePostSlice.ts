@@ -1,36 +1,38 @@
 import { createSlice } from '@reduxjs/toolkit';
-
 import {
   ShowAllTradePostResponse,
   createTradePost,
   showallTradePost,
   showoneTradePost,
+  ShowOneTradePostResponse,
 } from 'store/thunks/trade_post';
 import { searchBySbTradePost2 } from 'store/thunks/trade_post2';
 
-type TradePostState = {
+export type TradePostState = {
   loading: boolean;
   success: boolean;
   message: string;
   url: string;
   //infoBox: { open: boolean } & InfoBoxAction;
-  //docs: TaskBoardsCollection;
-} & ShowAllTradePostResponse;
+} & ShowAllTradePostResponse &
+  ShowOneTradePostResponse;
 
-const initialState = {
+export const initialTradePostState = {
   loading: false,
   data: [],
   error: false,
-  success: false, //新規追加下三つ(CreateTradePostResponse)
+  success: false,
   message: '',
   url: '',
-  links: {} as TradePostState['links'], //必須(ページネーション)
-  meta: {} as TradePostState['meta'], //必須(ページネーション)
-} as TradePostState;
+  //dataOne: {},
+  //photos: [],
+  links: {} as TradePostState['links'],
+  meta: {} as TradePostState['meta'],
+} as unknown as TradePostState;
 
 export const tradePostSlice = createSlice({
   name: 'tradePost', //これがActiontypeと同じ、あと以下は従来のReduxと変わらない
-  initialState,
+  initialState: initialTradePostState,
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(showallTradePost.pending, (state) => {
@@ -41,6 +43,7 @@ export const tradePostSlice = createSlice({
       state.links = action.payload.links || {};
       state.meta = action.payload.meta || {};
       state.loading = false;
+      console.log(state.data);
     });
     builder.addCase(showallTradePost.rejected, (state) => {
       state.loading = false;
@@ -50,7 +53,11 @@ export const tradePostSlice = createSlice({
       state.loading = true;
     });
     builder.addCase(showoneTradePost.fulfilled, (state, action) => {
-      state.data.push(action.payload.data); //= action.payload.data;   これでいけるのか？？
+      //state.data.push(action.payload.data); //= action.payload.data;
+      //state.dataOne = action.payload.dataOne;
+      state.photos = action.payload.photos;
+      console.log(action.payload.photos + '=action.payload.photos');
+      console.log(state.photos + '=state.photos');
       state.loading = false;
     });
     builder.addCase(showoneTradePost.rejected, (state) => {
