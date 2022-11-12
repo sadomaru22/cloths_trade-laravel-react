@@ -12,20 +12,45 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { BaseLayout } from 'layouts';
 import { LinkButton } from 'templates';
-import { Avatar, Pagination } from '@mui/material';
+import { Avatar, Button, Pagination } from '@mui/material';
 import { useEffect } from 'react';
-import { useAppDispatch, useAppSelector } from 'utils/hooks';
-import { showallTradePost } from 'store/thunks/trade_post';
+import { useAppDispatch, useAppSelector, useQuery } from 'utils/hooks';
+import {
+  showallTradePost,
+  ShowAllTradePostRequest,
+  showoneTradePost,
+} from 'store/thunks/trade_post';
+import { useHistory } from 'react-router-dom';
 
 const OtherUserIchiran = () => {
   const dispatch = useAppDispatch();
+  const history = useHistory();
   const userId = '1'; //後でuseParamsに変える(OtherUserTopできたら)
   const userName = 'useLocation'; //後でuseLocationに変える(OtherUserTopできたら)
-
+  const query = { page: useQuery().get('page') || '' };
   const posts = useAppSelector((state) => state.tradePost.data);
+  const count = useAppSelector((state) => state.tradePost.meta.last_page);
+  const currentPage = useAppSelector(
+    (state) => state.tradePost.meta.current_page
+  );
   useEffect(() => {
-    dispatch(showallTradePost(userId));
-  }, [dispatch, userId]);
+    const request: ShowAllTradePostRequest = {
+      userId: userId,
+      page: query.page,
+    };
+    dispatch(showallTradePost(request));
+  }, [dispatch, query.page, userId]);
+
+  //ページネーション
+  const handleChange = (_e: React.ChangeEvent<unknown>, page: number) =>
+    history.push(`?page=${String(page)}`);
+
+  //「詳細」ボタン押下時に投稿に紐づく画像をとってから、遷移する。
+  const onGetPhotos = async (index: number, id: string) => {
+    await dispatch(showoneTradePost(id));
+    history.push(`trade-detail/${index}`);
+  };
+
   return (
     // <Ichiran
     // url={"trade-detail"}
@@ -56,7 +81,6 @@ const OtherUserIchiran = () => {
               sx={{ marginLeft: 8 }}
             >
               {userName} さんの投稿一覧
-              {/* 渡邊さんの投稿一覧 */}
             </Typography>
           </Grid>
         </Grid>
@@ -77,28 +101,34 @@ const OtherUserIchiran = () => {
                 <CardMedia
                   component="img"
                   sx={{ pt: '26.25%' }}
-                  image="https://source.unsplash.com/random"
-                  alt="random"
+                  image={`${row.thumbnail}`}
                 />
                 <CardContent sx={{ flexGrow: 1 }}>
                   <Typography>{row.description.substring(0, 45)}...</Typography>
                 </CardContent>
                 <CardActions>
-                  <LinkButton
-                    size="small"
-                    to={{ pathname: `trade-detail/${row.id}`, state: userName }}
+                  <Button
+                    variant="contained"
+                    onClick={() => onGetPhotos(index, row.id)}
                   >
                     詳細ページへ
-                  </LinkButton>
+                  </Button>
                 </CardActions>
               </Card>
             </Grid>
           ))}
         </Grid>
-        <Pagination
-          count={5}
-          sx={{ display: 'flex', justifyContent: 'center', mt: 5 }}
-        />
+        {posts.length > 0 && count && currentPage && (
+          <Pagination
+            count={count}
+            page={currentPage}
+            siblingCount={2}
+            color="primary"
+            size="large"
+            onChange={handleChange}
+            sx={{ display: 'flex', justifyContent: 'center', mt: 5 }}
+          />
+        )}
       </Container>
     </BaseLayout>
   );

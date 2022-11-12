@@ -50,21 +50,21 @@ export const apiClient = (options?: ApiClientOption) => {
   const isNotIntercepted = () => options?.intercepted === false;
 
   const apiClient = axios.create({
-    baseURL: isNonApiRoute() ? API_HOST : API_ROUTE,   //可変にする
-    withCredentials: true,  //これによってSanctumのCORSに対応する。
+    baseURL: isNonApiRoute() ? API_HOST : API_ROUTE, //可変にする
+    withCredentials: true, //これによってSanctumのCORSに対応する。
   });
 
   if (isNotIntercepted()) return apiClient;
 
-  //responseのケースごとにメッセージを挟む処理。
+  //responseのケースごとにFlashメッセージを挟む処理。
   apiClient.interceptors.response.use(
     (response) => response, // response = 2xx の場合は素通り
     async (error) => {
       const { default: store } =
-      //   process.env.NODE_ENV === 'test'   //testモードだった時
-      //     ? await import('mocks/store')
-      //     :
-           await import('store');
+        //   process.env.NODE_ENV === 'test'   //testモードだった時
+        //     ? await import('mocks/store')
+        //     :
+        await import('store');
       const { setFlash, signOut } = await import('store/slices/authSlice');
 
       if (!axios.isAxiosError(error)) return Promise.reject(error);

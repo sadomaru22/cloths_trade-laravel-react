@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Auth;
 use Intervention\Image\Facades\Image as InterventionImage;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Exception;
+use App\Http\Resources\TradePostCollection;
 
 class TradePostController extends Controller
 {
@@ -30,11 +31,10 @@ class TradePostController extends Controller
      */
     public function index($user)
     {
-        //Log::debug($user);  //テスト用
         // Viewの代わりにJSONとして返却
-        return TradePost::where('user_id', $user)
-            ->orderBy('date', 'desc')   //日付降順
-            ->paginate(20);
+        return new TradePostCollection(
+            TradePost::where('user_id', $user)->orderBy('date', 'desc')->paginate(12)
+        );
     }
 
     //新規投稿

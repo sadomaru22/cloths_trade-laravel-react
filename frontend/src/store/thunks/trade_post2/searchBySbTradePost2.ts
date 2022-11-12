@@ -7,7 +7,10 @@ import { apiClient, ResponseWithPagination } from 'utils/api';
 export type SearchBySbTradePost2Response = ResponseWithPagination<TradePost>;
 
 //export type SearchBySbTradePost2Request = FormEvent<HTMLFormElement>;
-export type SearchBySbTradePost2Request = string | undefined;
+export type SearchBySbTradePost2Request = {
+  place: any;
+  page?: string;
+};
 
 export const searchBySbTradePost2 = createAsyncThunk<
   SearchBySbTradePost2Response,
@@ -15,15 +18,13 @@ export const searchBySbTradePost2 = createAsyncThunk<
   AsyncThunkConfig
 >('tradePost/searchBySbTradePost2', async (payload, thunkApi) => {
   //payloadにlabelが渡ってくる。
-  const place = payload;
+  const { place, page } = payload;
   console.log(place);
   //const path = makePath(['trade_posts', place], ['searchBySb']);
   const path = `/trade_posts/searchBySb/${place}`;
 
   try {
-    //await apiClient({ apiRoute: false }).get(GET_CSRF_TOKEN_PATH);
-    const response = await apiClient().get(path);
-
+    const response = await apiClient().get(path, { params: { page } });
     return response?.data;
   } catch (error: any) {
     return thunkApi.rejectWithValue(makeRejectValue(error.response.data));
