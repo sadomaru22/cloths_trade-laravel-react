@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
@@ -7,29 +7,52 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { BaseLayout } from 'layouts';
-import { LinkButton } from 'templates';
 import { Button, Pagination } from '@mui/material';
-import { useAppDispatch, useAppSelector } from 'utils/hooks';
+import { useAppDispatch, useAppSelector, useQuery } from 'utils/hooks';
 import { useHistory, useParams } from 'react-router-dom';
-import { searchBySbTradePost2 } from 'store/thunks/trade_post2';
+import {
+  searchBySbTradePost2,
+  SearchBySbTradePost2Request,
+} from 'store/thunks/trade_post2';
+import { showoneTradePost } from 'store/thunks/trade_post';
 
 const SearchResultIchiran = () => {
   const dispatch = useAppDispatch();
+  const history = useHistory();
+  const userId = localStorage.getItem('userId');
   const params: { place: string } = useParams();
   const place = params.place;
-  let posts = useAppSelector((state) => state.tradePost.data);
+  const query = { page: useQuery().get('page') || '' };
+  const posts = useAppSelector((state) => state.tradePost.data); //ここからmapなどで展開、かずぶん。
+  const count = useAppSelector((state) => state.tradePost.meta.last_page);
+  const currentPage = useAppSelector(
+    (state) => state.tradePost.meta.current_page
+  );
   console.log(posts);
   useEffect(() => {
-    dispatch(searchBySbTradePost2(place));
-  }, [dispatch, place]);
-  // const [isPosts, setIsPosts] = useState(false);
-  // if ((posts = [])) {
-  //   setIsPosts(true);
-  // }
-  const history = useHistory();
+    const request: SearchBySbTradePost2Request = {
+      place: place,
+      page: query.page,
+    };
+    dispatch(searchBySbTradePost2(request));
+  }, [dispatch, place, query.page]);
+
+  //戻る
   const onClickBack = () => {
-    history.goBack();
+    history.push(`/users/${userId}/top`); //この画面だけは、history.pushで遷移してきているため別の方法で遷移
+    // window.location.href = `/users/${userId}/top`;
   };
+
+  //ページネーション
+  const handleChange = (_e: React.ChangeEvent<unknown>, page: number) =>
+    history.push(`?page=${String(page)}`);
+
+  //「詳細」ボタン押下時に投稿に紐づく画像をとってから、遷移する。
+  const onGetPhotos = async (index: number, id: string) => {
+    await dispatch(showoneTradePost(id));
+    history.push(`trade-detail/${index}`);
+  };
+
   return (
     <BaseLayout subtitle="Album">
       <Container sx={{ py: 8 }} maxWidth="md">
@@ -40,7 +63,8 @@ const SearchResultIchiran = () => {
               color="textSecondary"
               sx={{ marginLeft: 8 }}
             >
-              "{place}"の検索結果は、{posts.length}件でした。
+              "{place}"の検索結果は、{posts.length}件でした。{' '}
+              {/*これでは、paginationで分割されたときに対応できない*/}
             </Typography>
           </Grid>
         </Grid>
@@ -60,28 +84,35 @@ const SearchResultIchiran = () => {
                 <Typography>日付：{row.date}</Typography>
                 <CardMedia
                   component="img"
-                  sx={{ pt: '26.25%' }}
+                  sx={{ pt: '16.25%' }}
                   image={`${row.thumbnail}`}
                 />
                 <CardContent sx={{ flexGrow: 1 }}>
                   <Typography>{row.description.substring(0, 45)}...</Typography>
                 </CardContent>
                 <CardActions>
-                  <LinkButton
-                    size="small"
-                    to={{ pathname: `trade-detail/${row.id}` }}
+                  <Button
+                    variant="contained"
+                    onClick={() => onGetPhotos(index, row.id)}
                   >
                     詳細ページへ
-                  </LinkButton>
+                  </Button>
                 </CardActions>
               </Card>
             </Grid>
           ))}
         </Grid>
-        <Pagination
-          count={5}
-          sx={{ display: 'flex', justifyContent: 'center', mt: 5 }}
-        />
+        {posts.length > 0 && count && currentPage && (
+          <Pagination
+            count={count}
+            page={currentPage}
+            siblingCount={2}
+            color="primary"
+            size="large"
+            onChange={handleChange}
+            sx={{ display: 'flex', justifyContent: 'center', mt: 5 }}
+          />
+        )}
         <Button onClick={onClickBack}>一覧に戻る</Button>
       </Container>
     </BaseLayout>

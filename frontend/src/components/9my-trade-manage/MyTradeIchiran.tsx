@@ -10,29 +10,46 @@ import Grid from '@mui/material/Grid';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-//import Link from '@mui/material/Link';
 //import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import { BaseLayout } from 'layouts';
-import { LinkButton } from 'templates';
 import { Avatar, Button, Pagination } from '@mui/material';
 import { useEffect } from 'react';
-import { useAppDispatch, useAppSelector } from 'utils/hooks';
-import { showallTradePost, showoneTradePost } from 'store/thunks/trade_post';
+import { useAppDispatch, useAppSelector, useQuery } from 'utils/hooks';
+import {
+  showallTradePost,
+  ShowAllTradePostRequest,
+  showoneTradePost,
+} from 'store/thunks/trade_post';
 import { useHistory } from 'react-router-dom';
 
-//一覧画面
 const MyTradeIchiran = () => {
   const dispatch = useAppDispatch();
   const history = useHistory();
-  console.log('25行目');
-  //const userId = useAppSelector((state) => state.auth.user?.id);
   const userId = localStorage.getItem('userId');
-  //const userName = useAppSelector((state) => state.auth.user?.name);
+  //const userId = useAppSelector((state) => state.auth.user?.id);
   const userName = localStorage.getItem('userName');
+  const query = { page: useQuery().get('page') || '' };
   const posts = useAppSelector((state) => state.tradePost.data); //ここからmapなどで展開、かずぶん。
+  const count = useAppSelector((state) => state.tradePost.meta.last_page);
+  const currentPage = useAppSelector(
+    (state) => state.tradePost.meta.current_page
+  );
   useEffect(() => {
-    dispatch(showallTradePost(userId));
-  }, [dispatch, userId]);
+    const request: ShowAllTradePostRequest = {
+      userId: userId,
+      page: query.page,
+    };
+    dispatch(showallTradePost(request));
+  }, [dispatch, query.page, userId]);
+
+  //戻る
+  const onClickBack = () => {
+    history.push(`users/${userId}/top`);
+  };
+
+  //ページネーション
+  const handleChange = (_e: React.ChangeEvent<unknown>, page: number) =>
+    history.push(`?page=${String(page)}`);
 
   //「詳細」ボタン押下時に投稿に紐づく画像をとってから、遷移する。
   const onGetPhotos = async (index: number, id: string) => {
@@ -116,10 +133,18 @@ const MyTradeIchiran = () => {
             </Grid>
           ))}
         </Grid>
-        <Pagination
-          count={5}
-          sx={{ display: 'flex', justifyContent: 'center', mt: 5 }}
-        />
+        {posts.length > 0 && count && currentPage && (
+          <Pagination
+            count={count}
+            page={currentPage}
+            siblingCount={2}
+            color="primary"
+            size="large"
+            onChange={handleChange}
+            sx={{ display: 'flex', justifyContent: 'center', mt: 5 }}
+          />
+        )}
+        <Button onClick={onClickBack}>一覧に戻る</Button>
       </Container>
     </BaseLayout>
   );

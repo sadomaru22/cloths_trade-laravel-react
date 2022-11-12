@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\TradePostCollection;
 use App\Models\SankaFlag;
 use App\Models\TradePost;
 use App\Models\User;
@@ -21,7 +22,7 @@ class TradePost2Controller extends Controller
             ['user_id', '=', $request->id],
             ['date', '<', now()],
         ])
-            ->paginate(20);
+            ->paginate(12);
     }
 
     //参加予定のトレード一覧
@@ -104,29 +105,11 @@ class TradePost2Controller extends Controller
         );
     }
 
-    public function searchBySb(Request $request, $place)
+    public function searchBySb($place)
     {
         Log::debug($place);
-        // 渡ってきた都道府県名と一致するものを探す
-        $result = TradePost::where('place', 'like', "%$place%")
+        return new TradePostCollection(TradePost::where('place', 'like', "%$place%")
             ->orderBy('date', 'desc')   //日付降順
-            ->paginate(20);
-
-        //Log::debug("messagefrom searchBySb" . $request);
-        // 該当のトレードがあればjsonで結果を返す  //とりあえずこの実装でresponseは返せる
-        Log::debug($result);
-        return $result
-            ? response()->json($result, 200)  //urlとsuccess返すん一旦やめで。
-            : response()->json(['message' => '該当のトレードはありませんでした。']);
-
-        // $path = $request->session()->get('url.intended');
-        // $url = $path
-        //     ? url($path . '/searchResult')
-        //     : url(env('SPA_URL') . '/login');
-
-        //return redirect(RouteServiceProvider::HOME);;
-
-        //response()->header('Access-Control-Allow-Origin', '*');
-        //return redirect(env('SPA_URL') . "/searchResult");
+            ->paginate(12));
     }
 }

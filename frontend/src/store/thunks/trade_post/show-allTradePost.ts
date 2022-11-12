@@ -6,19 +6,22 @@ import { apiClient, makePath, ResponseWithPagination } from 'utils/api';
 
 export type ShowAllTradePostResponse = ResponseWithPagination<TradePost>;
 
-export type ShowAllTradePostRequest = any; //いろんなとこで使うので
+export type ShowAllTradePostRequest = {
+  userId: any;
+  page?: string;
+};
 
 export const showallTradePost = createAsyncThunk<
   ShowAllTradePostResponse,
   ShowAllTradePostRequest,
   AsyncThunkConfig
 >('tradePost/showallTradePost', async (payload, thunkApi) => {
-  const userId = payload;
+  const { userId, page } = payload;
   console.log(userId);
   const path = makePath(['users', userId], ['trade_posts']);
 
   try {
-    const response = await apiClient().get(path);
+    const response = await apiClient().get(path, { params: { page } });
     return response?.data;
   } catch (error: any) {
     return thunkApi.rejectWithValue(makeRejectValue(error.response.data));
