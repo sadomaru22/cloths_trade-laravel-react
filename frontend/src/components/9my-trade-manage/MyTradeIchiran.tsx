@@ -14,14 +14,16 @@ import Container from '@mui/material/Container';
 //import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import { BaseLayout } from 'layouts';
 import { LinkButton } from 'templates';
-import { Avatar, Pagination } from '@mui/material';
+import { Avatar, Button, Pagination } from '@mui/material';
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from 'utils/hooks';
 import { showallTradePost, showoneTradePost } from 'store/thunks/trade_post';
+import { useHistory } from 'react-router-dom';
 
 //一覧画面
 const MyTradeIchiran = () => {
   const dispatch = useAppDispatch();
+  const history = useHistory();
   console.log('25行目');
   //const userId = useAppSelector((state) => state.auth.user?.id);
   const userId = localStorage.getItem('userId');
@@ -32,9 +34,10 @@ const MyTradeIchiran = () => {
     dispatch(showallTradePost(userId));
   }, [dispatch, userId]);
 
-  //「詳細」ボタン押下時に投稿に紐づく画像をとる。
-  const onGetPhotos = async (id: string) => {
+  //「詳細」ボタン押下時に投稿に紐づく画像をとってから、遷移する。
+  const onGetPhotos = async (index: number, id: string) => {
     await dispatch(showoneTradePost(id));
+    history.push(`mytrade-detail/${index}`);
   };
 
   return (
@@ -95,13 +98,19 @@ const MyTradeIchiran = () => {
                   <Typography>{row.description.substring(0, 45)}...</Typography>
                 </CardContent>
                 <CardActions>
-                  <LinkButton
+                  {/* <LinkButton
                     //onClick={() => onGetPhotos(row.id)}
                     size="small"
                     to={{ pathname: `mytrade-detail/${index}/${row.id}` }}
                   >
                     詳細ページへ
-                  </LinkButton>
+                  </LinkButton> */}
+                  <Button
+                    variant="contained"
+                    onClick={() => onGetPhotos(index, row.id)}
+                  >
+                    詳細ページへ
+                  </Button>
                 </CardActions>
               </Card>
             </Grid>
