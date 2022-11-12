@@ -83,11 +83,15 @@ export const tradePostSlice = createSlice({
 
     builder.addCase(searchBySbTradePost2.pending, (state) => {
       state.loading = true;
+      // state.url = ''; //初期化
+      // state.success = false;
     });
     builder.addCase(searchBySbTradePost2.fulfilled, (state, action) => {
       state.data = action.payload.data || [];
       state.links = action.payload.links || {};
       state.meta = action.payload.meta || {};
+      // state.success = action.payload.success;
+      // state.url = action.payload.url;
       state.loading = false;
       console.log(state.data);
     });

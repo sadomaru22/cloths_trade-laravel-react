@@ -72,15 +72,16 @@ const Routes = () => {
       <GuestRoute exact path="/forgot-password" component={ForgotPassword} />
       <Route exact path="/reset-password" component={ResetPassword} />
       <Route exact path="/users/:userId/top" component={TopPage} />
-      <Route exact path="/searchResult" component={SearchResultIchiran} />
+      <Route
+        exact
+        path="/searchResult/:place"
+        component={SearchResultIchiran}
+      />
       <Route exact path="/ichiran" component={Ichiran} />
       <Route exact path="/detail" component={Detail} />
       <Route exact path="/other-user" component={OtheUserTop} />
       <Route exact path="/trade-ichiran/:userId" component={OtherUserIchiran} />
-      <Route
-        path="/trade-ichiran/trade-detail/:id"
-        component={OtherUserDetail}
-      />{' '}
+      <Route path="/trade-detail/:id" component={OtherUserDetail} />
       {/*URLによって表示ページが変わる(Dynamic Route)の場合、exactはいらない*/}
       <Route exact path="/past-trade-ichiran" component={PastIchiran} />
       <Route path="/past-trade-detail/:id" component={PastDetail} />

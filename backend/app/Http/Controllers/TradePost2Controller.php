@@ -108,16 +108,15 @@ class TradePost2Controller extends Controller
     {
         Log::debug($place);
         // 渡ってきた都道府県名と一致するものを探す
-        $result = TradePost::where('place', 'like', "%$place%")->get();
+        $result = TradePost::where('place', 'like', "%$place%")
+            ->orderBy('date', 'desc')   //日付降順
+            ->paginate(20);
 
         //Log::debug("messagefrom searchBySb" . $request);
         // 該当のトレードがあればjsonで結果を返す  //とりあえずこの実装でresponseは返せる
         Log::debug($result);
         return $result
-            ? response()->json(
-                $result,
-                200
-            )
+            ? response()->json($result, 200)  //urlとsuccess返すん一旦やめで。
             : response()->json(['message' => '該当のトレードはありませんでした。']);
 
         // $path = $request->session()->get('url.intended');
