@@ -5,6 +5,8 @@ import {
   showallTradePost,
   showoneTradePost,
   ShowOneTradePostResponse,
+  getOtherUser,
+  GetOtherUserResponse,
 } from 'store/thunks/trade_post';
 import { searchBySbTradePost2 } from 'store/thunks/trade_post2';
 
@@ -15,7 +17,8 @@ export type TradePostState = {
   url: string;
   //infoBox: { open: boolean } & InfoBoxAction;
 } & ShowAllTradePostResponse &
-  ShowOneTradePostResponse;
+  ShowOneTradePostResponse &
+  GetOtherUserResponse;
 
 export const initialTradePostState = {
   loading: false,
@@ -53,11 +56,8 @@ export const tradePostSlice = createSlice({
       state.loading = true;
     });
     builder.addCase(showoneTradePost.fulfilled, (state, action) => {
-      //state.data.push(action.payload.data); //= action.payload.data;
       //state.dataOne = action.payload.dataOne;
       state.photos = action.payload.photos;
-      console.log(action.payload.photos + '=action.payload.photos');
-      console.log(state.photos + '=state.photos');
       state.loading = false;
     });
     builder.addCase(showoneTradePost.rejected, (state) => {
@@ -96,6 +96,18 @@ export const tradePostSlice = createSlice({
       console.log(state.data);
     });
     builder.addCase(searchBySbTradePost2.rejected, (state) => {
+      state.loading = false;
+    });
+
+    builder.addCase(getOtherUser.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(getOtherUser.fulfilled, (state, action) => {
+      state.user = action.payload.user;
+      console.log(action.payload.user + '=action.payload.user');
+      console.log(state.user + '=state.user');
+    });
+    builder.addCase(getOtherUser.rejected, (state) => {
       state.loading = false;
     });
   },

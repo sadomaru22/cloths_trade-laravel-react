@@ -12,7 +12,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 //import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import { BaseLayout } from 'layouts';
-import { Avatar, Button, Pagination } from '@mui/material';
+import { Avatar, Button, Link, Pagination } from '@mui/material';
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector, useQuery } from 'utils/hooks';
 import {
@@ -54,7 +54,7 @@ const MyTradeIchiran = () => {
   //「詳細」ボタン押下時に投稿に紐づく画像をとってから、遷移する。
   const onGetPhotos = async (index: number, id: string) => {
     await dispatch(showoneTradePost(id));
-    history.push(`mytrade-detail/${index}`);
+    history.push({ pathname: `mytrade-detail/${index}`, state: userName });
   };
 
   return (
@@ -74,11 +74,13 @@ const MyTradeIchiran = () => {
       <Container sx={{ py: 8 }} maxWidth="md">
         <Grid container sx={{ marginBottom: 8 }}>
           <Grid item>
-            <Avatar
-              alt="Remy Sharp"
-              src="/static/images/avatar/1.jpg"
-              sx={{ width: '6rem', height: '6rem' }}
-            />
+            <Link href="account" sx={{ textDecoration: 'none' }}>
+              <Avatar
+                alt="Remy Sharp"
+                src="/static/images/avatar/1.jpg" //ここにuser.iconが入る
+                sx={{ width: '6rem', height: '6rem' }}
+              />
+            </Link>
           </Grid>
           <Grid item>
             <Typography

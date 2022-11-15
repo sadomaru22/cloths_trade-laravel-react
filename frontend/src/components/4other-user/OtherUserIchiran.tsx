@@ -11,14 +11,14 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { BaseLayout } from 'layouts';
-import { LinkButton } from 'templates';
-import { Avatar, Button, Pagination } from '@mui/material';
+import { Avatar, Button, Link, Pagination } from '@mui/material';
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector, useQuery } from 'utils/hooks';
 import {
   showallTradePost,
   ShowAllTradePostRequest,
   showoneTradePost,
+  getOtherUser,
 } from 'store/thunks/trade_post';
 import { useHistory } from 'react-router-dom';
 
@@ -46,9 +46,10 @@ const OtherUserIchiran = () => {
     history.push(`?page=${String(page)}`);
 
   //「詳細」ボタン押下時に投稿に紐づく画像をとってから、遷移する。
-  const onGetPhotos = async (index: number, id: string) => {
-    await dispatch(showoneTradePost(id));
-    history.push(`trade-detail/${index}`);
+  const onGetPhotos = async (index: number, id: string, userId: string) => {
+    await dispatch(showoneTradePost(id)); //画像
+    await dispatch(getOtherUser(userId)); //多分不要。
+    history.push(`/trade-detail/${index}`);
   };
 
   return (
@@ -68,11 +69,16 @@ const OtherUserIchiran = () => {
       <Container sx={{ py: 8 }} maxWidth="md">
         <Grid container sx={{ marginBottom: 8 }}>
           <Grid item>
-            <Avatar
-              alt="Remy Sharp"
-              src="/static/images/avatar/1.jpg"
-              sx={{ width: '6rem', height: '6rem' }}
-            />
+            <Link
+              href={`/other-user/${userId}`}
+              sx={{ textDecoration: 'none' }}
+            >
+              <Avatar
+                alt="Remy Sharp"
+                src="/static/images/avatar/1.jpg"
+                sx={{ width: '6rem', height: '6rem' }}
+              />
+            </Link>
           </Grid>
           <Grid item>
             <Typography
@@ -109,7 +115,7 @@ const OtherUserIchiran = () => {
                 <CardActions>
                   <Button
                     variant="contained"
-                    onClick={() => onGetPhotos(index, row.id)}
+                    onClick={() => onGetPhotos(index, row.id, row.user_id)}
                   >
                     詳細ページへ
                   </Button>

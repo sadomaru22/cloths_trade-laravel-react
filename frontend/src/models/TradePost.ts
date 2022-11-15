@@ -1,7 +1,7 @@
 import { DocumentBase } from 'models';
 
 export type TradePost = {
-  user_id: number;
+  user_id: string;
   title: string;
   date: Date;
   sankasya: number; //default0

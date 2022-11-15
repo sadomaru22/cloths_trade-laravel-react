@@ -35,6 +35,10 @@ class User extends Authenticatable implements MustVerifyEmail
     //  */
     // protected $keyType = 'string';
 
+
+    //id以外は自由にupdate、insertしてOK
+    protected $guarded = ['id'];
+
     /**
      * The attributes that are mass assignable.
      *

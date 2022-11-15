@@ -4,9 +4,11 @@ use App\Http\Controllers\SinseiController;
 use App\Http\Resources\UserResource;
 use App\Http\Controllers\TradePostController;
 use App\Http\Controllers\TradePost2Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Log;
 
 /*
 |--------------------------------------------------------------------------
@@ -53,6 +55,10 @@ Route::group([
     |--------------------------------------------------------------
     */
     Route::apiResource('/users/{user}/trade_posts', TradePostController::class);
+    Route::get('/get-other-user/{user}', function ($user) {
+        Log::debug($user);
+        return new UserResource(User::find($user));
+    });
 
     /*
     |--------------------------------------------------------------
