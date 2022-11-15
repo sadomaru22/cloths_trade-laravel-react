@@ -79,8 +79,8 @@ const Routes = () => {
       />
       <Route exact path="/ichiran" component={Ichiran} />
       <Route exact path="/detail" component={Detail} />
-      <Route exact path="/other-user" component={OtheUserTop} />
-      <Route exact path="/trade-ichiran/:userId" component={OtherUserIchiran} />
+      <Route exact path="/other-user/:id" component={OtheUserTop} />
+      <Route exact path="/trade-ichiran/:id" component={OtherUserIchiran} />
       <Route path="/trade-detail/:id" component={OtherUserDetail} />
       {/*URLによって表示ページが変わる(Dynamic Route)の場合、exactはいらない*/}
       <Route exact path="/past-trade-ichiran" component={PastIchiran} />

@@ -1,5 +1,12 @@
-import { useHistory, useParams } from 'react-router-dom';
-import { Grid, Typography, Avatar, Button, Container } from '@mui/material';
+import { useHistory, useLocation, useParams } from 'react-router-dom';
+import {
+  Grid,
+  Typography,
+  Avatar,
+  Button,
+  Container,
+  Link,
+} from '@mui/material';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import { BaseLayout } from 'layouts';
@@ -8,14 +15,14 @@ import { LinkButton } from 'templates';
 import { useAppSelector } from 'utils/hooks';
 
 const MyTradeDetail = () => {
-  const userName = localStorage.getItem('userName'); //これもuseLocationでいいのでは？
+  //const userName = localStorage.getItem('userName'); //これもuseLocationでいいのでは？
+  const history = useHistory();
+  const { state } = useLocation(); //これは必要
   const params: { id: string } = useParams(); //投稿情報用のパラメータ
   const tpi_number = Number(params.id);
   const post = useAppSelector((state) => state.tradePost.data[tpi_number]);
-  console.log(post);
   const photos = useAppSelector((state) => state.tradePost.photos);
 
-  const history = useHistory();
   const onClickBack = () => {
     history.goBack();
   };
@@ -48,11 +55,13 @@ const MyTradeDetail = () => {
       <Container maxWidth="md" sx={{ marginTop: 10 }}>
         <Grid container sx={{ marginBottom: 8 }}>
           <Grid item>
-            <Avatar
-              alt="Remy Sharp"
-              src="/static/images/avatar/1.jpg"
-              sx={{ width: '6rem', height: '6rem' }}
-            />
+            <Link href="account" sx={{ textDecoration: 'none' }}>
+              <Avatar
+                alt="Remy Sharp"
+                src="/static/images/avatar/1.jpg" //ここにuser.iconが入る
+                sx={{ width: '6rem', height: '6rem' }}
+              />
+            </Link>
           </Grid>
           <Grid item>
             <Typography
@@ -60,7 +69,7 @@ const MyTradeDetail = () => {
               color="textSecondary"
               sx={{ marginLeft: 8 }}
             >
-              {userName} さんの投稿詳細
+              {state} さんの投稿詳細
             </Typography>
           </Grid>
         </Grid>

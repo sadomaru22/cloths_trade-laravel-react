@@ -14,7 +14,7 @@ import {
   searchBySbTradePost2,
   SearchBySbTradePost2Request,
 } from 'store/thunks/trade_post2';
-import { showoneTradePost } from 'store/thunks/trade_post';
+import { showoneTradePost, getOtherUser } from 'store/thunks/trade_post';
 
 const SearchResultIchiran = () => {
   const dispatch = useAppDispatch();
@@ -48,9 +48,10 @@ const SearchResultIchiran = () => {
     history.push(`?page=${String(page)}`);
 
   //「詳細」ボタン押下時に投稿に紐づく画像をとってから、遷移する。
-  const onGetPhotos = async (index: number, id: string) => {
-    await dispatch(showoneTradePost(id));
-    history.push(`trade-detail/${index}`);
+  const onGetPhotos = async (index: number, id: string, userId: string) => {
+    await dispatch(showoneTradePost(id)); //画像
+    await dispatch(getOtherUser(userId)); //other-user取得用のAPI処理を挟む,SearchResultも同じ。
+    history.push(`/trade-detail/${index}`);
   };
 
   return (
@@ -93,7 +94,7 @@ const SearchResultIchiran = () => {
                 <CardActions>
                   <Button
                     variant="contained"
-                    onClick={() => onGetPhotos(index, row.id)}
+                    onClick={() => onGetPhotos(index, row.id, row.user_id)}
                   >
                     詳細ページへ
                   </Button>
