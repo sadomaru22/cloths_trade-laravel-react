@@ -25,21 +25,20 @@ import { useHistory } from 'react-router-dom';
 const OtherUserIchiran = () => {
   const dispatch = useAppDispatch();
   const history = useHistory();
-  const userId = '1'; //後でuseParamsに変える(OtherUserTopできたら)
-  const userName = 'useLocation'; //後でuseLocationに変える(OtherUserTopできたら)
   const query = { page: useQuery().get('page') || '' };
   const posts = useAppSelector((state) => state.tradePost.data);
   const count = useAppSelector((state) => state.tradePost.meta.last_page);
+  const other_user = useAppSelector((state) => state.tradePost.user);
   const currentPage = useAppSelector(
     (state) => state.tradePost.meta.current_page
   );
   useEffect(() => {
     const request: ShowAllTradePostRequest = {
-      userId: userId,
+      userId: other_user.id,
       page: query.page,
     };
     dispatch(showallTradePost(request));
-  }, [dispatch, query.page, userId]);
+  }, [dispatch, query.page, other_user.id]);
 
   //ページネーション
   const handleChange = (_e: React.ChangeEvent<unknown>, page: number) =>
@@ -50,6 +49,12 @@ const OtherUserIchiran = () => {
     await dispatch(showoneTradePost(id)); //画像
     await dispatch(getOtherUser(userId)); //多分不要。
     history.push(`/trade-detail/${index}`);
+  };
+
+  //アイコン押下時
+  const onClickIcon = async (id: string) => {
+    await dispatch(getOtherUser(id));
+    history.push(`/other-user/${id}`);
   };
 
   return (
@@ -69,13 +74,10 @@ const OtherUserIchiran = () => {
       <Container sx={{ py: 8 }} maxWidth="md">
         <Grid container sx={{ marginBottom: 8 }}>
           <Grid item>
-            <Link
-              href={`/other-user/${userId}`}
-              sx={{ textDecoration: 'none' }}
-            >
+            <Link onClick={() => onClickIcon(other_user.id)}>
               <Avatar
                 alt="Remy Sharp"
-                src="/static/images/avatar/1.jpg"
+                src={`${other_user.icon}`}
                 sx={{ width: '6rem', height: '6rem' }}
               />
             </Link>
@@ -86,7 +88,7 @@ const OtherUserIchiran = () => {
               color="textSecondary"
               sx={{ marginLeft: 8 }}
             >
-              {userName} さんの投稿一覧
+              {other_user.name} さんの投稿一覧
             </Typography>
           </Grid>
         </Grid>

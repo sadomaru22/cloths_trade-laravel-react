@@ -18,7 +18,8 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { useHistory, useParams } from 'react-router-dom';
-import { useAppSelector } from 'utils/hooks';
+import { useAppDispatch, useAppSelector } from 'utils/hooks';
+import { getOtherUser } from 'store/thunks/trade_post';
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -30,8 +31,9 @@ const Transition = React.forwardRef(function Transition(
 });
 
 const OtherUserDetail = () => {
+  const dispatch = useAppDispatch();
   const history = useHistory();
-  const userId = localStorage.getItem('userId');
+  const userId = localStorage.getItem('userId'); //参加申請ボタン活性非活性の比較用
 
   const params: { id: string } = useParams(); //投稿情報用のパラメータ
   const tpi_number = Number(params.id);
@@ -58,18 +60,21 @@ const OtherUserDetail = () => {
     history.goBack();
   };
 
+  //アイコン押下時
+  const onClickIcon = async (id: string) => {
+    await dispatch(getOtherUser(id));
+    history.push(`/other-user/${id}`);
+  };
+
   return (
     <BaseLayout subtitle="other-user-detail">
       <Container maxWidth="md" sx={{ marginTop: 10 }}>
         <Grid container sx={{ marginBottom: 8 }}>
           <Grid item>
-            <Link
-              href={`/other-user/${other_user.id}`}
-              sx={{ textDecoration: 'none' }}
-            >
+            <Link onClick={() => onClickIcon(other_user.id)}>
               <Avatar
                 alt="Remy Sharp"
-                src="/static/images/avatar/1.jpg"
+                src={`${other_user.icon}`}
                 sx={{ width: '6rem', height: '6rem' }}
               />
             </Link>
@@ -141,6 +146,7 @@ const OtherUserDetail = () => {
         <Grid container sx={{ mt: 15, mb: 8, justifyContent: 'center' }}>
           <Grid item>
             <Button
+              // eslint-disable-next-line eqeqeq
               disabled={userId == other_user.id}
               variant="contained"
               color="primary"
