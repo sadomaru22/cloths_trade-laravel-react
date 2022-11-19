@@ -25,10 +25,10 @@ class TradePostSeeder extends Seeder
 
         // 'User'に属するデータを10件生成
         //1対多のSankaFlagも同時に3件
-        //1対多のImageも同時に9件
+        //1対多のImageも同時に3件
         TradePost::factory()->has(SankaFlag::factory()->count(3))
-            //->has(Image::factory()->count(9))
+            ->has(Image::factory()->count(3))
             //->count(10)->for($user)->create();
-            ->count(12)->create();
+            ->count(10)->create();
     }
 }

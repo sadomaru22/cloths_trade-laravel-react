@@ -81,18 +81,18 @@ const Routes = () => {
       <Route exact path="/detail" component={Detail} />
       <Route exact path="/other-user/:id" component={OtheUserTop} />
       <Route exact path="/trade-ichiran/:id" component={OtherUserIchiran} />
-      <Route path="/trade-detail/:id" component={OtherUserDetail} />
+      <Route path="/trade-detail/:index" component={OtherUserDetail} />
       {/*URLによって表示ページが変わる(Dynamic Route)の場合、exactはいらない*/}
-      <Route exact path="/past-trade-ichiran" component={PastIchiran} />
-      <Route path="/past-trade-detail/:id" component={PastDetail} />
+      <Route exact path="/past-trade-ichiran/:id" component={PastIchiran} />
+      <Route path="/past-trade-detail/:index" component={PastDetail} />
       <Route exact path="/mypage" component={MyPage} />
       <Route exact path="/pending-ichiran" component={PendingIchiran} />
       <Route exact path="/pending-detail" component={PendingDetail} />
       <Route exact path="/confirmed-ichiran" component={ConfirmedIchiran} />
       <Route exact path="/confirmed-detail" component={ConfirmedDetail} />
       <Route exact path="/trade-post" component={TradePost} />
-      <Route exact path="/mytrade-detail/:id" component={MyTradeDetail} />
       <Route exact path="/mytrade-ichiran" component={MyTradeIchiran} />
+      <Route exact path="/mytrade-detail/:index" component={MyTradeDetail} />
       <Route exact path="/sanka-ichiran" component={Sankasya} />
       <Route exact path="/mytrade-edit" component={TradeEdit} />
       <Route exact path="/mytrade-juri" component={SankaJuri} />

@@ -12,14 +12,14 @@ import theme from 'theme';
 //import { HelmetProvider } from 'react-helmet-async';
 
 ReactDOM.render(
-  // <React.StrictMode>
-  <Provider store={store}>
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <App />
-    </ThemeProvider>
-  </Provider>,
-  // </React.StrictMode>
+  <React.StrictMode>
+    <Provider store={store}>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <App />
+      </ThemeProvider>
+    </Provider>
+  </React.StrictMode>,
   document.getElementById('root')
 );
 

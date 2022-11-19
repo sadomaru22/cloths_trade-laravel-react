@@ -33,7 +33,10 @@ class TradePostController extends Controller
     {
         // Viewの代わりにJSONとして返却
         return new TradePostCollection(
-            TradePost::where('user_id', $user)->orderBy('date', 'desc')->paginate(12)
+            TradePost::where([
+                ['user_id', '=', $user],
+                ['date', '>', now()],
+            ])->orderBy('date', 'desc')->paginate(12)
         );
     }
 

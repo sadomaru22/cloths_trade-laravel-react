@@ -23,6 +23,7 @@ class TradePostFactory extends Factory
         return [
             'user_id' => 1,
             'title' => $this->faker->sentence,
+            'date' => '2023-03-05 00:00:00',
             'description' => $this->faker->paragraph,
         ];
     }
