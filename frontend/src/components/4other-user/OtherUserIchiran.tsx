@@ -1,17 +1,5 @@
 import React from 'react';
-//import Ichiran from 'templates/ichiran/Ichiran'
-import AppBar from '@mui/material/AppBar';
-import CameraIcon from '@mui/icons-material/PhotoCamera';
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import Grid from '@mui/material/Grid';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
 import { BaseLayout } from 'layouts';
-import { Avatar, Button, Link, Pagination } from '@mui/material';
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector, useQuery } from 'utils/hooks';
 import {
@@ -21,10 +9,12 @@ import {
   getOtherUser,
 } from 'store/thunks/trade_post';
 import { useHistory } from 'react-router-dom';
+import Ichiran from 'templates/ichiran/Ichiran';
 
 const OtherUserIchiran = () => {
   const dispatch = useAppDispatch();
   const history = useHistory();
+  const userId = localStorage.getItem('userId');
   const query = { page: useQuery().get('page') || '' };
   const posts = useAppSelector((state) => state.tradePost.data);
   const count = useAppSelector((state) => state.tradePost.meta.last_page);
@@ -40,6 +30,11 @@ const OtherUserIchiran = () => {
     dispatch(showallTradePost(request));
   }, [dispatch, query.page, other_user.id]);
 
+  //戻る
+  const onClickBack = () => {
+    history.push(`/users/${userId}/top`);
+  };
+
   //ページネーション
   const handleChange = (_e: React.ChangeEvent<unknown>, page: number) =>
     history.push(`?page=${String(page)}`);
@@ -47,7 +42,7 @@ const OtherUserIchiran = () => {
   //「詳細」ボタン押下時に投稿に紐づく画像をとってから、遷移する。
   const onGetPhotos = async (index: number, id: string, userId: string) => {
     await dispatch(showoneTradePost(id)); //画像
-    await dispatch(getOtherUser(userId)); //多分不要。
+    await dispatch(getOtherUser(userId));
     history.push(`/trade-detail/${index}`);
   };
 
@@ -58,86 +53,18 @@ const OtherUserIchiran = () => {
   };
 
   return (
-    // <Ichiran
-    // url={"trade-detail"}
-    // pageDescription={"開催予定のトレード一覧"}
-    // />
     <BaseLayout subtitle="Album">
-      <AppBar position="relative">
-        <Toolbar>
-          <CameraIcon sx={{ mr: 2 }} />
-          <Typography variant="h6" color="inherit" noWrap>
-            他のユーザが開催予定のトレード一覧
-          </Typography>
-        </Toolbar>
-      </AppBar>
-      <Container sx={{ py: 8 }} maxWidth="md">
-        <Grid container sx={{ marginBottom: 8 }}>
-          <Grid item>
-            <Link onClick={() => onClickIcon(other_user.id)}>
-              <Avatar
-                alt="Remy Sharp"
-                src={`${other_user.icon}`}
-                sx={{ width: '6rem', height: '6rem' }}
-              />
-            </Link>
-          </Grid>
-          <Grid item>
-            <Typography
-              variant="h4"
-              color="textSecondary"
-              sx={{ marginLeft: 8 }}
-            >
-              {other_user.name} さんの投稿一覧
-            </Typography>
-          </Grid>
-        </Grid>
-
-        <Grid container spacing={4}>
-          {posts.map((row, index) => (
-            <Grid item key={index} xs={12} sm={6} md={4}>
-              <Card
-                sx={{
-                  height: '100%',
-                  display: 'flex',
-                  flexDirection: 'column',
-                }}
-              >
-                <Typography>{row.title}</Typography>
-                <Typography>場所：{row.place}</Typography>
-                <Typography>日付：{row.date}</Typography>
-                <CardMedia
-                  component="img"
-                  sx={{ pt: '26.25%' }}
-                  image={`${row.thumbnail}`}
-                />
-                <CardContent sx={{ flexGrow: 1 }}>
-                  <Typography>{row.description.substring(0, 45)}...</Typography>
-                </CardContent>
-                <CardActions>
-                  <Button
-                    variant="contained"
-                    onClick={() => onGetPhotos(index, row.id, row.user_id)}
-                  >
-                    詳細ページへ
-                  </Button>
-                </CardActions>
-              </Card>
-            </Grid>
-          ))}
-        </Grid>
-        {posts.length > 0 && count && currentPage && (
-          <Pagination
-            count={count}
-            page={currentPage}
-            siblingCount={2}
-            color="primary"
-            size="large"
-            onChange={handleChange}
-            sx={{ display: 'flex', justifyContent: 'center', mt: 5 }}
-          />
-        )}
-      </Container>
+      <Ichiran
+        posts={posts}
+        other_user={other_user}
+        title2={'開催予定'}
+        count={count}
+        currentPage={currentPage}
+        onClickIcon={onClickIcon}
+        onGetPhotos={onGetPhotos}
+        handleChange={handleChange}
+        onClickBack={onClickBack}
+      />
     </BaseLayout>
   );
 };

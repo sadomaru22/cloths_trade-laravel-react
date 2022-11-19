@@ -1,30 +1,27 @@
-import { useHistory, useLocation, useParams } from 'react-router-dom';
-import {
-  Grid,
-  Typography,
-  Avatar,
-  Button,
-  Container,
-  Link,
-} from '@mui/material';
-import ImageList from '@mui/material/ImageList';
-import ImageListItem from '@mui/material/ImageListItem';
+import { useHistory, useParams } from 'react-router-dom';
+import { Grid, Typography, Button } from '@mui/material';
 import { BaseLayout } from 'layouts';
 import React from 'react';
 import { LinkButton } from 'templates';
 import { useAppSelector } from 'utils/hooks';
+import Detail from 'templates/detail/Detail';
 
 const MyTradeDetail = () => {
-  //const userName = localStorage.getItem('userName'); //これもuseLocationでいいのでは？
   const history = useHistory();
-  const { state } = useLocation(); //これは必要
-  const params: { id: string } = useParams(); //投稿情報用のパラメータ
-  const tpi_number = Number(params.id);
+  //const { state } = useLocation();
+  const params: { index: string } = useParams(); //投稿情報用のパラメータ
+  const tpi_number = Number(params.index);
   const post = useAppSelector((state) => state.tradePost.data[tpi_number]);
   const photos = useAppSelector((state) => state.tradePost.photos);
+  const myUser = useAppSelector((state) => state.auth.user);
 
   const onClickBack = () => {
     history.goBack();
+  };
+
+  //アイコン押下時
+  const onClickIcon = async (id: string) => {
+    history.push('/account');
   };
 
   return (
@@ -51,85 +48,32 @@ const MyTradeDetail = () => {
           </LinkButton>
         </Grid>
       </Grid>
-      {/* <Detail/> */}
-      <Container maxWidth="md" sx={{ marginTop: 10 }}>
-        <Grid container sx={{ marginBottom: 8 }}>
-          <Grid item>
-            <Link href="account" sx={{ textDecoration: 'none' }}>
-              <Avatar
-                alt="Remy Sharp"
-                src="/static/images/avatar/1.jpg" //ここにuser.iconが入る
-                sx={{ width: '6rem', height: '6rem' }}
-              />
-            </Link>
-          </Grid>
-          <Grid item>
-            <Typography
-              variant="h4"
-              color="textSecondary"
-              sx={{ marginLeft: 8 }}
-            >
-              {state} さんの投稿詳細
-            </Typography>
-          </Grid>
-        </Grid>
 
-        <Grid container justifyContent="center" sx={{ marginBottom: 5 }}>
-          <Grid item xs={4}>
-            <Typography color="textSecondary" borderBottom={0.5}>
-              日付：{post.date}
-            </Typography>
-          </Grid>
-          <Grid item xs={2}>
-            <p />
-          </Grid>
-          <Grid item xs={6}>
-            <Typography color="textSecondary" borderBottom={0.5}>
-              現在の参加人数/上限人数: {post.sankasya} / {post.maxCapa}
-            </Typography>
-          </Grid>
-        </Grid>
-        <Typography
-          variant="h3"
-          color="textSecondary"
-          sx={{ marginBottom: 8, borderBottom: 0.5 }}
-        >
-          {post.title}
-        </Typography>
-        <Typography
-          color="textSecondary"
-          sx={{ marginBottom: 5, borderBottom: 0.5 }}
-        >
-          開催場所：　 {post.place}
-        </Typography>
-        <Typography
-          color="textSecondary"
-          sx={{ marginBottom: 8, borderBottom: 0.5 }}
-        >
-          概要：　{post.description}
-        </Typography>
+      <Detail
+        user={myUser}
+        post={post}
+        photos={photos}
+        onClickIcon={onClickIcon}
+      />
 
-        <ImageList
-          sx={{ width: 800, height: 450 }}
-          variant="woven"
-          cols={3}
-          gap={8}
-        >
-          {photos.map((item) => (
-            <ImageListItem key={item}>
-              <img
-                src={`${item}?w=161&fit=crop&auto=format`}
-                srcSet={`${item}?w=161&fit=crop&auto=format&dpr=2 2x`}
-                alt={item}
-                loading="lazy"
-              />
-            </ImageListItem>
-          ))}
-        </ImageList>
-        <Button sx={{ mt: 5, mb: 3 }} onClick={onClickBack}>
-          一覧に戻る
-        </Button>
-      </Container>
+      <Grid container sx={{ mt: 15, mb: 8, justifyContent: 'center' }}>
+        <Grid item>
+          <Button
+            // eslint-disable-next-line eqeqeq
+            disabled //過去のトレードなので常に非活性
+            variant="contained"
+            color="primary"
+            sx={{ mr: 8 }}
+          >
+            参加申請
+          </Button>
+        </Grid>
+        <Grid item>
+          <Button variant="contained" color="primary" onClick={onClickBack}>
+            一覧に戻る
+          </Button>
+        </Grid>
+      </Grid>
     </BaseLayout>
   );
 };

@@ -65,11 +65,11 @@ Route::group([
     | TradePost2  過去、予定、確定、参加者、検索
     |--------------------------------------------------------------
     */
-    Route::get('/users/{user}/trade_posts/past', [TradePost2Controller::class, 'past']);
-    Route::get('/users/{user}/trade_posts/pending', [TradePost2Controller::class, 'pending']);
-    Route::get('/users/{user}/trade_posts/confirmed', [TradePost2Controller::class, 'confirmed']);
-    Route::get('/users/{user}/trade_posts/sankasya', [TradePost2Controller::class, 'sankasya']);
-    Route::get('/trade_posts/search', [TradePost2Controller::class, 'search']);
+    Route::get('/trade_posts/past/{id}', [TradePost2Controller::class, 'past']);
+    Route::get('/trade_posts/pending/{id}', [TradePost2Controller::class, 'pending']);
+    Route::get('/trade_posts/confirmed/{id}', [TradePost2Controller::class, 'confirmed']);
+    Route::get('/trade_posts/sankasya/{id}', [TradePost2Controller::class, 'sankasya']);
+    Route::get('/trade_posts/search', [TradePost2Controller::class, 'search']);  //不要
     Route::get('/trade_posts/searchBySb/{place}', [TradePost2Controller::class, 'searchBySb']);
 
     /*

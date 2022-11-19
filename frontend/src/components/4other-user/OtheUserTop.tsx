@@ -5,7 +5,6 @@ import Typography from '@mui/material/Typography';
 import { Avatar, Box, Container, Grid, Link } from '@mui/material';
 import { BaseLayout } from 'layouts';
 import React from 'react';
-import { LinkButton2 } from 'templates';
 import { useAppDispatch, useAppSelector } from 'utils/hooks';
 import { useHistory } from 'react-router-dom';
 import { getOtherUser } from 'store/thunks/trade_post';
@@ -42,11 +41,16 @@ const OtheUserTop = () => {
   const other_user = useAppSelector((state) => state.tradePost.user);
   console.log(other_user);
 
-  //アイコン押下時
-  const onClickIcon = async (id: string) => {
+  //開催予定のトレード一覧押下時
+  const onClickYotei = async (id: string) => {
     await dispatch(getOtherUser(id));
     history.push(`/trade-ichiran/${id}`);
   };
+
+  //過去のトレード一覧押下時
+  function onClickKako() {
+    history.push(`/past-trade-ichiran/${other_user.id}`);
+  }
 
   return (
     <BaseLayout subtitle="OtheUser Top">
@@ -87,7 +91,7 @@ const OtheUserTop = () => {
           sx={{ display: 'flex', justifyContent: 'center' }}
         >
           <Grid item>
-            <Link onClick={() => onClickIcon(other_user.id)}>
+            <Link onClick={() => onClickYotei(other_user.id)}>
               {/* <div className={classes.card}> */}
               <Card className={classes.card}>
                 <CardMedia
@@ -111,7 +115,7 @@ const OtheUserTop = () => {
             </Link>
           </Grid>
           <Grid item>
-            <Link>
+            <Link onClick={onClickKako}>
               {/* <div className={classes.card}> */}
               <Card className={classes.card}>
                 <CardMedia

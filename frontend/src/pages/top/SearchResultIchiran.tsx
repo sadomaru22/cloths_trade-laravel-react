@@ -50,7 +50,7 @@ const SearchResultIchiran = () => {
   //「詳細」ボタン押下時に投稿に紐づく画像をとってから、遷移する。
   const onGetPhotos = async (index: number, id: string, userId: string) => {
     await dispatch(showoneTradePost(id)); //画像
-    await dispatch(getOtherUser(userId)); //other-user取得用のAPI処理を挟む,SearchResultも同じ。
+    await dispatch(getOtherUser(userId));
     history.push(`/trade-detail/${index}`);
   };
 
@@ -64,7 +64,7 @@ const SearchResultIchiran = () => {
               color="textSecondary"
               sx={{ marginLeft: 8 }}
             >
-              "{place}"の検索結果は、{posts.length}件でした。{' '}
+              "{place}"の検索結果は、{posts.length}件でした。
               {/*これでは、paginationで分割されたときに対応できない*/}
             </Typography>
           </Grid>
@@ -114,7 +114,14 @@ const SearchResultIchiran = () => {
             sx={{ display: 'flex', justifyContent: 'center', mt: 5 }}
           />
         )}
-        <Button onClick={onClickBack}>一覧に戻る</Button>
+        <Button
+          variant="contained"
+          sx={{ mt: 3, ml: 10 }}
+          color="primary"
+          onClick={onClickBack}
+        >
+          トップページに戻る
+        </Button>
       </Container>
     </BaseLayout>
   );

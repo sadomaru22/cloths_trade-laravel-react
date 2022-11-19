@@ -3,7 +3,6 @@ import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import {
   Container,
   Typography,
-  Button,
   Card,
   CardActions,
   CardContent,
@@ -16,12 +15,6 @@ import { useHistory } from 'react-router-dom';
 //import { useAppDispatch, useAppSelector } from 'utils/hooks';
 import { LinkButton2 } from 'templates';
 import Paper from '@mui/material/Paper';
-import InputBase from '@mui/material/InputBase';
-import Divider from '@mui/material/Divider';
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
-import SearchIcon from '@mui/icons-material/Search';
-//import DirectionsIcon from '@mui/icons-material/Directions';
 import { Grid } from '@mui/material';
 import { PREF_OPTIONS } from 'templates/todouhuken';
 //import {searchBySbTradePost2} from 'store/thunks/trade_post2'
@@ -39,7 +32,8 @@ const useStyles = makeStyles((theme: Theme) =>
       marginRight: theme.spacing(10),
     },
     card: {
-      maxWidth: 375,
+      maxWidth: 350,
+      maxHeight: 300,
     },
     root: {
       flexGrow: 1,
@@ -57,22 +51,10 @@ const useStyles = makeStyles((theme: Theme) =>
 const TopPage = () => {
   const classes = useStyles();
   const history = useHistory();
-  //const dispatch = useAppDispatch();
-  //let posts = useAppSelector((state) => state.tradePost.data);
-  // if (posts) {
-  //    console.log("あ");
-  //    history.replace('searchResult');
-  // } else {return}
-  // useEffect(() => {
-  //    history.replace('searchResult');
-  //  }, [posts]);
   const onLoad = () => {
     console.log('onLoad準備完了');
   };
-  //function onSubmit(newValue: SingleValue<{ value: string; label: string; }>, actionMeta: ActionMeta<{ value: string; label: string; }>){
-  // function onSubmit(event: FormEvent<HTMLFormElement>){
-  //    dispatch(searchBySbTradePost2(event));
-  // }
+
   function onChange(
     newValue: SingleValue<{ value: string; label: string }>,
     actionMeta: ActionMeta<{ value: string; label: string }>
@@ -87,63 +69,19 @@ const TopPage = () => {
       <BaseLayout subtitle="Top Page">
         <Container component="main" maxWidth="md" className={classes.container}>
           <Typography variant="h1" gutterBottom>
-            Topページです。
-          </Typography>
-          <Typography variant="h2" gutterBottom color="textSecondary">
-            　Topページです！
+            Topページ
           </Typography>
 
           <Typography color="textSecondary" paragraph>
             都道府県で検索
           </Typography>
-          <Paper sx={{ mt: 3, mb: 6 }}>
+          <Paper sx={{ mt: 1, mb: 6 }}>
             <Select
               options={PREF_OPTIONS}
               onChange={onChange}
               //isMulti //複数にすると
             />
           </Paper>
-          {/* <Paper
-      //component="form"
-      //sx={{ display: 'flex', justifyContent: 'center' }}
-      >
-         <form onSubmit={onSubmit}>
-         <Select 
-            className={classes.container}
-            options={PREF_OPTIONS}
-            //onChange={onChange} 
-            //isMulti //複数にすると複雑になるので一旦単数
-         />
-         <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
-         <IconButton type="submit" sx={{ p: '10px' }} aria-label="search">
-            <SearchIcon />
-         </IconButton>
-         </form>
-      </Paper> */}
-
-          {/* <Paper
-            component="form"
-            sx={{
-              p: '2px 4px',
-              display: 'flex',
-              mt: 3,
-              mb: 6,
-              justifyContent: 'center',
-            }}
-          >
-            <IconButton sx={{ p: '10px' }} aria-label="menu">
-              <MenuIcon />
-            </IconButton>
-            <InputBase
-              sx={{ ml: 1, flex: 1 }}
-              placeholder="または、フリーワードで検索"
-              inputProps={{ 'aria-label': 'search google maps' }}
-            />
-            <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
-            <IconButton type="submit" sx={{ p: '10px' }} aria-label="search">
-              <SearchIcon />
-            </IconButton>
-          </Paper> */}
 
           <Grid
             container
@@ -157,7 +95,7 @@ const TopPage = () => {
                     <CardMedia
                       component="img"
                       height="140"
-                      image="/static/images/cards/contemplative-reptile.jpg"
+                      image={`${process.env.PUBLIC_URL}/yotei.jpg`}
                       alt="green iguana"
                     />
                     <CardContent>
@@ -165,7 +103,7 @@ const TopPage = () => {
                         トレードの投稿
                       </Typography>
                       <Typography color="secondary">
-                        トレードを投稿します。
+                        トレードを作成して、参加者を募ります。
                       </Typography>
                     </CardContent>
                     <CardActions></CardActions>
@@ -180,7 +118,7 @@ const TopPage = () => {
                     <CardMedia
                       component="img"
                       height="140"
-                      image="/static/images/cards/contemplative-reptile.jpg"
+                      image={`${process.env.PUBLIC_URL}/yotei.jpg`}
                       alt="green iguana"
                     />
                     <CardContent>
@@ -210,12 +148,12 @@ const TopPage = () => {
                     <CardMedia
                       component="img"
                       height="140"
-                      image="/static/images/cards/contemplative-reptile.jpg"
+                      image={`${process.env.PUBLIC_URL}/yotei.jpg`}
                       alt="green iguana"
                     />
                     <CardContent>
                       <Typography gutterBottom variant="h5" component="div">
-                        参加予定のトレード(申請中)
+                        参加申請中のトレード
                       </Typography>
                       <Typography color="secondary">
                         自分が参加する申請中の予定のトレードの一覧を表示します。
@@ -233,16 +171,15 @@ const TopPage = () => {
                     <CardMedia
                       component="img"
                       height="140"
-                      image="/static/images/cards/contemplative-reptile.jpg"
+                      image={`${process.env.PUBLIC_URL}/yotei.jpg`}
                       alt="green iguana"
                     />
                     <CardContent>
                       <Typography gutterBottom variant="h5" component="div">
-                        参加予定のトレード(確定)
+                        参加が確定したトレード
                       </Typography>
                       <Typography color="secondary">
                         自分の参加が確定した予定のトレードの一覧を表示します。
-                        aaaaaa
                       </Typography>
                     </CardContent>
                     <CardActions></CardActions>
@@ -252,12 +189,12 @@ const TopPage = () => {
             </Grid>
           </Grid>
 
-          <div className={classes.card}>
+          {/* <div className={classes.card}>
             <Card>
               <CardMedia
                 component="img"
                 height="140"
-                image="/static/images/cards/contemplative-reptile.jpg"
+                image={`${process.env.PUBLIC_URL}/yotei.jpg`}
                 alt="green iguana"
               />
               <CardContent>
@@ -275,7 +212,7 @@ const TopPage = () => {
                 <Button size="small">Learn More</Button>
               </CardActions>
             </Card>
-          </div>
+          </div> */}
         </Container>
       </BaseLayout>
     </div>

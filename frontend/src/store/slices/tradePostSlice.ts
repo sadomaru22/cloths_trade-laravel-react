@@ -8,7 +8,7 @@ import {
   getOtherUser,
   GetOtherUserResponse,
 } from 'store/thunks/trade_post';
-import { searchBySbTradePost2 } from 'store/thunks/trade_post2';
+import { pastTradePost2, searchBySbTradePost2 } from 'store/thunks/trade_post2';
 
 export type TradePostState = {
   loading: boolean;
@@ -108,6 +108,20 @@ export const tradePostSlice = createSlice({
       console.log(state.user + '=state.user');
     });
     builder.addCase(getOtherUser.rejected, (state) => {
+      state.loading = false;
+    });
+
+    builder.addCase(pastTradePost2.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(pastTradePost2.fulfilled, (state, action) => {
+      state.data = action.payload.data || [];
+      state.links = action.payload.links || {};
+      state.meta = action.payload.meta || {};
+      state.loading = false;
+      console.log(state.data);
+    });
+    builder.addCase(pastTradePost2.rejected, (state) => {
       state.loading = false;
     });
   },

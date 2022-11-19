@@ -16,13 +16,15 @@ class TradePost2Controller extends Controller
 {
 
     //過去のトレード一覧
-    public function past(Request $request)
+    public function past($id)
     {
-        return TradePost::where([
-            ['user_id', '=', $request->id],
-            ['date', '<', now()],
-        ])
-            ->paginate(12);
+        Log::debug($id . "過去");
+        return new TradePostCollection(
+            TradePost::where([
+                ['user_id', '=', $id],
+                ['date', '<', now()],
+            ])->orderBy('date', 'desc')->paginate(12)
+        );
     }
 
     //参加予定のトレード一覧
@@ -108,8 +110,10 @@ class TradePost2Controller extends Controller
     public function searchBySb($place)
     {
         Log::debug($place);
-        return new TradePostCollection(TradePost::where('place', 'like', "%$place%")
-            ->orderBy('date', 'desc')   //日付降順
+        return new TradePostCollection(TradePost::where([
+            ['place', 'like', "%$place%"],
+            ['date', '>', now()],
+        ])->orderBy('date', 'desc')   //日付降順
             ->paginate(12));
     }
 }
