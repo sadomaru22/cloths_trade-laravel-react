@@ -4,6 +4,7 @@ use App\Http\Controllers\SinseiController;
 use App\Http\Resources\UserResource;
 use App\Http\Controllers\TradePostController;
 use App\Http\Controllers\TradePost2Controller;
+use App\Http\Controllers\Auth\ProfileInformationController;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -48,6 +49,7 @@ Route::group([
         $request->user()->delete();
         return response()->json([], 204);
     });
+    Route::put('/user/profile-information2', [ProfileInformationController::class, 'updateOriginal']);
 
     /*
     |--------------------------------------------------------------

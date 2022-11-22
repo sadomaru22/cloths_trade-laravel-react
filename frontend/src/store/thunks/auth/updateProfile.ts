@@ -8,11 +8,15 @@ import { makeRejectValue } from 'store/thunks/utils';
 export type UpdateProfileResponse = {
   name: string;
   email: string;
+  icon: string;
+  jikoshokai: string;
 };
 
 export type UpdateProfileRequest = {
   name: string;
   email: string;
+  icon: string;
+  jikoshokai: string;
 };
 
 export const updateProfile = createAsyncThunk<
@@ -20,10 +24,16 @@ export const updateProfile = createAsyncThunk<
   UpdateProfileRequest,
   AsyncThunkConfig
 >('auth/updateProfile', async (payload, thunkApi) => {
-  const { name, email } = payload;
+  const { name, email, icon, jikoshokai } = payload;
+  console.log(icon);
   try {
-    await apiClient().put(UPDATE_USER_INFO_PATH, { name, email });
-    return { name, email }; // fulfill時は、requestの値をそのまま`return`
+    await apiClient().put(UPDATE_USER_INFO_PATH, {
+      name,
+      email,
+      icon,
+      jikoshokai,
+    });
+    return { name, email, icon, jikoshokai }; // fulfill時は、requestの値をそのまま`return`
   } catch (error) {
     return thunkApi.rejectWithValue(makeRejectValue(error));
   }
