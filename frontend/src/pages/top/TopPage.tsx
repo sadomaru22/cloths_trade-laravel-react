@@ -12,7 +12,6 @@ import { BaseLayout } from 'layouts';
 import React from 'react';
 import Select, { ActionMeta, SingleValue } from 'react-select';
 import { useHistory } from 'react-router-dom';
-//import { useAppDispatch, useAppSelector } from 'utils/hooks';
 import { LinkButton2 } from 'templates';
 import Paper from '@mui/material/Paper';
 import { Grid } from '@mui/material';
@@ -25,25 +24,9 @@ const useStyles = makeStyles((theme: Theme) =>
       marginTop: theme.spacing(7),
       marginBottom: theme.spacing(10),
     },
-    button: {
-      marginTop: theme.spacing(7),
-      marginBottom: theme.spacing(10),
-      marginLeft: theme.spacing(10),
-      marginRight: theme.spacing(10),
-    },
     card: {
       maxWidth: 350,
       maxHeight: 300,
-    },
-    root: {
-      flexGrow: 1,
-    },
-    flex: {
-      flexGrow: 1,
-    },
-    select: {
-      ml: 1,
-      flex: 1,
     },
   })
 );

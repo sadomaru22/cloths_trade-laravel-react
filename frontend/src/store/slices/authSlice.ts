@@ -30,11 +30,13 @@ export type AuthState = {
   afterRegistration: boolean;
   signedIn: boolean;
   loading: boolean;
+  isPreviw: boolean;
   flash: FlashNotificationProps[];
 };
 
 //＊一個めのasは型アサーション
 export const initialAuthState = {
+  isPreviw: false,
   flash: [] as AuthState['flash'],
 } as AuthState;
 
@@ -138,11 +140,15 @@ export const authSlice = createSlice({
 
     builder.addCase(updateProfile.pending, (state, action) => {
       state.loading = true;
+      state.isPreviw = true;
     });
     builder.addCase(updateProfile.fulfilled, (state, action) => {
       if (!state.user) return; // `null`を排除 (state.user?利用不可)
       state.loading = false;
       state.user.name = action.payload.name;
+      state.user.icon = action.payload.icon;
+      state.user.jikoshokai = action.payload.jikoshokai;
+      state.isPreviw = false;
 
       if (state.user.email !== action.payload.email) {
         state.user.email = action.payload.email;
@@ -152,6 +158,7 @@ export const authSlice = createSlice({
           message: '認証用メールを送信しました',
         });
       } else {
+        console.log('ユーザ情報');
         state.user.email = action.payload.email;
         state.flash.push({
           type: 'success',

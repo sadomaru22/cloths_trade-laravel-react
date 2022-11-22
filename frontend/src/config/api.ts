@@ -15,7 +15,7 @@ export const VERIFICATION_NOTIFICATION_PATH =
 export const SIGNIN_PATH = process.env.REACT_APP_SIGNIN_PATH || '/login';
 
 export const UPDATE_USER_INFO_PATH =
-  process.env.REACT_APP_UPDATE_USER_INFO_PATH || '/user/profile-information';
+  process.env.REACT_APP_UPDATE_USER_INFO_PATH || '/user/profile-information2';
 
 export const UPDATE_PASSWORD_PATH =
   process.env.REACT_APP_UPDATE_PASSWORD_PATH || '/user/password';

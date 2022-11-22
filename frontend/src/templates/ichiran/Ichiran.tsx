@@ -1,4 +1,5 @@
 import React from 'react';
+import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
@@ -8,12 +9,28 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import { Avatar, Button, Link, Pagination } from '@mui/material';
 
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    container: {
+      marginTop: theme.spacing(7),
+      marginBottom: theme.spacing(10),
+    },
+    link: {
+      cursor: 'pointer',
+    },
+  })
+);
+
 const Ichiran = (props: any) => {
+  const classes = useStyles();
   return (
-    <Container sx={{ py: 8 }} maxWidth="md">
+    <Container maxWidth="md" className={classes.container}>
       <Grid container sx={{ marginBottom: 8 }}>
         <Grid item>
-          <Link onClick={() => props.onClickIcon(props.other_user.id)}>
+          <Link
+            className={classes.link}
+            onClick={() => props.onClickIcon(props.other_user.id)}
+          >
             <Avatar
               alt="Remy Sharp"
               src={`${props.other_user.icon}`}

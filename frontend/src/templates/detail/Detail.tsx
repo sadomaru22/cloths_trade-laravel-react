@@ -1,16 +1,32 @@
 import React from 'react';
+import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import { Grid, Typography, Avatar, Container, Link } from '@mui/material';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 
-const Detail2 = (props: any) => {
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    container: {
+      marginTop: theme.spacing(10),
+    },
+    link: {
+      cursor: 'pointer',
+    },
+  })
+);
+
+const Detail = (props: any) => {
+  const classes = useStyles();
   const user = props.user;
   const post = props.post;
   return (
-    <Container maxWidth="md" sx={{ marginTop: 10 }}>
+    <Container maxWidth="md" className={classes.container}>
       <Grid container sx={{ marginBottom: 8 }}>
         <Grid item>
-          <Link onClick={() => props.onClickIcon(user.id)}>
+          <Link
+            className={classes.link}
+            onClick={() => props.onClickIcon(user.id)}
+          >
             <Avatar
               alt="Remy Sharp"
               src={`${user.icon}`}
@@ -81,4 +97,4 @@ const Detail2 = (props: any) => {
   );
 };
 
-export default Detail2;
+export default Detail;

@@ -110,15 +110,15 @@ Route::group(['middleware' => config('fortify.middleware', ['web'])], function (
    }
 
    // Profile Information...
-   Route::get('/user/profile-information', [ProfileInformationController::class, 'update'])
-      ->middleware([config('fortify.auth_middleware', 'auth') . ':' . config('fortify.guard')])
-      ->name('user-profile-information.show');
+   // Route::put('/user/profile-information2', [ProfileInformationController::class, 'updateOriginal']);
+   // ->middleware([config('fortify.auth_middleware', 'auth') . ':' . config('fortify.guard')])
+   // ->name('user-profile-information.show');
 
-   if (Features::enabled(Features::updateProfileInformation())) {
-      Route::put('/user/profile-information', [ProfileInformationController::class, 'update'])
-         ->middleware([config('fortify.auth_middleware', 'auth') . ':' . config('fortify.guard')])
-         ->name('user-profile-information.update');
-   }
+   // if (Features::enabled(Features::updateProfileInformation())) {
+   //    Route::put('/user/profile-information', [ProfileInformationController::class, 'updateOriginal'])
+   //       ->middleware([config('fortify.auth_middleware', 'auth') . ':' . config('fortify.guard')])
+   //       ->name('user-profile-information.update');
+   // }
 
    // Passwords...
    if (Features::enabled(Features::updatePasswords())) {
