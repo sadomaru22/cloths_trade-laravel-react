@@ -12,6 +12,7 @@ import {
   InputLabel,
   MenuItem,
   Select,
+  Box,
 } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -24,10 +25,7 @@ import { useAppDispatch } from 'utils/hooks';
 import yup from 'templates/yup.locale'; //日本語化対応済み
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-//import ImageTest from './ImageTest';
-//import Place from './Place';
-//import { makeStyles } from "@material-ui/core";   //問題の箇所
-//import DatePickers from './DatePickers';
+import { SubmitButton } from 'templates';
 
 import {
   CreateTradePostRequest,
@@ -295,9 +293,9 @@ const TradePost = () => {
             rows={7}
             //InputProps={{ style: { height: 60 } }}
           />
-          <Button variant="contained" type="submit" sx={{ mt: 3 }}>
-            投稿する
-          </Button>
+          <Box mt={3} mb={1}>
+            {<SubmitButton>投稿する</SubmitButton>}
+          </Box>
         </form>
       </Container>
     </BaseLayout>

@@ -43,7 +43,7 @@ const MyTradeDetail = () => {
           </LinkButton>
         </Grid>
         <Grid item>
-          <LinkButton size="large" to={'/mytrade-edit'}>
+          <LinkButton size="large" to={`/mytrade-edit/${params.index}`}>
             投稿の編集
           </LinkButton>
         </Grid>

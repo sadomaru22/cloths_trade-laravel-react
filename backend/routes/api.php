@@ -73,6 +73,8 @@ Route::group([
     Route::get('/trade_posts/sankasya/{id}', [TradePost2Controller::class, 'sankasya']);
     Route::get('/trade_posts/search', [TradePost2Controller::class, 'search']);  //不要
     Route::get('/trade_posts/searchBySb/{place}', [TradePost2Controller::class, 'searchBySb']);
+    Route::put('/trade_posts/edit_others', [TradePost2Controller::class, 'updateOthers']);
+    Route::put('/trade_posts/edit_photos', [TradePost2Controller::class, 'updatePhotos']);
 
     /*
     |--------------------------------------------------------------

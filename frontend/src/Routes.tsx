@@ -94,7 +94,7 @@ const Routes = () => {
       <Route exact path="/mytrade-ichiran" component={MyTradeIchiran} />
       <Route exact path="/mytrade-detail/:index" component={MyTradeDetail} />
       <Route exact path="/sanka-ichiran" component={Sankasya} />
-      <Route exact path="/mytrade-edit" component={TradeEdit} />
+      <Route exact path="/mytrade-edit/:index" component={TradeEdit} />
       <Route exact path="/mytrade-juri" component={SankaJuri} />
       {/* 設定した全てのパスに該当しないアクセスを捕捉 */}
       <Route path="*" component={NotFound} />

@@ -8,17 +8,25 @@ import {
   getOtherUser,
   GetOtherUserResponse,
 } from 'store/thunks/trade_post';
-import { pastTradePost2, searchBySbTradePost2 } from 'store/thunks/trade_post2';
+import {
+  pastTradePost2,
+  searchBySbTradePost2,
+  updateTrade,
+  UpdateTradeResponse,
+} from 'store/thunks/trade_post2';
+import { FlashNotificationProps } from './authSlice';
 
 export type TradePostState = {
   loading: boolean;
   success: boolean;
   message: string;
   url: string;
+  flash: FlashNotificationProps[];
   //infoBox: { open: boolean } & InfoBoxAction;
 } & ShowAllTradePostResponse &
   ShowOneTradePostResponse &
-  GetOtherUserResponse;
+  GetOtherUserResponse &
+  UpdateTradeResponse;
 
 export const initialTradePostState = {
   loading: false,
@@ -27,8 +35,7 @@ export const initialTradePostState = {
   success: false,
   message: '',
   url: '',
-  //dataOne: {},
-  //photos: [],
+  flash: [],
   links: {} as TradePostState['links'],
   meta: {} as TradePostState['meta'],
 } as unknown as TradePostState;
@@ -83,8 +90,6 @@ export const tradePostSlice = createSlice({
 
     builder.addCase(searchBySbTradePost2.pending, (state) => {
       state.loading = true;
-      // state.url = ''; //初期化
-      // state.success = false;
     });
     builder.addCase(searchBySbTradePost2.fulfilled, (state, action) => {
       state.data = action.payload.data || [];
@@ -123,6 +128,28 @@ export const tradePostSlice = createSlice({
     });
     builder.addCase(pastTradePost2.rejected, (state) => {
       state.loading = false;
+    });
+
+    builder.addCase(updateTrade.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(updateTrade.fulfilled, (state, action) => {
+      state.loading = false;
+      //const newDoc = action.payload.data;
+      //state.data = [...state.data, { ...newDoc }]; //配列
+      const index = action.payload.dataOne.id;
+      const index_number = Number(index);
+      //state.dataOne = action.payload.dataOne;
+      state.data[index_number] = action.payload.dataOne;
+      console.log(state.data[index_number]);
+      state.flash.push({
+        type: 'success',
+        message: '投稿の内容を変更しました',
+      });
+    });
+    builder.addCase(updateTrade.rejected, (state, action) => {
+      state.loading = false;
+      //state.error = true;   //errorはShowAllTradePostResponseにないらしい
     });
   },
 });
