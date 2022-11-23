@@ -93,7 +93,7 @@ class TradePost2Controller extends Controller
         }
     }
 
-    //キーワード検索
+    //キーワード検索(使ってない)
     public function search(Request $request)
     {
         // キーワードで検索
@@ -107,6 +107,7 @@ class TradePost2Controller extends Controller
         );
     }
 
+    //セレクトボックスによる検索
     public function searchBySb($place)
     {
         Log::debug($place);
@@ -115,5 +116,20 @@ class TradePost2Controller extends Controller
             ['date', '>', now()],
         ])->orderBy('date', 'desc')   //日付降順
             ->paginate(12));
+    }
+
+    //トレード内容の変更(画像以外)
+    public function updateOthers(Request $request)
+    {
+        Log::debug($request);
+        $post = TradePost::find($request->trade_post_id);
+        $post->title = $request->title;
+        $post->date = $request->date;
+        $post->maxCapa = $request->maxCapa;
+        $post->place = $request->place;
+        $post->description = $request->description;
+
+        $post->save();
+        return response()->json(['dataOne' => $post]);
     }
 }

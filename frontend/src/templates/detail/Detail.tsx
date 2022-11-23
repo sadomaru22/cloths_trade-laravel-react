@@ -44,7 +44,7 @@ const Detail = (props: any) => {
       <Grid container justifyContent="center" sx={{ marginBottom: 5 }}>
         <Grid item xs={4}>
           <Typography color="textSecondary" borderBottom={0.5}>
-            日付：{post.date}
+            日付：{post.date.substring(0, 11)}
           </Typography>
         </Grid>
         <Grid item xs={2}>
