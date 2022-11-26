@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import {
   ShowAllTradePostResponse,
   createTradePost,
@@ -14,7 +14,7 @@ import {
   updateTrade,
   UpdateTradeResponse,
 } from 'store/thunks/trade_post2';
-import { FlashNotificationProps } from './authSlice';
+import { AuthState, FlashNotificationProps } from './authSlice';
 
 export type TradePostState = {
   loading: boolean;
@@ -22,7 +22,6 @@ export type TradePostState = {
   message: string;
   url: string;
   flash: FlashNotificationProps[];
-  //infoBox: { open: boolean } & InfoBoxAction;
 } & ShowAllTradePostResponse &
   ShowOneTradePostResponse &
   GetOtherUserResponse &
@@ -35,7 +34,7 @@ export const initialTradePostState = {
   success: false,
   message: '',
   url: '',
-  flash: [],
+  flash: [] as AuthState['flash'],
   links: {} as TradePostState['links'],
   meta: {} as TradePostState['meta'],
 } as unknown as TradePostState;
@@ -43,7 +42,12 @@ export const initialTradePostState = {
 export const tradePostSlice = createSlice({
   name: 'tradePost', //これがActiontypeと同じ、あと以下は従来のReduxと変わらない
   initialState: initialTradePostState,
-  reducers: {},
+  reducers: {
+    setFlash(state, action: PayloadAction<FlashNotificationProps>) {
+      const { type, message } = action.payload;
+      state.flash.push({ type, message });
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(showallTradePost.pending, (state) => {
       state.loading = true;
@@ -63,9 +67,10 @@ export const tradePostSlice = createSlice({
       state.loading = true;
     });
     builder.addCase(showoneTradePost.fulfilled, (state, action) => {
-      //state.dataOne = action.payload.dataOne;
+      state.dataOne = action.payload.dataOne;
       state.photos = action.payload.photos;
       state.loading = false;
+      console.log('showone from slice');
     });
     builder.addCase(showoneTradePost.rejected, (state) => {
       state.loading = false;
@@ -149,7 +154,6 @@ export const tradePostSlice = createSlice({
     });
     builder.addCase(updateTrade.rejected, (state, action) => {
       state.loading = false;
-      //state.error = true;   //errorはShowAllTradePostResponseにないらしい
     });
   },
 });

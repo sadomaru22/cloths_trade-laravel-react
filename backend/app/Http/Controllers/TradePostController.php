@@ -96,10 +96,10 @@ class TradePostController extends Controller
         Log::debug($id);
         // 存在するレコードIDだったら
         if (TradePost::where('id', $id)->exists()) {
-            //$dataOne = TradePost::find($id);
+            $dataOne = TradePost::find($id);
             $photos = Image::where('trade_post_id', $id)->pluck('file_name');
             Log::debug($photos);
-            return response()->json(['photos' => $photos], 200);
+            return response()->json(['dataOne' => $dataOne, 'photos' => $photos], 200);
             //return Image::where('trade_post_id', $id)->pluck('file_name');
         } else {
             return response()->json([

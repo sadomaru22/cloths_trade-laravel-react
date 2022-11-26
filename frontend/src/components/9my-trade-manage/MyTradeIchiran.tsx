@@ -43,7 +43,10 @@ const MyTradeIchiran = () => {
   //「詳細」ボタン押下時に投稿に紐づく画像をとってから、遷移する。
   const onGetPhotos = async (index: number, id: string) => {
     await dispatch(showoneTradePost(id));
-    history.push({ pathname: `mytrade-detail/${index}`, state: userName });
+    history.push({
+      pathname: `mytrade-detail/${index}/${id}`,
+      state: userName,
+    });
   };
 
   //アイコン押下時

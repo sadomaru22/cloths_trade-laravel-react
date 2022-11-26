@@ -1,19 +1,31 @@
 import { useHistory, useParams } from 'react-router-dom';
 import { Grid, Typography, Button } from '@mui/material';
 import { BaseLayout } from 'layouts';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { LinkButton } from 'templates';
-import { useAppSelector } from 'utils/hooks';
+import { useAppDispatch, useAppSelector } from 'utils/hooks';
 import Detail from 'templates/detail/Detail';
+import { showoneTradePost } from 'store/thunks/trade_post';
 
 const MyTradeDetail = () => {
   const history = useHistory();
+  const dispatch = useAppDispatch();
   //const { state } = useLocation();
-  const params: { index: string } = useParams(); //投稿情報用のパラメータ
+  const params: { index: string; id: string } = useParams(); //投稿情報用のパラメータ
   const tpi_number = Number(params.index);
-  const post = useAppSelector((state) => state.tradePost.data[tpi_number]);
+  //const post = useAppSelector((state) => state.tradePost.data[tpi_number]);
   const photos = useAppSelector((state) => state.tradePost.photos);
   const myUser = useAppSelector((state) => state.auth.user);
+  const post = useAppSelector((state) => state.tradePost.dataOne);
+
+  useEffect(() => {
+    // const request: ShowAllTradePostRequest = {
+    //   userId: userId,
+    //   page: query.page,
+    // };
+    console.log('aaa'); //これは動くんよ。////
+    dispatch(showoneTradePost(params.id));
+  }, [dispatch, params.id]);
 
   const onClickBack = () => {
     history.goBack();

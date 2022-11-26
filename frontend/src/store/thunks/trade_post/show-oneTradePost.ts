@@ -5,7 +5,7 @@ import { makeRejectValue } from 'store/thunks/utils';
 import { apiClient, makePath } from 'utils/api';
 
 export type ShowOneTradePostResponse = {
-  //dataOne: TradePost;
+  dataOne: TradePost;
   photos: string[]; //いらんかも
 };
 
@@ -20,7 +20,6 @@ export const showoneTradePost = createAsyncThunk<
   const userId = String(thunkApi.getState().auth.user?.id); //userIDはURIからではなくcreateTradePostなどと同様にこの形式で取ればいい。
   const trade_post_id = payload; //onclick時に取るt_ID
   console.log(trade_post_id + 'from show-one.ts');
-  console.log(userId);
   const path = makePath(['users', userId], ['trade_posts', trade_post_id]);
 
   try {
