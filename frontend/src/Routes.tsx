@@ -1,4 +1,3 @@
-//import { useEffect } from 'react';
 import { Switch, Route as DefaultRoute, Redirect } from 'react-router-dom';
 import { useEffect } from 'react';
 import Home from './pages';
@@ -16,8 +15,8 @@ import { useAppSelector } from './utils/hooks';
 import SignIn from 'pages/auth/SignIn';
 import { isAfterRegistration, isSignedIn } from './utils/auth';
 import TopPage from 'pages/top/TopPage';
-import Ichiran from 'templates/ichiran/Ichiran';
-import Detail from 'templates/detail/Detail';
+// import Ichiran from 'templates/ichiran/Ichiran';
+// import Detail from 'templates/detail/Detail';
 import {
   OtherUserDetail,
   OtherUserIchiran,
@@ -71,31 +70,35 @@ const Routes = () => {
       <AuthRoute path="/email-verification" component={EmailVerification} />
       <GuestRoute exact path="/forgot-password" component={ForgotPassword} />
       <Route exact path="/reset-password" component={ResetPassword} />
-      <Route exact path="/users/:userId/top" component={TopPage} />
-      <Route
+      <AuthRoute exact path="/users/:userId/top" component={TopPage} />
+      <AuthRoute
         exact
         path="/searchResult/:place"
         component={SearchResultIchiran}
       />
-      <Route exact path="/ichiran" component={Ichiran} />
-      <Route exact path="/detail" component={Detail} />
-      <Route exact path="/other-user/:id" component={OtheUserTop} />
-      <Route exact path="/trade-ichiran/:id" component={OtherUserIchiran} />
-      <Route path="/trade-detail/:index" component={OtherUserDetail} />
+      {/* <Route exact path="/ichiran" component={Ichiran} /> */}
+      {/* <Route exact path="/detail" component={Detail} /> */}
+      <AuthRoute exact path="/other-user/:id" component={OtheUserTop} />
+      <AuthRoute exact path="/trade-ichiran/:id" component={OtherUserIchiran} />
+      <AuthRoute path="/trade-detail/:index" component={OtherUserDetail} />
       {/*URLによって表示ページが変わる(Dynamic Route)の場合、exactはいらない*/}
-      <Route exact path="/past-trade-ichiran/:id" component={PastIchiran} />
-      <Route path="/past-trade-detail/:index" component={PastDetail} />
-      <Route exact path="/mypage" component={MyPage} />
-      <Route exact path="/pending-ichiran" component={PendingIchiran} />
-      <Route exact path="/pending-detail" component={PendingDetail} />
-      <Route exact path="/confirmed-ichiran" component={ConfirmedIchiran} />
-      <Route exact path="/confirmed-detail" component={ConfirmedDetail} />
-      <Route exact path="/trade-post" component={TradePost} />
-      <Route exact path="/mytrade-ichiran" component={MyTradeIchiran} />
-      <Route exact path="/mytrade-detail/:index" component={MyTradeDetail} />
-      <Route exact path="/sanka-ichiran" component={Sankasya} />
-      <Route exact path="/mytrade-edit/:index" component={TradeEdit} />
-      <Route exact path="/mytrade-juri" component={SankaJuri} />
+      <AuthRoute exact path="/past-trade-ichiran/:id" component={PastIchiran} />
+      <AuthRoute path="/past-trade-detail/:index" component={PastDetail} />
+      <AuthRoute exact path="/mypage" component={MyPage} />
+      <AuthRoute exact path="/pending-ichiran" component={PendingIchiran} />
+      <AuthRoute exact path="/pending-detail" component={PendingDetail} />
+      <AuthRoute exact path="/confirmed-ichiran" component={ConfirmedIchiran} />
+      <AuthRoute exact path="/confirmed-detail" component={ConfirmedDetail} />
+      <AuthRoute exact path="/trade-post" component={TradePost} />
+      <AuthRoute exact path="/mytrade-ichiran" component={MyTradeIchiran} />
+      <AuthRoute
+        exact
+        path="/mytrade-detail/:index/:id"
+        component={MyTradeDetail}
+      />
+      <AuthRoute exact path="/sanka-ichiran" component={Sankasya} />
+      <AuthRoute exact path="/mytrade-edit/:index" component={TradeEdit} />
+      <AuthRoute exact path="/mytrade-juri" component={SankaJuri} />
       {/* 設定した全てのパスに該当しないアクセスを捕捉 */}
       <Route path="*" component={NotFound} />
     </Switch>
