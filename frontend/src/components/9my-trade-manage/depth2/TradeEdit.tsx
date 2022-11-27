@@ -9,8 +9,12 @@ import {
 import Box from '@mui/material/Box';
 import { BaseLayout } from 'layouts';
 import { TradeEditOthers } from '..';
-import TradeEditPhotos from './TradeEditPhotos';
+import TradeAddPhotos from './TradeAddPhotos';
 import { useParams } from 'react-router-dom';
+import { showoneTradePost } from 'store/thunks/trade_post';
+import { useEffect } from 'react';
+import { useAppDispatch, useAppSelector } from 'utils/hooks';
+import TradeDeletePhotos from './TradeDeletePhotos';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -24,8 +28,13 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const TradeEdit = () => {
   const classes = useStyles();
-  const params: { index: string } = useParams(); //投稿情報用のパラメータ
-  const tpi_number = Number(params.index);
+  const dispatch = useAppDispatch();
+  const params: { id: string } = useParams(); //投稿情報用のパラメータ
+  const photos = useAppSelector((state) => state.tradePost.photos);
+  useEffect(() => {
+    console.log('aaa from TradeEdit.tsx'); //これは動く
+    dispatch(showoneTradePost(params.id));
+  }, [dispatch, params.id]);
 
   return (
     <BaseLayout subtitle="TradeEdit">
@@ -35,14 +44,21 @@ const TradeEdit = () => {
             <CardHeader title="投稿内容の編集" />
             <Divider />
             <CardContent>
-              <TradeEditOthers index={tpi_number} />
+              <TradeEditOthers />
             </CardContent>
           </Box>
           <Box component="section" mb={3}>
-            <CardHeader title="画像の編集" />
+            <CardHeader title="画像の新規追加" />
             <Divider />
             <CardContent>
-              <TradeEditPhotos />
+              <TradeAddPhotos id={params.id} photos={photos} />
+            </CardContent>
+          </Box>
+          <Box component="section" mb={3}>
+            <CardHeader title="画像の削除" />
+            <Divider />
+            <CardContent>
+              <TradeDeletePhotos photos={photos} />
             </CardContent>
           </Box>
         </Card>

@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import {
   ShowAllTradePostResponse,
   createTradePost,
@@ -11,17 +11,18 @@ import {
 import {
   pastTradePost2,
   searchBySbTradePost2,
+  updatePhotos,
   updateTrade,
   UpdateTradeResponse,
 } from 'store/thunks/trade_post2';
-import { AuthState, FlashNotificationProps } from './authSlice';
+//import { AuthState, FlashNotificationProps } from './authSlice';
 
 export type TradePostState = {
   loading: boolean;
   success: boolean;
   message: string;
   url: string;
-  flash: FlashNotificationProps[];
+  //flash: FlashNotificationProps[];
 } & ShowAllTradePostResponse &
   ShowOneTradePostResponse &
   GetOtherUserResponse &
@@ -34,7 +35,7 @@ export const initialTradePostState = {
   success: false,
   message: '',
   url: '',
-  flash: [] as AuthState['flash'],
+  //flash: [] as AuthState['flash'],
   links: {} as TradePostState['links'],
   meta: {} as TradePostState['meta'],
 } as unknown as TradePostState;
@@ -42,12 +43,7 @@ export const initialTradePostState = {
 export const tradePostSlice = createSlice({
   name: 'tradePost', //これがActiontypeと同じ、あと以下は従来のReduxと変わらない
   initialState: initialTradePostState,
-  reducers: {
-    setFlash(state, action: PayloadAction<FlashNotificationProps>) {
-      const { type, message } = action.payload;
-      state.flash.push({ type, message });
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder.addCase(showallTradePost.pending, (state) => {
       state.loading = true;
@@ -57,7 +53,6 @@ export const tradePostSlice = createSlice({
       state.links = action.payload.links || {};
       state.meta = action.payload.meta || {};
       state.loading = false;
-      console.log(state.data);
     });
     builder.addCase(showallTradePost.rejected, (state) => {
       state.loading = false;
@@ -81,9 +76,6 @@ export const tradePostSlice = createSlice({
     });
     builder.addCase(createTradePost.fulfilled, (state, action) => {
       state.loading = false;
-      //const newDoc = action.payload.data;
-      //state.data = [...state.data, { ...newDoc }]; //配列
-      console.log(action.payload.message);
       state.success = action.payload.success;
       state.message = action.payload.message;
       state.url = action.payload.url;
@@ -100,10 +92,7 @@ export const tradePostSlice = createSlice({
       state.data = action.payload.data || [];
       state.links = action.payload.links || {};
       state.meta = action.payload.meta || {};
-      // state.success = action.payload.success;
-      // state.url = action.payload.url;
       state.loading = false;
-      console.log(state.data);
     });
     builder.addCase(searchBySbTradePost2.rejected, (state) => {
       state.loading = false;
@@ -129,7 +118,6 @@ export const tradePostSlice = createSlice({
       state.links = action.payload.links || {};
       state.meta = action.payload.meta || {};
       state.loading = false;
-      console.log(state.data);
     });
     builder.addCase(pastTradePost2.rejected, (state) => {
       state.loading = false;
@@ -140,19 +128,22 @@ export const tradePostSlice = createSlice({
     });
     builder.addCase(updateTrade.fulfilled, (state, action) => {
       state.loading = false;
-      //const newDoc = action.payload.data;
-      //state.data = [...state.data, { ...newDoc }]; //配列
-      const index = action.payload.dataOne.id;
-      const index_number = Number(index);
-      //state.dataOne = action.payload.dataOne;
-      state.data[index_number] = action.payload.dataOne;
-      console.log(state.data[index_number]);
-      state.flash.push({
-        type: 'success',
-        message: '投稿の内容を変更しました',
-      });
+      state.dataOne = action.payload.dataOne;
+      console.log(state.dataOne);
     });
     builder.addCase(updateTrade.rejected, (state, action) => {
+      state.loading = false;
+    });
+
+    builder.addCase(updatePhotos.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(updatePhotos.fulfilled, (state, action) => {
+      state.loading = false;
+      state.photos = action.payload.photos;
+      console.log(state.photos);
+    });
+    builder.addCase(updatePhotos.rejected, (state, action) => {
       state.loading = false;
     });
   },

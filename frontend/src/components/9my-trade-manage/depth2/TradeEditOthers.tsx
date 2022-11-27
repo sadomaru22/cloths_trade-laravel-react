@@ -3,12 +3,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import {
-  AppBar,
-  Button,
-  Container,
   TextField,
-  Toolbar,
-  Typography,
   FormControl,
   FormHelperText,
   InputLabel,
@@ -64,17 +59,15 @@ const schema = yup.object().shape({
   description: yup.string().min(30).max(300),
 });
 
-const TradeEditOthers = (props: any) => {
-  const index = props.index;
+const TradeEditOthers = () => {
+  //const index = props.index;
   const post = {
-    title: useAppSelector((state) => state.tradePost.data[index].title),
-    date: useAppSelector((state) => state.tradePost.data[index].date),
-    maxCapa: useAppSelector((state) => state.tradePost.data[index].maxCapa),
-    place: useAppSelector((state) => state.tradePost.data[index].place),
-    description: useAppSelector(
-      (state) => state.tradePost.data[index].description
-    ),
-    id: useAppSelector((state) => state.tradePost.data[index].id),
+    title: useAppSelector((state) => state.tradePost.dataOne.title),
+    date: useAppSelector((state) => state.tradePost.dataOne.date),
+    maxCapa: useAppSelector((state) => state.tradePost.dataOne.maxCapa),
+    place: useAppSelector((state) => state.tradePost.dataOne.place),
+    description: useAppSelector((state) => state.tradePost.dataOne.description),
+    id: useAppSelector((state) => state.tradePost.dataOne.id),
   };
   const dispatch = useAppDispatch();
   const [message, setMessage] = useState<string | undefined>('');

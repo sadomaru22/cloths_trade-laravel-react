@@ -44,7 +44,7 @@ const MyTradeIchiran = () => {
   const onGetPhotos = async (index: number, id: string) => {
     await dispatch(showoneTradePost(id));
     history.push({
-      pathname: `mytrade-detail/${index}/${id}`,
+      pathname: `mytrade-detail/${id}`,
       state: userName,
     });
   };

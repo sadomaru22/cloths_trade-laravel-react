@@ -65,8 +65,6 @@ export const authSlice = createSlice({
     });
     builder.addCase(createUser.fulfilled, (state, action) => {
       state.user = action.payload.user;
-      console.log('登録できてるか確認');
-      console.log(state.user);
       state.afterRegistration = true;
       state.signedIn = true;
       state.loading = false;
@@ -121,7 +119,6 @@ export const authSlice = createSlice({
     });
     builder.addCase(signInWithEmail.fulfilled, (state, action) => {
       state.user = action.payload.user;
-      console.log(action.payload.user);
       localStorage.setItem('userId', action.payload.user.id);
       localStorage.setItem('userName', action.payload.user.name);
       state.signedIn = true;
@@ -154,7 +151,6 @@ export const authSlice = createSlice({
           message: '認証用メールを送信しました',
         });
       } else {
-        console.log('ユーザ情報');
         state.user.email = action.payload.email;
         state.flash.push({
           type: 'success',
