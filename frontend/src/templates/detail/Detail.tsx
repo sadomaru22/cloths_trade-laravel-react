@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import { Grid, Typography, Avatar, Container, Link } from '@mui/material';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
+import { useAppDispatch, useAppSelector } from 'utils/hooks';
+import { showoneTradePost } from 'store/thunks/trade_post';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -17,8 +19,17 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const Detail = (props: any) => {
   const classes = useStyles();
+  const dispatch = useAppDispatch();
   const user = props.user;
-  const post = props.post;
+  const id: string = props.id;
+  const post = useAppSelector((state) => state.tradePost.dataOne);
+  const photos: string[] = useAppSelector((state) => state.tradePost.photos);
+
+  useEffect(() => {
+    console.log('aaa'); //これは動く
+    dispatch(showoneTradePost(id));
+  }, [dispatch, id]);
+
   return (
     <Container maxWidth="md" className={classes.container}>
       <Grid container sx={{ marginBottom: 8 }}>
@@ -44,7 +55,7 @@ const Detail = (props: any) => {
       <Grid container justifyContent="center" sx={{ marginBottom: 5 }}>
         <Grid item xs={4}>
           <Typography color="textSecondary" borderBottom={0.5}>
-            日付：{post.date.substring(0, 11)}
+            日付：{post.date}
           </Typography>
         </Grid>
         <Grid item xs={2}>
@@ -77,13 +88,14 @@ const Detail = (props: any) => {
       </Typography>
 
       <ImageList
-        sx={{ width: 800, height: 450 }}
-        variant="woven"
+        sx={{ width: 600, height: 450, ml: 15 }}
         cols={3}
-        gap={8}
+        rowHeight={164}
+        //variant="woven"
+        //gap={8}
       >
-        {props.photos.map((item: any) => (
-          <ImageListItem key={item}>
+        {photos.map((item: any, index) => (
+          <ImageListItem key={index}>
             <img
               src={`${item}?w=161&fit=crop&auto=format`}
               srcSet={`${item}?w=161&fit=crop&auto=format&dpr=2 2x`}

@@ -26,18 +26,8 @@ const OtherUserDetail = () => {
   const history = useHistory();
   const userId = localStorage.getItem('userId'); //参加申請ボタン活性非活性の比較用
 
-  const params: { index: string } = useParams(); //投稿情報用のパラメータ
-  const tpi_number = Number(params.index);
-  //const other_userId = params.id;
-  console.log('あああ');
-  const post = useAppSelector((state) => state.tradePost.data[tpi_number]);
-  const photos = useAppSelector((state) => state.tradePost.photos);
+  const params: { id: string } = useParams(); //投稿情報用のパラメータ
   const other_user = useAppSelector((state) => state.tradePost.user);
-  // useEffect(() => {
-  //   const request: GetOtherUserRequest = other_userId;
-  //   dispatch(getOtherUser(request));
-  //   console.log('aaa from OtherDetail');
-  // });
 
   const [open, setOpen] = React.useState(false);
 
@@ -68,8 +58,9 @@ const OtherUserDetail = () => {
     <BaseLayout subtitle="other-user-detail">
       <Detail
         user={other_user}
-        post={post}
-        photos={photos}
+        id={params.id}
+        // post={post}
+        // photos={photos}
         onClickIcon={onClickIcon}
       />
 

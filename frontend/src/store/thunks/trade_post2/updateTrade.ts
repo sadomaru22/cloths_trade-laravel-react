@@ -23,14 +23,14 @@ export const updateTrade = createAsyncThunk<
   const path = '/trade_posts/edit_others';
   console.log(payload.trade_post_id + '=payload.trade_post_id');
 
-  //画像は別のAPi処理になるので不要
-  //   const config = {
-  //     headers: {
-  //       'Content-type': 'multipart/form-data', //画像の送信には必須。
-  //     },
-  //   };
   try {
-    const response = await apiClient().put(path, payload); //TradePostController@update
+    const response = await apiClient().put(path, payload); //TradePost2Controller@updateOthers
+    const { setFlash } = await import('store/slices/authSlice');
+    if (response?.data) {
+      thunkApi.dispatch(
+        setFlash({ type: 'success', message: '投稿の内容を変更しました' })
+      );
+    }
     return response?.data;
   } catch (error) {
     return thunkApi.rejectWithValue(makeRejectValue(error));

@@ -6,10 +6,12 @@ use App\Http\Resources\TradePostCollection;
 use App\Models\SankaFlag;
 use App\Models\TradePost;
 use App\Models\User;
+use App\Models\Image;
 use Illuminate\Http\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Providers\RouteServiceProvider;
+use Intervention\Image\Facades\Image as InterventionImage;
 
 
 class TradePost2Controller extends Controller
@@ -131,5 +133,38 @@ class TradePost2Controller extends Controller
 
         $post->save();
         return response()->json(['dataOne' => $post]);
+    }
+    //トレード内容の変更(画像)
+    public function updatePhotos(Request $request)
+    {
+        Log::debug($request->all());
+        $trade_post_id = $request->id;
+        try {
+            for ($i = 0; $i < 10; $i++) {
+                //Laravelのstorage/app/publicに全画像を保存
+                $index = $request->file('photos_' . $i);
+                if ($index) {
+                    $file_name = $index->getClientOriginalName();
+                    //$index->storeAs('public', $file_name);  //まずはstorage/app/publicに画像を保存
+                    InterventionImage::make($index)->resize(510, 809, function ($constraint) {
+                        // 縦横比を保持したままにする
+                        $constraint->aspectRatio();
+                        // 小さい画像は大きくしない
+                        $constraint->upsize();
+                    })->save(storage_path('/app/public/' . $file_name));;
+                    //画像のパスをImagesTに保存
+                    $images = new Image();   //ここでnewしないと最初の1件しかsave()されない
+                    $images->trade_post_id = $trade_post_id;
+                    Log::debug('89行目');
+                    $images->file_name = 'http://localhost/storage/' . $file_name;
+                    $images->save();
+                };
+            };
+        } catch (\Exception $e) { //3枚の画像のリクエストが来た場合、4枚目以降はreturnに走るようにする。
+        };
+        //$newImages = Image::where('trade_post_id', $trade_post_id);  //これ？
+        $photos = Image::where('trade_post_id', $trade_post_id)->pluck('file_name');
+
+        return response()->json(['photos' => $photos]);
     }
 }

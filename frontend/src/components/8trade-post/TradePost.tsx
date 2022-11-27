@@ -245,34 +245,37 @@ const TradePost = () => {
               />
             </label>
             {/* 画像を選択したら選択中のすべての画像のプレビューを表示 */}
-            {images.map((image, i) => (
-              <div
-                key={i}
-                style={{
-                  position: 'relative',
-                  width: '30%',
-                }}
-              >
-                <IconButton
-                  aria-label="delete image"
+            <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+              {images.map((image, i) => (
+                <div
+                  key={i}
                   style={{
-                    position: 'absolute',
-                    top: 10,
-                    left: 10,
-                    color: '#aaa',
+                    position: 'relative',
+                    width: '30%',
+                    marginBottom: 10,
                   }}
-                  onClick={() => handleOnRemoveImage(i)}
                 >
-                  <CancelIcon />
-                </IconButton>
-                <img
-                  src={URL.createObjectURL(image)}
-                  style={{
-                    width: '80%',
-                  }}
-                />
-              </div>
-            ))}
+                  <IconButton
+                    aria-label="delete image"
+                    style={{
+                      position: 'absolute',
+                      top: 10,
+                      left: 10,
+                      color: '#aaa',
+                    }}
+                    onClick={() => handleOnRemoveImage(i)}
+                  >
+                    <CancelIcon />
+                  </IconButton>
+                  <img
+                    src={URL.createObjectURL(image)}
+                    style={{
+                      width: '80%',
+                    }}
+                  />
+                </div>
+              ))}
+            </div>
             <br />
             <br />
           </FormControl>

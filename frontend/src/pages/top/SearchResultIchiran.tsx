@@ -51,7 +51,7 @@ const SearchResultIchiran = () => {
   const onGetPhotos = async (index: number, id: string, userId: string) => {
     await dispatch(showoneTradePost(id)); //画像
     await dispatch(getOtherUser(userId));
-    history.push(`/trade-detail/${index}`);
+    history.push(`/trade-detail/${id}`);
   };
 
   return (
