@@ -9,6 +9,7 @@ import {
   GetOtherUserResponse,
 } from 'store/thunks/trade_post';
 import {
+  deletePhotos,
   pastTradePost2,
   searchBySbTradePost2,
   updatePhotos,
@@ -144,6 +145,19 @@ export const tradePostSlice = createSlice({
       console.log(state.photos);
     });
     builder.addCase(updatePhotos.rejected, (state, action) => {
+      state.loading = false;
+    });
+
+    builder.addCase(deletePhotos.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(deletePhotos.fulfilled, (state, action) => {
+      state.loading = false;
+      state.photos = action.payload.photos;
+      console.log(state.photos);
+      console.log('from deletePhotos.fullfilled');
+    });
+    builder.addCase(deletePhotos.rejected, (state, action) => {
       state.loading = false;
     });
   },

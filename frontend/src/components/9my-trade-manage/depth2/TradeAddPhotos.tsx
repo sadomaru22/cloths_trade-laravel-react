@@ -12,7 +12,7 @@ type FormData = UpdatePhotosRequest;
 
 const TradeAddPhotos = (props: any) => {
   const id = props.id;
-  const photos = props.photos;
+  const photos = props.photos; //画像ボタンの非活性監視用
   const dispatch = useAppDispatch();
   const [message, setMessage] = useState<string | undefined>('');
 

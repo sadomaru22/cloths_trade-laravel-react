@@ -5,6 +5,7 @@ import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import { useAppDispatch, useAppSelector } from 'utils/hooks';
 import { showoneTradePost } from 'store/thunks/trade_post';
+import { Image } from 'models';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -23,7 +24,7 @@ const Detail = (props: any) => {
   const user = props.user;
   const id: string = props.id;
   const post = useAppSelector((state) => state.tradePost.dataOne);
-  const photos: string[] = useAppSelector((state) => state.tradePost.photos);
+  const photos: Image[] = useAppSelector((state) => state.tradePost.photos);
 
   useEffect(() => {
     console.log('aaa'); //これは動く
@@ -94,12 +95,12 @@ const Detail = (props: any) => {
         //variant="woven"
         //gap={8}
       >
-        {photos.map((item: any, index) => (
+        {photos.map((row: any, index) => (
           <ImageListItem key={index}>
             <img
-              src={`${item}?w=161&fit=crop&auto=format`}
-              srcSet={`${item}?w=161&fit=crop&auto=format&dpr=2 2x`}
-              alt={item}
+              src={`${row.file_name}?w=161&fit=crop&auto=format`}
+              srcSet={`${row.file_name}?w=161&fit=crop&auto=format&dpr=2 2x`}
+              alt={row.file_name}
               loading="lazy"
             />
           </ImageListItem>

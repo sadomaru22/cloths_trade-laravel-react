@@ -11,6 +11,7 @@ use Illuminate\Http\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Providers\RouteServiceProvider;
+use Illuminate\Support\Facades\Auth;
 use Intervention\Image\Facades\Image as InterventionImage;
 
 
@@ -162,8 +163,17 @@ class TradePost2Controller extends Controller
             };
         } catch (\Exception $e) { //3枚の画像のリクエストが来た場合、4枚目以降はreturnに走るようにする。
         };
-        //$newImages = Image::where('trade_post_id', $trade_post_id);  //これ？
-        $photos = Image::where('trade_post_id', $trade_post_id)->pluck('file_name');
+        $photos = Image::where('trade_post_id', $trade_post_id)->get();
+
+        return response()->json(['photos' => $photos]);
+    }
+    //画像の削除(DBから)
+    public function deletePhotos(Request $request)
+    {
+        Log::debug($request->all());
+        Image::destroy($request->id);
+
+        $photos = Image::where('trade_post_id', $request->trade_post_id)->get();
 
         return response()->json(['photos' => $photos]);
     }

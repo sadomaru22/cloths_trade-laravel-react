@@ -75,6 +75,7 @@ Route::group([
     Route::get('/trade_posts/searchBySb/{place}', [TradePost2Controller::class, 'searchBySb']);
     Route::put('/trade_posts/edit_others', [TradePost2Controller::class, 'updateOthers']);
     Route::post('/trade_posts/edit_photos', [TradePost2Controller::class, 'updatePhotos']);
+    Route::post('/trade_posts/delete_photos', [TradePost2Controller::class, 'deletePhotos']);
 
     /*
     |--------------------------------------------------------------
