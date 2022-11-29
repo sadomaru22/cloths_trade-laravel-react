@@ -1,12 +1,12 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AsyncThunkConfig } from 'store/thunks/config';
-import { TradePost } from 'models';
+import { Image, TradePost } from 'models';
 import { makeRejectValue } from 'store/thunks/utils';
 import { apiClient, makePath } from 'utils/api';
 
 export type ShowOneTradePostResponse = {
   dataOne: TradePost;
-  photos: string[]; //いらんかも
+  photos: Image[];
 };
 
 export type ShowOneTradePostRequest = string;

@@ -4,15 +4,6 @@ import { TradePost } from 'models';
 import { apiClient, makePath } from 'utils/api';
 import { makeRejectValue } from 'store/thunks/utils';
 
-// export type  CreateTradePostRequest = {
-//    title: string;
-//    date: string;
-//    photos: string;
-//    maxCapa: number;
-//    place: string;
-//    description: string;
-// }
-
 export type CreateTradePostRequest = Pick<TradePost, 'title'> &
   Partial<Pick<TradePost, 'date'>> &
   Partial<Pick<TradePost, 'photos'>> &

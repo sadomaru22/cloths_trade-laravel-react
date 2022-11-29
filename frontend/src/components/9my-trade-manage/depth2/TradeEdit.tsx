@@ -58,7 +58,7 @@ const TradeEdit = () => {
             <CardHeader title="画像の削除" />
             <Divider />
             <CardContent>
-              <TradeDeletePhotos photos={photos} />
+              <TradeDeletePhotos id={params.id} photos={photos} />
             </CardContent>
           </Box>
         </Card>

@@ -2,10 +2,10 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { apiClient } from 'utils/api';
 import { AsyncThunkConfig } from 'store/thunks/config';
 import { makeRejectValue } from 'store/thunks/utils';
-import { TradePost } from 'models';
+import { Image, TradePost } from 'models';
 
 export type UpdatePhotosResponse = {
-  photos: string[];
+  photos: Image[];
 };
 
 export type UpdatePhotosRequest = Pick<TradePost, 'photos'> & { id: string };
