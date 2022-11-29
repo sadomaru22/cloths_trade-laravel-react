@@ -93,16 +93,17 @@ const TradeEditOthers = () => {
     if (!data.maxCapa) data.maxCapa = post.maxCapa;
     if (!data.place) data.place = post.place;
     if (!data.description) data.description = post.description;
-
+    console.log(data.date);
+    console.log(post.date);
     // 全ての項目で変更点がない場合はリクエストを送らない
     if (
       data.title === post?.title &&
-      data.date === post?.date &&
+      //data.date === post?.date &&
       data.maxCapa === post?.maxCapa &&
       data.place === post?.place &&
       data.description === post?.description
     ) {
-      setMessage('プロフィールが変更されておりません');
+      setMessage('投稿内容が変更されておりません');
       return;
     }
     data.trade_post_id = post.id;

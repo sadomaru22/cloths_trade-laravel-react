@@ -21,10 +21,10 @@ const SideMenu = () => {
   const userId = useAppSelector((state) => state.auth.user?.id);
   const dispatch = useAppDispatch();
 
-  //userIdある(=ログイン状態)であればボードとログアウト
+  //userIdある(=ログイン状態)であればTOPページとログアウト
   const menuItem = userId
     ? ({
-        boards: 'ボードを表示',
+        boards: 'TOPページに戻る',
         logout: 'ログアウト',
       } as const)
     : ({
@@ -47,7 +47,7 @@ const SideMenu = () => {
   const handleClick = (key: keyof typeof menuItem) => () => {
     switch (key) {
       case 'boards':
-        history.push(`/users/${userId}/boards`);
+        history.push(`/users/${userId}/top`);
         break;
       case 'logout':
         dispatch(signOutFromAPI());
