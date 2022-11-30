@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { sankaSinsei } from 'store/thunks/sinsei';
 import {
   ShowAllTradePostResponse,
   createTradePost,
@@ -80,7 +81,6 @@ export const tradePostSlice = createSlice({
     builder.addCase(createTradePost.fulfilled, (state, action) => {
       state.loading = false;
       state.success = action.payload.success;
-      state.message = action.payload.message;
       state.url = action.payload.url;
     });
     builder.addCase(createTradePost.rejected, (state, action) => {
@@ -186,6 +186,39 @@ export const tradePostSlice = createSlice({
     builder.addCase(pendingTradePost.rejected, (state, action) => {
       state.loading = false;
     });
+
+    builder.addCase(sankaSinsei.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(sankaSinsei.fulfilled, (state, action) => {
+      state.success = action.payload.success;
+      state.url = action.payload.url;
+      console.log('申請成功');
+      state.loading = false;
+    });
+    builder.addCase(sankaSinsei.rejected, (state, action) => {
+      state.loading = false;
+    });
+
+    // builder.addCase(sankaSinsei.pending, (state) => {
+    //   state.loading = true;
+    // });
+    // builder.addCase(sankaSinsei.fulfilled, (state, action) => {
+    //   state.loading = false;
+    // });
+    // builder.addCase(sankaSinsei.rejected, (state, action) => {
+    //   state.loading = false;
+    // });
+
+    // builder.addCase(sankaSinsei.pending, (state) => {
+    //   state.loading = true;
+    // });
+    // builder.addCase(sankaSinsei.fulfilled, (state, action) => {
+    //   state.loading = false;
+    // });
+    // builder.addCase(sankaSinsei.rejected, (state, action) => {
+    //   state.loading = false;
+    // });
   },
 });
 

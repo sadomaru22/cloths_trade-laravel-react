@@ -109,13 +109,12 @@ const TradePost = () => {
     //data.photos = imageData;
 
     const response = await dispatch(createTradePost(data));
-    //const success = useAppSelector((state) => state.tradePost.success);
     const success = store.getState().tradePost.success;
-    const messageFromState = store.getState().tradePost.message;
     const url = store.getState().tradePost.url;
     if (success) {
-      window.location.href = url; //これで自在にリダイレクトできる
-      alert(messageFromState);
+      setTimeout(function () {
+        window.location.href = url;
+      }, 2000); //これで自在にリダイレクトできる
     }
 
     if (createTradePost.rejected.match(response)) {

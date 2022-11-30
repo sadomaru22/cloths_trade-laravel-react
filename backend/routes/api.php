@@ -82,10 +82,10 @@ Route::group([
     | Sinsei  参加、取消(参加)、受理、取消(主催)
     |--------------------------------------------------------------
     */
-    Route::get('/sinsei/{trade_posts}/sanka', [SinseiController::class, 'sanka']);
-    Route::get('/sinsei/{trade_posts}/delsan', [SinseiController::class, 'delsan']);
-    Route::get('/sinsei/{trade_posts}/juri', [SinseiController::class, 'juri']);
-    Route::get('/sinsei/{trade_posts}/delsyu', [SinseiController::class, 'delsyu']);
+    Route::post('/sinsei/sanka', [SinseiController::class, 'sanka']);
+    Route::post('/sinsei/delsan', [SinseiController::class, 'delsan']);
+    Route::post('/sinsei/juri', [SinseiController::class, 'juri']);
+    Route::post('/sinsei/delsyu', [SinseiController::class, 'delsyu']);  //不要かも
 });
 
 

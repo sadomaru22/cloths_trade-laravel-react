@@ -86,7 +86,7 @@ class TradePostController extends Controller
             };
         } catch (\Exception $e) { //3枚の画像のリクエストが来た場合、4枚目以降はreturnに走るようにする。
         };
-        return response()->json(['success' => true, 'url' => "/users/$id/top", 'message' => 'トレードの投稿が完了しました!'], 201);
+        return response()->json(['success' => true, 'url' => "/users/$id/top"], 201);
     }
 
     //一件表示  //投稿に結びつく画像を取ってくるメソッドにする
