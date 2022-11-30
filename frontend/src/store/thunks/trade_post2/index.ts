@@ -4,3 +4,5 @@ export * from './pastTradePost2';
 export * from './updateTrade';
 export * from './updatePhotos';
 export * from './deletePhotos';
+export * from './confirmedTradePost2';
+export * from './pendingTradePost2';

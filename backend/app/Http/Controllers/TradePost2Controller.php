@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Arr;
 use Intervention\Image\Facades\Image as InterventionImage;
 
 
@@ -35,21 +36,11 @@ class TradePost2Controller extends Controller
     {
         $pflag = SankaFlag::where([
             ['user_id', '=', $id],
-            ['pending_flag', '=', true],
-        ]);
-        $result = TradePost::where([
-            ['tradepost_id', '=', $pflag->tradepost_id],
-        ]);
-        if ($result) {
-            return response()->json(
-                $result,
-                200
-            );
-        } else {
-            response()->json([
-                'message' => 'Post was not found',
-            ], 404);
-        }
+            ['pending_flag', '=', 1],
+        ])->pluck('trade_post_id');
+        return new TradePostCollection(
+            TradePost::whereIn('id', $pflag)->orderBy('date', 'desc')->paginate(12)
+        );
     }
 
     //参加確定したトレード一覧
@@ -57,21 +48,12 @@ class TradePost2Controller extends Controller
     {
         $cflag = SankaFlag::where([
             ['user_id', '=', $id],
-            ['confirmed_flag', '=', true],
-        ]);
-        $result = TradePost::where([
-            ['tradepost_id', '=', $cflag->tradepost_id],
-        ]);
-        if ($result) {
-            return response()->json(
-                $result,
-                200
-            );
-        } else {
-            response()->json([
-                'message' => 'Post was not found',
-            ], 404);
-        }
+            ['confirmed_flag', '=', 1],
+        ])->pluck('trade_post_id');
+        Log::debug($cflag . '=cflag');
+        return new TradePostCollection(
+            TradePost::whereIn('id', $cflag)->orderBy('date', 'desc')->paginate(12)
+        );
     }
 
     //トレードの参加者一覧

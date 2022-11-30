@@ -9,8 +9,10 @@ import {
   GetOtherUserResponse,
 } from 'store/thunks/trade_post';
 import {
+  confirmedTradePost,
   deletePhotos,
   pastTradePost2,
+  pendingTradePost,
   searchBySbTradePost2,
   updatePhotos,
   updateTrade,
@@ -154,10 +156,34 @@ export const tradePostSlice = createSlice({
     builder.addCase(deletePhotos.fulfilled, (state, action) => {
       state.loading = false;
       state.photos = action.payload.photos;
-      console.log(state.photos);
-      console.log('from deletePhotos.fullfilled');
     });
     builder.addCase(deletePhotos.rejected, (state, action) => {
+      state.loading = false;
+    });
+
+    builder.addCase(confirmedTradePost.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(confirmedTradePost.fulfilled, (state, action) => {
+      state.data = action.payload.data || [];
+      state.links = action.payload.links || {};
+      state.meta = action.payload.meta || {};
+      state.loading = false;
+    });
+    builder.addCase(confirmedTradePost.rejected, (state, action) => {
+      state.loading = false;
+    });
+
+    builder.addCase(pendingTradePost.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(pendingTradePost.fulfilled, (state, action) => {
+      state.data = action.payload.data || [];
+      state.links = action.payload.links || {};
+      state.meta = action.payload.meta || {};
+      state.loading = false;
+    });
+    builder.addCase(pendingTradePost.rejected, (state, action) => {
       state.loading = false;
     });
   },

@@ -77,9 +77,13 @@ const Routes = () => {
       <AuthRoute path="/past-trade-detail/:index" component={PastDetail} />
       <AuthRoute exact path="/mypage" component={MyPage} />
       <AuthRoute exact path="/pending-ichiran" component={PendingIchiran} />
-      <AuthRoute exact path="/pending-detail" component={PendingDetail} />
+      <AuthRoute exact path="/pending-detail/:id" component={PendingDetail} />
       <AuthRoute exact path="/confirmed-ichiran" component={ConfirmedIchiran} />
-      <AuthRoute exact path="/confirmed-detail" component={ConfirmedDetail} />
+      <AuthRoute
+        exact
+        path="/confirmed-detail/:id"
+        component={ConfirmedDetail}
+      />
       <AuthRoute exact path="/trade-post" component={TradePost} />
       <AuthRoute exact path="/mytrade-ichiran" component={MyTradeIchiran} />
       <AuthRoute path="/mytrade-detail/:id" component={MyTradeDetail} />

@@ -1,12 +1,9 @@
 import React, { useState } from 'react';
 import { BaseLayout } from 'layouts';
 import {
-  AppBar,
   Button,
   Container,
   TextField,
-  Toolbar,
-  Typography,
   FormControl,
   FormHelperText,
   InputLabel,
@@ -129,13 +126,6 @@ const TradePost = () => {
 
   return (
     <BaseLayout subtitle="Post">
-      {/* <AppBar position="relative">
-        <Toolbar>
-          <Typography variant="h6" color="inherit" noWrap>
-            トレードの投稿
-          </Typography>
-        </Toolbar>
-      </AppBar> */}
       <Container maxWidth="md" className={classes.container}>
         <Card className={classes.card} elevation={2}>
           <form onSubmit={handleSubmit(onSubmit)}>
