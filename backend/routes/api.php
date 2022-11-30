@@ -68,8 +68,8 @@ Route::group([
     |--------------------------------------------------------------
     */
     Route::get('/trade_posts/past/{id}', [TradePost2Controller::class, 'past']);
-    Route::get('/trade_posts/pending/{id}', [TradePost2Controller::class, 'pending']);
     Route::get('/trade_posts/confirmed/{id}', [TradePost2Controller::class, 'confirmed']);
+    Route::get('/trade_posts/pending/{id}', [TradePost2Controller::class, 'pending']);
     Route::get('/trade_posts/sankasya/{id}', [TradePost2Controller::class, 'sankasya']);
     Route::get('/trade_posts/search', [TradePost2Controller::class, 'search']);  //不要
     Route::get('/trade_posts/searchBySb/{place}', [TradePost2Controller::class, 'searchBySb']);
