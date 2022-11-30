@@ -15,7 +15,6 @@ export type CreateTradePostResponse = {
   //data: TradePost;
   success: boolean;
   url: string;
-  message: string;
 };
 
 export const createTradePost = createAsyncThunk<
@@ -37,6 +36,15 @@ export const createTradePost = createAsyncThunk<
   };
   try {
     const response = await apiClient().post(path, payload, config);
+    const { setFlash } = await import('store/slices/authSlice');
+    if (response?.data) {
+      thunkApi.dispatch(
+        setFlash({
+          type: 'success',
+          message: 'トレードの投稿が完了しました。',
+        })
+      );
+    }
     return response?.data;
   } catch (error) {
     return thunkApi.rejectWithValue(makeRejectValue(error)); //この時、slice側ではrejectedに行く

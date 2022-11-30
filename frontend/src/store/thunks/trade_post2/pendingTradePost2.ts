@@ -1,19 +1,11 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AsyncThunkConfig } from 'store/thunks/config';
-import { TradePost } from 'models';
 import { makeRejectValue } from 'store/thunks/utils';
-import { apiClient, ResponseWithPagination } from 'utils/api';
+import { apiClient } from 'utils/api';
 import {
   ShowAllTradePostRequest,
   ShowAllTradePostResponse,
 } from '../trade_post';
-
-//一緒なので別に新しく作る必要はない
-// export type ConfirmedTradePostResponse = ResponseWithPagination<TradePost>;
-// export type ConfirmedTradePostRequest = {
-//   userId: any;
-//   page?: string;
-// };
 
 export const pendingTradePost = createAsyncThunk<
   ShowAllTradePostResponse,

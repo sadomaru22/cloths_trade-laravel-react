@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { BaseLayout } from 'layouts';
 import { Grid, Button, Slide } from '@mui/material';
 import { TransitionProps } from '@mui/material/transitions';
@@ -9,8 +9,10 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { useHistory, useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from 'utils/hooks';
+import { store } from 'store';
 import { getOtherUser } from 'store/thunks/trade_post';
 import Detail from 'templates/detail/Detail';
+import { sankaSinsei, SankaSinseiRequest } from 'store/thunks/sinsei';
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -24,6 +26,7 @@ const Transition = React.forwardRef(function Transition(
 const OtherUserDetail = () => {
   const dispatch = useAppDispatch();
   const history = useHistory();
+  const [message, setMessage] = useState<string | undefined>('');
   const userId = localStorage.getItem('userId'); //参加申請ボタン活性非活性の比較用
 
   const params: { id: string } = useParams(); //投稿情報用のパラメータ
@@ -39,9 +42,24 @@ const OtherUserDetail = () => {
     setOpen(false);
   };
 
-  const handleGo = () => {
-    //ここに参加申請のAPI処理かく
-    history.push('/top');
+  //参加申請
+  const handleGo = async () => {
+    const data: SankaSinseiRequest = {
+      trade_post_id: params.id,
+      id: userId,
+    };
+    const response = await dispatch(sankaSinsei(data));
+    const success = store.getState().tradePost.success;
+    const url = store.getState().tradePost.url;
+    if (success) {
+      setTimeout(function () {
+        window.location.href = url;
+      }, 2000);
+    }
+    if (sankaSinsei.rejected.match(response)) {
+      setMessage(response.payload?.error?.message);
+      alert(message);
+    }
   };
 
   const onClickBack = () => {
@@ -56,13 +74,7 @@ const OtherUserDetail = () => {
 
   return (
     <BaseLayout subtitle="other-user-detail">
-      <Detail
-        user={other_user}
-        id={params.id}
-        // post={post}
-        // photos={photos}
-        onClickIcon={onClickIcon}
-      />
+      <Detail user={other_user} id={params.id} onClickIcon={onClickIcon} />
 
       <Grid container sx={{ mt: 15, mb: 8, justifyContent: 'center' }}>
         <Grid item>

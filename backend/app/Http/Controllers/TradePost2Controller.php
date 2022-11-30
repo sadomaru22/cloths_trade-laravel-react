@@ -12,7 +12,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Arr;
 use Intervention\Image\Facades\Image as InterventionImage;
 
 
