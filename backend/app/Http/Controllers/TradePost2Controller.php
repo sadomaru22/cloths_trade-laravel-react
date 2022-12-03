@@ -158,4 +158,16 @@ class TradePost2Controller extends Controller
 
         return response()->json(['photos' => $photos]);
     }
+
+    //MyIchiranにて使用。トレードごとにSanka _Flag .pending _flagがついてるかどうかを判定する。
+    public function indexWithIsPending($user)
+    {
+        return new TradePostCollection(
+            //TradePost::with('sankaflag:id,pending_flag')->where([
+            TradePost::with('sankaflag')->where([
+                ['user_id', '=', $user],
+                ['date', '>', now()],
+            ])->orderBy('date', 'desc')->paginate(12)
+        );
+    }
 }

@@ -4,6 +4,7 @@ import { TradePost } from 'models';
 import { makeRejectValue } from 'store/thunks/utils';
 import { apiClient, makePath, ResponseWithPagination } from 'utils/api';
 
+//Pending, Confirmed, OtherIchiranにて使用
 export type ShowAllTradePostResponse = ResponseWithPagination<TradePost>;
 
 export type ShowAllTradePostRequest = {
