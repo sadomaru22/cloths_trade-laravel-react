@@ -8,6 +8,7 @@ import {
   ShowOneTradePostResponse,
   getOtherUser,
   GetOtherUserResponse,
+  showallWithIsPending,
 } from 'store/thunks/trade_post';
 import {
   confirmedTradePost,
@@ -53,6 +54,19 @@ export const tradePostSlice = createSlice({
       state.loading = true;
     });
     builder.addCase(showallTradePost.fulfilled, (state, action) => {
+      state.data = action.payload.data || [];
+      state.links = action.payload.links || {};
+      state.meta = action.payload.meta || {};
+      state.loading = false;
+    });
+    builder.addCase(showallWithIsPending.rejected, (state) => {
+      state.loading = false;
+    });
+
+    builder.addCase(showallWithIsPending.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(showallWithIsPending.fulfilled, (state, action) => {
       state.data = action.payload.data || [];
       state.links = action.payload.links || {};
       state.meta = action.payload.meta || {};

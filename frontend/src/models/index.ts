@@ -17,3 +17,4 @@ export interface DocumentBase {
 
 export * from './TradePost';
 export * from './Image';
+export * from './SankaFlags';
