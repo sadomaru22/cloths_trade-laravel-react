@@ -21,7 +21,6 @@ class TradePost2Controller extends Controller
     //過去のトレード一覧
     public function past($id)
     {
-        Log::debug($id . "過去");
         return new TradePostCollection(
             TradePost::where([
                 ['user_id', '=', $id],
@@ -94,7 +93,6 @@ class TradePost2Controller extends Controller
     //セレクトボックスによる検索
     public function searchBySb($place)
     {
-        Log::debug($place);
         return new TradePostCollection(TradePost::where([
             ['place', 'like', "%$place%"],
             ['date', '>', now()],
@@ -105,7 +103,6 @@ class TradePost2Controller extends Controller
     //トレード内容の変更(画像以外)
     public function updateOthers(Request $request)
     {
-        Log::debug($request);
         $post = TradePost::find($request->trade_post_id);
         $post->title = $request->title;
         $post->date = $request->date;
@@ -169,5 +166,25 @@ class TradePost2Controller extends Controller
                 ['date', '>', now()],
             ])->orderBy('date', 'desc')->paginate(12)
         );
+    }
+
+    public function showPendingUsers($id)
+    {
+        $pflag = SankaFlag::where([
+            ['trade_post_id', '=', $id],
+            ['pending_flag', '=', 1],
+        ])->pluck('user_id');
+        Log::debug($pflag);
+        $users = User::whereIn('id', $pflag)->get();
+        return  response()->json(['users' => $users]);
+    }
+    public function showConfirmedUsers($id)
+    {
+        $cflag = SankaFlag::where([
+            ['trade_post_id', '=', $id],
+            ['confirmed_flag', '=', 1],
+        ])->pluck('user_id');
+        Log::debug($cflag);
+        return User::whereIn('id', $cflag)->get();
     }
 }

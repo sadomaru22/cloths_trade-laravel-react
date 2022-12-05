@@ -77,6 +77,8 @@ Route::group([
     Route::post('/trade_posts/edit_photos', [TradePost2Controller::class, 'updatePhotos']);
     Route::post('/trade_posts/delete_photos', [TradePost2Controller::class, 'deletePhotos']);
     Route::get('/trade_posts/withIsPending/{user}', [TradePost2Controller::class, 'indexWithIsPending']);
+    Route::get('/trade_posts/pendingUsers/{id}', [TradePost2Controller::class, 'showPendingUsers']);
+    Route::get('/trade_posts/confirmedUsers/{id}', [TradePost2Controller::class, 'showConfirmedUsers']);
 
     /*
     |--------------------------------------------------------------

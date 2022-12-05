@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
@@ -27,6 +27,21 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     link: {
       cursor: 'pointer',
+    },
+    card: {
+      height: '100%',
+      display: 'flex',
+      flexDirection: 'column',
+    },
+    squea: {
+      width: '50px',
+      height: '50px',
+      lineHeight: '50px',
+      borderRadius: '50%',
+      border: 1,
+      borderWidth: '3px',
+      borderColor: 'black',
+      //backgroundColor: 'lemonchiffon',
     },
   })
 );
@@ -61,34 +76,41 @@ const MyTradeIchiran = () => {
   const handleChange = (_e: React.ChangeEvent<unknown>, page: number) =>
     history.push(`?page=${String(page)}`);
 
+  //MyDetailにて「参加申請受理」を押下可能かを判定するフラグ  //paramsだとstringでしか渡せない
+  var isPflg: string = '0';
+
+  //confirmedやpendingに応じて背景色を変更、する処理
+  var cardBG: string = '';
+  const changeBackGround = (sankaflg: SankaFlags[]) => {
+    //要素の個数分この関数を通るので、まずは初期化
+    cardBG = '';
+    isPflg = '0';
+    console.log(isPflg);
+    const cflg: number[] = [];
+    const pflg: number[] = [];
+    // eslint-disable-next-line array-callback-return
+    sankaflg.map((key) => {
+      cflg.push(key.confirmed_flag);
+      pflg.push(key.pending_flag);
+    });
+    if (cflg.includes(1)) {
+      cardBG = 'lightpink';
+    }
+    if (pflg.includes(1)) {
+      //cardRef.current.style.backgroundColor = 'yellow';
+      cardBG = 'lemonchiffon';
+      isPflg = '1';
+    }
+  };
   //「詳細」ボタン押下時に投稿に紐づく画像をとってから、遷移する。
-  const onGetPhotos = async (index: number, id: string) => {
+  const onGetPhotos = async (id: string, sankaflg: SankaFlags[]) => {
+    changeBackGround(sankaflg); //ここでもう一度判定する。
+    console.log(isPflg + '=pflfg');
     await dispatch(showoneTradePost(id));
     history.push({
-      pathname: `mytrade-detail/${id}`,
+      pathname: `mytrade-detail/${id}/${isPflg}`,
       state: userName,
     });
-  };
-  const cardRef = useRef<any>(null!);
-
-  const changeBackGround = (sankaflg: SankaFlags[]) => {
-    //console.log(sankaflg);
-    // const cflg: number[] = [];
-    // const pflg: number[] = [];
-    // //sankaflg.map((row, index) => console.log(row));
-    // Object.keys(sankaflg).forEach(key => {
-    //   //console.log(`key: ${key} value: ${sankaflg[key]}`);
-    //   sankaflg[key].
-    // })
-    // cflg.push(row.confirmed_flag)
-    // pflg.push(row.pending_flag)
-
-    // if (cflg === 1) {
-    cardRef.current.style.backgroundColor = 'skyblue';
-    // }
-    // if (pflg === 1) {
-    //   cardRef.current.style.backgroundColor = 'yellow';
-    // }
   };
 
   //アイコン押下時
@@ -99,7 +121,7 @@ const MyTradeIchiran = () => {
   return (
     <BaseLayout subtitle="Album">
       <Container maxWidth="md" className={classes.container}>
-        <Grid container sx={{ marginBottom: 8 }}>
+        <Grid container sx={{ marginBottom: 3 }}>
           <Grid item>
             <Link className={classes.link} onClick={() => onClickIcon()}>
               <Avatar
@@ -109,21 +131,34 @@ const MyTradeIchiran = () => {
               />
             </Link>
           </Grid>
-          <Grid item>
-            <Typography
-              variant="h4"
-              color="textSecondary"
-              sx={{ marginLeft: 8 }}
-            >
+          <Grid item sx={{ marginLeft: 8 }}>
+            <Typography variant="h4" color="textSecondary">
               {userName} さんの投稿一覧
             </Typography>
-            <Typography
-              variant="h5"
-              color="textSecondary"
-              sx={{ marginLeft: 8 }}
-            >
+            <Typography variant="h5" color="textSecondary">
               {`(自分が開催予定のトレード)`}
             </Typography>
+          </Grid>
+        </Grid>
+
+        <Grid container sx={{ marginBottom: 4 }}>
+          <Grid item>
+            <Typography variant="h6" color="textSecondary">
+              {`*参加申請が来ている投稿`}
+            </Typography>
+            <div
+              className={classes.squea}
+              style={{ backgroundColor: 'lemonchiffon' }}
+            />
+          </Grid>
+          <Grid item sx={{ marginLeft: 8 }}>
+            <Typography variant="h6" color="textSecondary">
+              {`*参加者のいる投稿`}
+            </Typography>
+            <div
+              className={classes.squea}
+              style={{ backgroundColor: 'lightpink' }}
+            />
           </Grid>
         </Grid>
 
@@ -132,12 +167,9 @@ const MyTradeIchiran = () => {
             <Grid item key={index} xs={12} sm={6} md={4}>
               {changeBackGround(row.sankaflag)}
               <Card
-                ref={cardRef}
-                sx={{
-                  height: '100%',
-                  display: 'flex',
-                  flexDirection: 'column',
-                }}
+                //ref={cardRef}
+                className={classes.card}
+                sx={{ backgroundColor: cardBG }}
               >
                 <Typography>{row.title}</Typography>
                 <Typography>場所：{row.place}</Typography>
@@ -153,7 +185,7 @@ const MyTradeIchiran = () => {
                 <CardActions>
                   <Button
                     variant="contained"
-                    onClick={() => onGetPhotos(index, row.id)}
+                    onClick={() => onGetPhotos(row.id, row.sankaflag)}
                   >
                     詳細ページへ
                   </Button>

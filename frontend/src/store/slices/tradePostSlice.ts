@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { User } from 'models/User';
 import { sankaSinsei } from 'store/thunks/sinsei';
 import {
   ShowAllTradePostResponse,
@@ -20,6 +21,7 @@ import {
   updateTrade,
   UpdateTradeResponse,
 } from 'store/thunks/trade_post2';
+import { showPendingUsers } from 'store/thunks/trade_post2/showPendingUsers';
 //import { AuthState, FlashNotificationProps } from './authSlice';
 
 export type TradePostState = {
@@ -27,6 +29,7 @@ export type TradePostState = {
   success: boolean;
   message: string;
   url: string;
+  users: User[]; //ShowPending&ConfirmedUserResponse用
   //flash: FlashNotificationProps[];
 } & ShowAllTradePostResponse &
   ShowOneTradePostResponse &
@@ -211,6 +214,18 @@ export const tradePostSlice = createSlice({
       state.loading = false;
     });
     builder.addCase(sankaSinsei.rejected, (state, action) => {
+      state.loading = false;
+    });
+
+    builder.addCase(showPendingUsers.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(showPendingUsers.fulfilled, (state, action) => {
+      state.users = action.payload.users;
+      console.log(state.users);
+      state.loading = false;
+    });
+    builder.addCase(showPendingUsers.rejected, (state, action) => {
       state.loading = false;
     });
 

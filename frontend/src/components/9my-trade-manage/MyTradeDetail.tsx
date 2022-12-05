@@ -8,7 +8,13 @@ import Detail from 'templates/detail/Detail';
 
 const MyTradeDetail = () => {
   const history = useHistory();
-  const params: { id: string } = useParams(); //投稿情報用のパラメータ
+  //投稿情報用のパラメータ&「参加申請受理」を押下可能かを判定するフラグ
+  const params: { id: string; isPflg: string } = useParams();
+  var isP = true;
+  if ((params.isPflg = '1')) {
+    isP = false;
+  }
+  console.log(params.isPflg);
   const myUser = useAppSelector((state) => state.auth.user);
 
   const onClickBack = () => {
@@ -34,7 +40,11 @@ const MyTradeDetail = () => {
           </LinkButton>
         </Grid>
         <Grid item>
-          <LinkButton size="large" to={'/mytrade-juri'}>
+          <LinkButton
+            disabled={isP}
+            size="large"
+            to={`/mytrade-juri/${params.id}`}
+          >
             参加申請受理
           </LinkButton>
         </Grid>
