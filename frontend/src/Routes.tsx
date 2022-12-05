@@ -63,7 +63,7 @@ const Routes = () => {
       <Route exact path="/" component={Home} />
       <Route exact path="/login" component={SignIn} />
       <Route exact path="/register" component={SignUp} />
-      <Route exact path="/account" component={Account} />
+      <AuthRoute exact path="/account" component={Account} />
       <AuthRoute path="/email-verification" component={EmailVerification} />
       <GuestRoute exact path="/forgot-password" component={ForgotPassword} />
       <Route exact path="/reset-password" component={ResetPassword} />
@@ -86,10 +86,10 @@ const Routes = () => {
       />
       <AuthRoute exact path="/trade-post" component={TradePost} />
       <AuthRoute exact path="/mytrade-ichiran" component={MyTradeIchiran} />
-      <AuthRoute path="/mytrade-detail/:id" component={MyTradeDetail} />
+      <AuthRoute path="/mytrade-detail/:id/:isPflg" component={MyTradeDetail} />
       <AuthRoute exact path="/sanka-ichiran" component={Sankasya} />
       <AuthRoute path="/mytrade-edit/:id" component={TradeEdit} />
-      <AuthRoute path="/mytrade-juri" component={SankaJuri} />
+      <AuthRoute path="/mytrade-juri/:id" component={SankaJuri} />
       {/* 設定した全てのパスに該当しないアクセスを捕捉 */}
       <Route path="*" component={NotFound} />
     </Switch>

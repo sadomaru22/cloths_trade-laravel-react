@@ -1,130 +1,172 @@
-import { AppBar, Avatar, Button, Container, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Divider, Grid, Link, List, ListItem, ListItemAvatar, ListItemText, Pagination, Slide, Toolbar, Typography} from '@mui/material'
+import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
+import {
+  Avatar,
+  Button,
+  Card,
+  Container,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Divider,
+  Grid,
+  Link,
+  List,
+  ListItem,
+  ListItemAvatar,
+  ListItemText,
+  Slide,
+  Typography,
+} from '@mui/material';
 import { TransitionProps } from '@mui/material/transitions';
 import { BaseLayout } from 'layouts';
-import React from 'react';
-import { useHistory, useLocation } from 'react-router-dom';
-import { LinkButton } from 'templates';
+import React, { useEffect } from 'react';
+import { useHistory, useParams } from 'react-router-dom';
+import { showPendingUsers } from 'store/thunks/trade_post2/showPendingUsers';
+import { useAppDispatch, useAppSelector } from 'utils/hooks';
+
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    card: {
+      marginTop: theme.spacing(8),
+      marginBottom: theme.spacing(8),
+      padding: theme.spacing(3),
+    },
+    button: {
+      marginLeft: 3,
+    },
+  })
+);
 
 const style = {
-   ml: 7
-}
+  ml: 7,
+};
 
 const Transition = React.forwardRef(function Transition(
-   props: TransitionProps & {
-     children: React.ReactElement<any, any>;
-   },
-   ref: React.Ref<unknown>,
- ) {
-   return <Slide direction="up" ref={ref} {...props} />;
- });
-
+  props: TransitionProps & {
+    children: React.ReactElement<any, any>;
+  },
+  ref: React.Ref<unknown>
+) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
 
 const SankaJuri = () => {
-   const history = useHistory();
-   const {state} = useLocation();
-   const [open, setOpen] = React.useState(false);
-   const handleClickOpen = () => {
-      setOpen(true);
-    };
+  const classes = useStyles();
+  const history = useHistory();
+  const dispatch = useAppDispatch();
+  const params: { id: string } = useParams();
+  const [open, setOpen] = React.useState(false);
+  const users = useAppSelector((state) => state.tradePost.users);
+  useEffect(() => {
+    console.log('aaa from SankaJuri.tsx');
+    dispatch(showPendingUsers(params.id));
+  }, [dispatch, params.id]);
 
-   const handleClose = () => {
-      setOpen(false);
-    }; 
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
 
-    const handleJuri = () => {
-       //🌟ここに受理の処理を書く
-       history.push('/top');
-    }
+  const handleClose = () => {
+    setOpen(false);
+  };
 
-    const handleGo = () => {
-       //🌟ここに却下の処理をかく
-      history.push('/top');
-    }
+  //参加申請受理
+  const handleJuri = () => {
+    //history.push('/top');
+  };
 
-   return (
-      <BaseLayout subtitle="sankaichiran">
-      <AppBar position="relative">
-        <Toolbar>
-          <Typography variant="h6" color="inherit" noWrap>
-             「タイトル」の参加申請受理
+  //参加申請却下
+  const handleGo = () => {
+    history.push('/top');
+  };
+
+  return (
+    <BaseLayout subtitle="sankaichiran">
+      <Container sx={{ py: 7 }} maxWidth="md">
+        <Card className={classes.card} elevation={2}>
+          <Typography
+            variant="h6"
+            color="textSecondary"
+            noWrap
+            sx={{ ml: 3, mb: 3 }}
+          >
+            参加申請受理
           </Typography>
-        </Toolbar>
-      </AppBar>
-      <Container sx={{ py: 15 }} maxWidth="md">
-      <List>
-      {rows.map(example => (
-      <div>
-        <ListItem>
-         <Link href="/other-user" sx={{textDecoration: "none"}}>
-            <ListItemAvatar>
-               <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" sx={{width: '5rem', height: '5rem'}} />
-            </ListItemAvatar>
-         </Link>
-         <Grid container>
-               <Grid item>            
-                  <ListItemText     
-                  primaryTypographyProps={{
-                  fontSize: 20,
-                  variant: 'body2',
-                  ml: 8
-                  }}>{example.name} から参加申請が来ています。</ListItemText>
-               </Grid>  
-               <Grid item>
-                  <Button sx={style} variant="contained"　onClick={handleJuri}>受理</Button>
-               </Grid>
-               <Grid item>
-                  <Button sx={style} variant="contained" onClick={handleClickOpen}>却下</Button>
-               </Grid>
-         </Grid>
-        </ListItem>
-        <Divider variant="inset" component="li" sx={{marginBottom: 3}} />
-      </div>
-      ))}
-     </List>
-  <Pagination count={5} sx={{ display: 'flex', justifyContent: 'center', mt: 5 }} />
-     </Container>
-     
-     <Dialog
-      open={open}
-      TransitionComponent={Transition}
-      keepMounted
-      onClose={handleClose}
-      aria-describedby="alert-dialog-slide-description"
+          <List>
+            {users.map((row) => (
+              <div>
+                <ListItem>
+                  <Link href="/other-user" sx={{ textDecoration: 'none' }}>
+                    <ListItemAvatar>
+                      <Avatar
+                        alt="Remy Sharp"
+                        src={row.icon}
+                        sx={{ width: '5rem', height: '5rem' }}
+                      />
+                    </ListItemAvatar>
+                  </Link>
+                  <Grid container>
+                    <Grid item xs={8}>
+                      <ListItemText
+                        primaryTypographyProps={{
+                          fontSize: 20,
+                          variant: 'body2',
+                          ml: 4,
+                        }}
+                      >
+                        {row.name}さん
+                        <br />
+                        から参加申請が来ています。
+                      </ListItemText>
+                    </Grid>
+                    <Grid item xs={2}>
+                      <Button
+                        sx={style}
+                        variant="contained"
+                        onClick={handleJuri}
+                      >
+                        受理
+                      </Button>
+                    </Grid>
+                    <Grid item xs={2}>
+                      <Button
+                        sx={style}
+                        variant="contained"
+                        onClick={handleClickOpen}
+                      >
+                        却下
+                      </Button>
+                    </Grid>
+                  </Grid>
+                </ListItem>
+                <Divider
+                  variant="inset"
+                  component="li"
+                  sx={{ marginBottom: 3 }}
+                />
+              </div>
+            ))}
+          </List>
+        </Card>
+      </Container>
+
+      <Dialog
+        open={open}
+        TransitionComponent={Transition}
+        keepMounted
+        onClose={handleClose}
+        aria-describedby="alert-dialog-slide-description"
       >
-         <DialogTitle>{`参加申請を却下します。よろしいですか?`}</DialogTitle>
-         <DialogContent/>
-         <DialogActions>
-            <Button onClick={handleGo}>はい</Button>
-            <Button onClick={handleClose}>いいえ</Button>
-         </DialogActions>
+        <DialogTitle>{`参加申請を却下します。よろしいですか?`}</DialogTitle>
+        <DialogContent />
+        <DialogActions>
+          <Button onClick={handleGo}>はい</Button>
+          <Button onClick={handleClose}>いいえ</Button>
+        </DialogActions>
       </Dialog>
-     </BaseLayout>
-   )
-}
+    </BaseLayout>
+  );
+};
 
-
-let rows = [     //ユーザ(トレード情報.id=ユーザ.参加トレード情報id 紐付け
-   {
-      id: 1,
-      profPhoto: "url",
-      name: "あああ1",
-   },
-   {
-      id: 2,
-      profPhoto: "url",
-      name: "あああ2",
-   },
-   {
-      id: 3,
-      profPhoto: "url",
-      name: "あああ3",
-   },
-   {
-      id: 3,
-      profPhoto: "url",
-      name: "あああ4",
-   }
-]
-
-export default SankaJuri
-
+export default SankaJuri;

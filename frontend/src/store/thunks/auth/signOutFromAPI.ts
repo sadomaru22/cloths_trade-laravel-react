@@ -9,6 +9,7 @@ export const signOutFromAPI = createAsyncThunk<void, void, AsyncThunkConfig>(
   'auth/signOutFromAPI',
   async (_, thunkApi) => {
     try {
+      localStorage.clear();
       // status(response): ログイン状態によらず`204` 認証切れなら`419`
       await apiClient().post(SIGNOUT_PATH);
     } catch (error) {
