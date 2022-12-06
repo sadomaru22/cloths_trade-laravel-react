@@ -60,11 +60,14 @@ const MyTradeIchiran = () => {
     (state) => state.tradePost.meta.current_page
   );
   useEffect(() => {
-    const request: ShowAllTradePostRequest = {
-      userId: userId,
-      page: query.page,
-    };
-    dispatch(showallWithIsPending(request));
+    async function showAll() {
+      const request: ShowAllTradePostRequest = {
+        userId: userId,
+        page: query.page,
+      };
+      await dispatch(showallWithIsPending(request));
+    }
+    showAll();
   }, [dispatch, query.page, userId]);
 
   //戻る
@@ -76,16 +79,12 @@ const MyTradeIchiran = () => {
   const handleChange = (_e: React.ChangeEvent<unknown>, page: number) =>
     history.push(`?page=${String(page)}`);
 
-  //MyDetailにて「参加申請受理」を押下可能かを判定するフラグ  //paramsだとstringでしか渡せない
-  var isPflg: string = '0';
-
   //confirmedやpendingに応じて背景色を変更、する処理
   var cardBG: string = '';
   const changeBackGround = (sankaflg: SankaFlags[]) => {
     //要素の個数分この関数を通るので、まずは初期化
     cardBG = '';
-    isPflg = '0';
-    console.log(isPflg);
+    //console.log(isPflg);
     const cflg: number[] = [];
     const pflg: number[] = [];
     // eslint-disable-next-line array-callback-return
@@ -93,22 +92,25 @@ const MyTradeIchiran = () => {
       cflg.push(key.confirmed_flag);
       pflg.push(key.pending_flag);
     });
-    if (cflg.includes(1)) {
-      cardBG = 'lightpink';
-    }
-    if (pflg.includes(1)) {
+    //①
+    if (pflg.includes(1) && !cflg.includes(1)) {
       //cardRef.current.style.backgroundColor = 'yellow';
       cardBG = 'lemonchiffon';
-      isPflg = '1';
+    }
+    //②
+    if (pflg.includes(1) && cflg.includes(1)) {
+      cardBG = 'lightsalmon';
+    }
+    //③
+    if (cflg.includes(1) && !pflg.includes(1)) {
+      cardBG = 'lightpink';
     }
   };
   //「詳細」ボタン押下時に投稿に紐づく画像をとってから、遷移する。
   const onGetPhotos = async (id: string, sankaflg: SankaFlags[]) => {
-    changeBackGround(sankaflg); //ここでもう一度判定する。
-    console.log(isPflg + '=pflfg');
     await dispatch(showoneTradePost(id));
     history.push({
-      pathname: `mytrade-detail/${id}/${isPflg}`,
+      pathname: `mytrade-detail/${id}`,
       state: userName,
     });
   };
@@ -140,20 +142,31 @@ const MyTradeIchiran = () => {
             </Typography>
           </Grid>
         </Grid>
-
+        <Typography gutterBottom variant="h6" color="textSecondary">
+          ①、②のトレードで、参加申請を確認してください。
+        </Typography>
         <Grid container sx={{ marginBottom: 4 }}>
-          <Grid item>
+          <Grid item xs={4}>
             <Typography variant="h6" color="textSecondary">
-              {`*参加申請が来ている投稿`}
+              ①参加申請あり
             </Typography>
             <div
               className={classes.squea}
               style={{ backgroundColor: 'lemonchiffon' }}
             />
           </Grid>
-          <Grid item sx={{ marginLeft: 8 }}>
+          <Grid item xs={4}>
             <Typography variant="h6" color="textSecondary">
-              {`*参加者のいる投稿`}
+              ②参加者&参加申請あり
+            </Typography>
+            <div
+              className={classes.squea}
+              style={{ backgroundColor: 'lightsalmon' }}
+            />
+          </Grid>
+          <Grid item xs={4}>
+            <Typography variant="h6" color="textSecondary">
+              ③参加者あり
             </Typography>
             <div
               className={classes.squea}

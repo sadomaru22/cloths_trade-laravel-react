@@ -96,7 +96,8 @@ class TradePostController extends Controller
         Log::debug($id);
         // 存在するレコードIDだったら
         if (TradePost::where('id', $id)->exists()) {
-            $dataOne = TradePost::find($id);
+            //$dataOne = TradePost::find($id);
+            $dataOne = TradePost::with('sankaflag')->where('id', $id)->first();  //SankaFlagも取ってくる
             $photos = Image::where('trade_post_id', $id)->get();
             Log::debug($photos);
             return response()->json(['dataOne' => $dataOne, 'photos' => $photos], 200);

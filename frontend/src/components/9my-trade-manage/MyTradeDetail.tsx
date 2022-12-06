@@ -3,18 +3,35 @@ import { Grid, Typography, Button } from '@mui/material';
 import { BaseLayout } from 'layouts';
 import React from 'react';
 import { LinkButton } from 'templates';
-import { useAppSelector } from 'utils/hooks';
+import { useAppDispatch, useAppSelector } from 'utils/hooks';
 import Detail from 'templates/detail/Detail';
+import { showConfirmedUsers, showPendingUsers } from 'store/thunks/trade_post2';
+import { SankaFlags } from 'models';
 
 const MyTradeDetail = () => {
   const history = useHistory();
-  //投稿情報用のパラメータ&「参加申請受理」を押下可能かを判定するフラグ
-  const params: { id: string; isPflg: string } = useParams();
+  const dispatch = useAppDispatch();
+  //投稿情報用のパラメータ
+  const params: { id: string } = useParams();
+  //「参加者一覧」「参加申請受理」を押下可能かを判定するフラグ
   var isP = true;
-  if ((params.isPflg = '1')) {
+  var isC = true;
+  const sankaflag: SankaFlags[] = useAppSelector(
+    (state) => state.tradePost.dataOne.sankaflag
+  );
+  const cflg: number[] = [];
+  const pflg: number[] = [];
+  // eslint-disable-next-line array-callback-return
+  sankaflag.map((key) => {
+    cflg.push(key.confirmed_flag);
+    pflg.push(key.pending_flag);
+  });
+  if (pflg.includes(1)) {
     isP = false;
   }
-  console.log(params.isPflg);
+  if (cflg.includes(1)) {
+    isC = false;
+  }
   const myUser = useAppSelector((state) => state.auth.user);
 
   const onClickBack = () => {
@@ -24,6 +41,16 @@ const MyTradeDetail = () => {
   //アイコン押下時
   const onClickIcon = async (id: string) => {
     history.push('/account');
+  };
+  //「参加申請受理」ボタン押下時に投稿に紐づくUsersをとってから、遷移する。
+  const onGetPUsers = async (id: string) => {
+    await dispatch(showPendingUsers(id));
+    history.push(`/mytrade-juri/${id}`);
+  };
+  //「参加者一覧」ボタン押下時に投稿に紐づくUsersをとってから、遷移する。
+  const onGetCUsers = async (id: string) => {
+    await dispatch(showConfirmedUsers(id));
+    history.push(`/sanka-ichiran`);
   };
 
   return (
@@ -35,18 +62,25 @@ const MyTradeDetail = () => {
         sx={{ display: 'flex', justifyContent: 'center' }}
       >
         <Grid item>
-          <LinkButton size="large" to={'/sanka-ichiran'}>
+          <Button
+            disabled={isC}
+            size="large"
+            variant="contained"
+            onClick={() => onGetCUsers(params.id)}
+          >
             参加者一覧
-          </LinkButton>
+          </Button>
         </Grid>
         <Grid item>
-          <LinkButton
+          <Button
             disabled={isP}
             size="large"
-            to={`/mytrade-juri/${params.id}`}
+            variant="contained"
+            onClick={() => onGetPUsers(params.id)}
+            //to={`/mytrade-juri/${params.id}`}
           >
             参加申請受理
-          </LinkButton>
+          </Button>
         </Grid>
         <Grid item>
           <LinkButton size="large" to={`/mytrade-edit/${params.id}`}>
