@@ -86,7 +86,7 @@ const Routes = () => {
       />
       <AuthRoute exact path="/trade-post" component={TradePost} />
       <AuthRoute exact path="/mytrade-ichiran" component={MyTradeIchiran} />
-      <AuthRoute path="/mytrade-detail/:id/:isPflg" component={MyTradeDetail} />
+      <AuthRoute path="/mytrade-detail/:id" component={MyTradeDetail} />
       <AuthRoute exact path="/sanka-ichiran" component={Sankasya} />
       <AuthRoute path="/mytrade-edit/:id" component={TradeEdit} />
       <AuthRoute path="/mytrade-juri/:id" component={SankaJuri} />

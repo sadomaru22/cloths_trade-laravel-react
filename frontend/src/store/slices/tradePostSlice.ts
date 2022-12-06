@@ -1,6 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { User } from 'models/User';
-import { sankaSinsei } from 'store/thunks/sinsei';
+import {
+  delsanSinsei,
+  delsyuSinsei,
+  juriSinsei,
+  sankaSinsei,
+} from 'store/thunks/sinsei';
 import {
   ShowAllTradePostResponse,
   createTradePost,
@@ -20,8 +25,9 @@ import {
   updatePhotos,
   updateTrade,
   UpdateTradeResponse,
+  showPendingUsers,
+  showConfirmedUsers,
 } from 'store/thunks/trade_post2';
-import { showPendingUsers } from 'store/thunks/trade_post2/showPendingUsers';
 //import { AuthState, FlashNotificationProps } from './authSlice';
 
 export type TradePostState = {
@@ -102,7 +108,6 @@ export const tradePostSlice = createSlice({
     });
     builder.addCase(createTradePost.rejected, (state, action) => {
       state.loading = false;
-      //state.error = true;   //errorはShowAllTradePostResponseにないらしい
     });
 
     builder.addCase(searchBySbTradePost2.pending, (state) => {
@@ -123,13 +128,13 @@ export const tradePostSlice = createSlice({
     });
     builder.addCase(getOtherUser.fulfilled, (state, action) => {
       state.user = action.payload.user;
-      console.log(action.payload.user + '=action.payload.user');
-      console.log(state.user + '=state.user');
+      state.loading = false;
     });
     builder.addCase(getOtherUser.rejected, (state) => {
       state.loading = false;
     });
 
+    //from 'store/thunks/trade_post2'
     builder.addCase(pastTradePost2.pending, (state) => {
       state.loading = true;
     });
@@ -204,6 +209,30 @@ export const tradePostSlice = createSlice({
       state.loading = false;
     });
 
+    builder.addCase(showPendingUsers.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(showPendingUsers.fulfilled, (state, action) => {
+      state.users = action.payload.users;
+      state.loading = false;
+    });
+    builder.addCase(showPendingUsers.rejected, (state, action) => {
+      state.loading = false;
+    });
+
+    builder.addCase(showConfirmedUsers.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(showConfirmedUsers.fulfilled, (state, action) => {
+      state.users = action.payload.users;
+      console.log(state.users);
+      state.loading = false;
+    });
+    builder.addCase(showConfirmedUsers.rejected, (state, action) => {
+      state.loading = false;
+    });
+
+    //from 'store/thunks/sinsei'
     builder.addCase(sankaSinsei.pending, (state) => {
       state.loading = true;
     });
@@ -217,37 +246,39 @@ export const tradePostSlice = createSlice({
       state.loading = false;
     });
 
-    builder.addCase(showPendingUsers.pending, (state) => {
+    builder.addCase(juriSinsei.pending, (state) => {
       state.loading = true;
     });
-    builder.addCase(showPendingUsers.fulfilled, (state, action) => {
+    builder.addCase(juriSinsei.fulfilled, (state, action) => {
+      state.users = action.payload.users;
+      state.loading = false;
+    });
+    builder.addCase(juriSinsei.rejected, (state, action) => {
+      state.loading = false;
+    });
+
+    builder.addCase(delsyuSinsei.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(delsyuSinsei.fulfilled, (state, action) => {
       state.users = action.payload.users;
       console.log(state.users);
       state.loading = false;
     });
-    builder.addCase(showPendingUsers.rejected, (state, action) => {
+    builder.addCase(delsyuSinsei.rejected, (state, action) => {
       state.loading = false;
     });
 
-    // builder.addCase(sankaSinsei.pending, (state) => {
-    //   state.loading = true;
-    // });
-    // builder.addCase(sankaSinsei.fulfilled, (state, action) => {
-    //   state.loading = false;
-    // });
-    // builder.addCase(sankaSinsei.rejected, (state, action) => {
-    //   state.loading = false;
-    // });
-
-    // builder.addCase(sankaSinsei.pending, (state) => {
-    //   state.loading = true;
-    // });
-    // builder.addCase(sankaSinsei.fulfilled, (state, action) => {
-    //   state.loading = false;
-    // });
-    // builder.addCase(sankaSinsei.rejected, (state, action) => {
-    //   state.loading = false;
-    // });
+    builder.addCase(delsanSinsei.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(delsanSinsei.fulfilled, (state, action) => {
+      state.success = action.payload.success;
+      state.loading = false;
+    });
+    builder.addCase(delsanSinsei.rejected, (state, action) => {
+      state.loading = false;
+    });
   },
 });
 

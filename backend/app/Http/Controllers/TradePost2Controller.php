@@ -185,6 +185,7 @@ class TradePost2Controller extends Controller
             ['confirmed_flag', '=', 1],
         ])->pluck('user_id');
         Log::debug($cflag);
-        return User::whereIn('id', $cflag)->get();
+        $users = User::whereIn('id', $cflag)->get();
+        return  response()->json(['users' => $users]);
     }
 }

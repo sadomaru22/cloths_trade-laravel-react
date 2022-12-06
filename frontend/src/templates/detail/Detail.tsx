@@ -26,6 +26,13 @@ const Detail = (props: any) => {
   const post = useAppSelector((state) => state.tradePost.dataOne);
   const photos: Image[] = useAppSelector((state) => state.tradePost.photos);
 
+  // useEffect(() => {  //これでもリロードには対応できなかった
+  //   console.log('aaa'); //これは動く
+  //   async function dispatchShow() {
+  //     await dispatch(showoneTradePost(id));
+  //   }
+  //   dispatchShow();
+  // }, [dispatch, id]);
   useEffect(() => {
     console.log('aaa'); //これは動く
     dispatch(showoneTradePost(id));

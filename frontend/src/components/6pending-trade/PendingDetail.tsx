@@ -1,4 +1,5 @@
 import React from 'react';
+import { useHistory, useParams } from 'react-router-dom';
 import { BaseLayout } from 'layouts';
 import { Grid, Button, Slide, Typography } from '@mui/material';
 import { TransitionProps } from '@mui/material/transitions';
@@ -7,10 +8,11 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import { useHistory, useParams } from 'react-router-dom';
+import { store } from 'store';
 import { useAppDispatch, useAppSelector } from 'utils/hooks';
 import { getOtherUser } from 'store/thunks/trade_post';
 import Detail from 'templates/detail/Detail';
+import { delsanSinsei, DelsanSinseiRequest } from 'store/thunks/sinsei';
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -24,7 +26,7 @@ const Transition = React.forwardRef(function Transition(
 const PendingDetail = () => {
   const dispatch = useAppDispatch();
   const history = useHistory();
-
+  const userId = localStorage.getItem('userId');
   const params: { id: string } = useParams(); //投稿情報用のパラメータ
   const other_user = useAppSelector((state) => state.tradePost.user);
 
@@ -38,9 +40,18 @@ const PendingDetail = () => {
     setOpen(false);
   };
 
-  const handleGo = () => {
-    //ここに参加申請のAPI処理かく
-    history.push('/top');
+  const handleGo = async () => {
+    const data: DelsanSinseiRequest = {
+      trade_post_id: params.id,
+      user_id: userId,
+    };
+    await dispatch(delsanSinsei(data));
+    const success = store.getState().tradePost.success;
+    if (success) {
+      setTimeout(function () {
+        window.location.href = '/pending-ichiran';
+      }, 2000);
+    }
   };
 
   const onClickBack = () => {
@@ -92,15 +103,15 @@ const PendingDetail = () => {
         onClose={handleClose}
         aria-describedby="alert-dialog-slide-description"
       >
-        <DialogTitle>{`参加申請を${other_user.name}さんに送ります。よろしいですか?`}</DialogTitle>
+        <DialogTitle>参加申請を取り消します。よろしいですか?</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-slide-description">
-            参加申請を送信すると、主催者に通知が行きます。主催者が申請を受理すると、参加が確定となります。
+            参加申請を取り消すと、主催者に通知が行きます。一度取り消しても、また参加したい場合は再度申請が可能です。
           </DialogContentText>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>やっぱりやめる</Button>
-          <Button onClick={handleGo}>申請する</Button>
+          <Button onClick={handleGo}>申請を取り消す</Button>
         </DialogActions>
       </Dialog>
     </BaseLayout>

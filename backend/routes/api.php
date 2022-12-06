@@ -88,7 +88,7 @@ Route::group([
     Route::post('/sinsei/sanka', [SinseiController::class, 'sanka']);
     Route::post('/sinsei/delsan', [SinseiController::class, 'delsan']);
     Route::post('/sinsei/juri', [SinseiController::class, 'juri']);
-    Route::post('/sinsei/delsyu', [SinseiController::class, 'delsyu']);  //不要かも
+    Route::post('/sinsei/delsyu', [SinseiController::class, 'delsyu']);
 });
 
 
