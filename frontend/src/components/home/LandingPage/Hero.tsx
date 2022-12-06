@@ -12,7 +12,7 @@ import { createUser, signInWithEmail } from 'store/thunks/auth';
 import { useAppDispatch } from 'utils/hooks';
 import { makeEmail } from 'utils/generator';
 import { AlertButton, LinkButton, PopoverControl } from 'templates';
-import hero from 'images/hero.svg';
+import hero from 'images/hero_new.svg';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

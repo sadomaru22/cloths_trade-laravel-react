@@ -76,19 +76,19 @@ class TradePost2Controller extends Controller
         }
     }
 
-    //キーワード検索(使ってない)
-    public function search(Request $request)
-    {
-        // キーワードで検索
-        $result = TradePost::where('title', 'like', "%$request->keyword%")
-            ->orwhere('content', 'like', "%$request->keyword%")->get();
+    // //キーワード検索(未実装)
+    // public function search(Request $request)
+    // {
+    //     // キーワードで検索
+    //     $result = TradePost::where('title', 'like', "%$request->keyword%")
+    //         ->orwhere('content', 'like', "%$request->keyword%")->get();
 
-        // 問題なければjsonで結果を返す
-        return response()->json(
-            $result,
-            200
-        );
-    }
+    //     // 問題なければjsonで結果を返す
+    //     return response()->json(
+    //         $result,
+    //         200
+    //     );
+    // }
 
     //セレクトボックスによる検索
     public function searchBySb($place)

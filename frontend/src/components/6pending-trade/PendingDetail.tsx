@@ -1,7 +1,15 @@
+import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import React from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { BaseLayout } from 'layouts';
-import { Grid, Button, Slide, Typography } from '@mui/material';
+import {
+  Grid,
+  Button,
+  Slide,
+  Typography,
+  Container,
+  Card,
+} from '@mui/material';
 import { TransitionProps } from '@mui/material/transitions';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -14,6 +22,16 @@ import { getOtherUser } from 'store/thunks/trade_post';
 import Detail from 'templates/detail/Detail';
 import { delsanSinsei, DelsanSinseiRequest } from 'store/thunks/sinsei';
 
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    card: {
+      marginTop: theme.spacing(8),
+      marginBottom: theme.spacing(8),
+      padding: theme.spacing(3),
+    },
+  })
+);
+
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
     children: React.ReactElement<any, any>;
@@ -24,6 +42,7 @@ const Transition = React.forwardRef(function Transition(
 });
 
 const PendingDetail = () => {
+  const classes = useStyles();
   const dispatch = useAppDispatch();
   const history = useHistory();
   const userId = localStorage.getItem('userId');
@@ -66,54 +85,58 @@ const PendingDetail = () => {
 
   return (
     <BaseLayout subtitle="other-user-detail">
-      <Typography
-        variant={'h5'}
-        align={'center'}
-        color="textSecondary"
-        sx={{ mt: 5 }}
-      >
-        *申請が受理されるまでもうしばらくお待ちください
-      </Typography>
-      <Detail user={other_user} id={params.id} onClickIcon={onClickIcon} />
-
-      <Grid container sx={{ mt: 15, mb: 8, justifyContent: 'center' }}>
-        <Grid item>
-          <Button
-            // eslint-disable-next-line eqeqeq
-            //disabled
-            variant="contained"
-            color="primary"
-            sx={{ mr: 8 }}
-            onClick={handleClickOpen}
+      <Container component="main" maxWidth="md">
+        <Card className={classes.card} elevation={2}>
+          <Typography
+            variant={'h5'}
+            align={'center'}
+            color="textSecondary"
+            sx={{ mt: 5 }}
           >
-            参加申請取消
-          </Button>
-        </Grid>
-        <Grid item>
-          <Button variant="contained" color="primary" onClick={onClickBack}>
-            一覧に戻る
-          </Button>
-        </Grid>
-      </Grid>
+            *申請が受理されるまでもうしばらくお待ちください
+          </Typography>
+          <Detail user={other_user} id={params.id} onClickIcon={onClickIcon} />
 
-      <Dialog
-        open={open}
-        TransitionComponent={Transition}
-        keepMounted
-        onClose={handleClose}
-        aria-describedby="alert-dialog-slide-description"
-      >
-        <DialogTitle>参加申請を取り消します。よろしいですか?</DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-slide-description">
-            参加申請を取り消すと、主催者に通知が行きます。一度取り消しても、また参加したい場合は再度申請が可能です。
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose}>やっぱりやめる</Button>
-          <Button onClick={handleGo}>申請を取り消す</Button>
-        </DialogActions>
-      </Dialog>
+          <Grid container sx={{ mt: 10, mb: 8, justifyContent: 'center' }}>
+            <Grid item>
+              <Button
+                // eslint-disable-next-line eqeqeq
+                //disabled
+                variant="contained"
+                color="primary"
+                sx={{ mr: 8 }}
+                onClick={handleClickOpen}
+              >
+                参加申請取消
+              </Button>
+            </Grid>
+            <Grid item>
+              <Button variant="contained" color="primary" onClick={onClickBack}>
+                一覧に戻る
+              </Button>
+            </Grid>
+          </Grid>
+
+          <Dialog
+            open={open}
+            TransitionComponent={Transition}
+            keepMounted
+            onClose={handleClose}
+            aria-describedby="alert-dialog-slide-description"
+          >
+            <DialogTitle>参加申請を取り消します。よろしいですか?</DialogTitle>
+            <DialogContent>
+              <DialogContentText id="alert-dialog-slide-description">
+                参加申請を取り消すと、主催者に通知が行きます。一度取り消しても、また参加したい場合は再度申請が可能です。
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleClose}>やっぱりやめる</Button>
+              <Button onClick={handleGo}>申請を取り消す</Button>
+            </DialogActions>
+          </Dialog>
+        </Card>
+      </Container>
     </BaseLayout>
   );
 };
