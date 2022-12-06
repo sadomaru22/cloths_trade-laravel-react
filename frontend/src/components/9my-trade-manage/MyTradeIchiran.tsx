@@ -84,6 +84,8 @@ const MyTradeIchiran = () => {
   const changeBackGround = (sankaflg: SankaFlags[]) => {
     //要素の個数分この関数を通るので、まずは初期化
     cardBG = '';
+    console.log(sankaflg);
+    if (!sankaflg) return;
     //console.log(isPflg);
     const cflg: number[] = [];
     const pflg: number[] = [];
@@ -107,7 +109,7 @@ const MyTradeIchiran = () => {
     }
   };
   //「詳細」ボタン押下時に投稿に紐づく画像をとってから、遷移する。
-  const onGetPhotos = async (id: string, sankaflg: SankaFlags[]) => {
+  const onGetPhotos = async (id: string) => {
     await dispatch(showoneTradePost(id));
     history.push({
       pathname: `mytrade-detail/${id}`,
@@ -198,7 +200,7 @@ const MyTradeIchiran = () => {
                 <CardActions>
                   <Button
                     variant="contained"
-                    onClick={() => onGetPhotos(row.id, row.sankaflag)}
+                    onClick={() => onGetPhotos(row.id)}
                   >
                     詳細ページへ
                   </Button>

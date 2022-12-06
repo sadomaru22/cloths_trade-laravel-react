@@ -25,6 +25,11 @@ const useStyles = makeStyles((theme: Theme) =>
       maxWidth: 350,
       maxHeight: 350,
     },
+    cardOuter: {
+      marginTop: theme.spacing(8),
+      marginBottom: theme.spacing(8),
+      padding: theme.spacing(3),
+    },
   })
 );
 
@@ -39,7 +44,6 @@ const OtheUserTop = () => {
   const dispatch = useAppDispatch();
   const history = useHistory();
   const other_user = useAppSelector((state) => state.tradePost.user);
-  console.log(other_user);
 
   //開催予定のトレード一覧押下時
   const onClickYotei = async (id: string) => {
@@ -54,91 +58,94 @@ const OtheUserTop = () => {
 
   return (
     <BaseLayout subtitle="OtheUser Top">
-      <Container maxWidth="md" className={classes.container}>
-        <Grid container>
-          <Grid item sx={{ marginBottom: 6 }}>
-            <Avatar
-              alt="Remy Sharp"
-              src={`${other_user.icon}`}
-              sx={{ width: '6rem', height: '6rem' }}
-            />
+      <Container component="main" maxWidth="md">
+        <Card className={classes.cardOuter} elevation={2}>
+          <Grid container>
+            <Grid item sx={{ marginBottom: 6 }}>
+              <Avatar
+                alt="Remy Sharp"
+                src={`${other_user.icon}`}
+                sx={{ width: '6rem', height: '6rem' }}
+              />
+            </Grid>
+            <Grid item>
+              <Typography
+                variant="h4"
+                color="textSecondary"
+                sx={{ marginLeft: 8 }}
+              >
+                名前: {other_user.name}
+              </Typography>
+            </Grid>
           </Grid>
-          <Grid item>
-            <Typography
-              variant="h4"
-              color="textSecondary"
-              sx={{ marginLeft: 8 }}
-            >
-              名前: {other_user.name}
-            </Typography>
+          <Box
+            sx={{
+              ...commonStyles,
+              borderRadius: '16px',
+              mb: 8,
+              ml: 4,
+              width: '90%',
+              height: '200px',
+            }}
+          >
+            <Typography>プロフィール: </Typography>
+            <Typography>{other_user.jikoshokai}</Typography>
+          </Box>
+          <Grid
+            container
+            spacing={5}
+            sx={{ display: 'flex', justifyContent: 'center' }}
+          >
+            <Grid item>
+              <Link onClick={() => onClickYotei(other_user.id)}>
+                {/* <div className={classes.card}> */}
+                <Card className={classes.card}>
+                  <CardMedia
+                    component="img"
+                    height="140"
+                    image={`${process.env.PUBLIC_URL}/yotei.jpg`}
+                    alt="green iguana"
+                  />
+                  <CardContent>
+                    <Typography gutterBottom variant="h5" component="div">
+                      開催予定のトレード
+                    </Typography>
+                    <Typography>
+                      {other_user.name}
+                      さんが開催予定のトレード一覧を表示します。
+                    </Typography>
+                  </CardContent>
+                  <CardActions></CardActions>
+                </Card>
+                {/* </div> */}
+              </Link>
+            </Grid>
+            <Grid item>
+              <Link onClick={onClickKako}>
+                {/* <div className={classes.card}> */}
+                <Card className={classes.card}>
+                  <CardMedia
+                    component="img"
+                    height="140"
+                    image={`${process.env.PUBLIC_URL}/kako.jpg`}
+                    alt="green iguana"
+                  />
+                  <CardContent>
+                    <Typography gutterBottom variant="h5" component="div">
+                      過去のトレード
+                    </Typography>
+                    <Typography>
+                      過去に{other_user.name}
+                      さんが開催したトレードの一覧を表示します。
+                    </Typography>
+                  </CardContent>
+                  <CardActions></CardActions>
+                </Card>
+                {/* </div> */}
+              </Link>
+            </Grid>
           </Grid>
-        </Grid>
-        <Box
-          sx={{
-            ...commonStyles,
-            borderRadius: '16px',
-            mb: 8,
-            width: '52rem',
-            height: '10rem',
-          }}
-        >
-          <Typography>プロフィール: </Typography>
-          <Typography>{other_user.jikoshokai}</Typography>
-        </Box>
-        <Grid
-          container
-          spacing={5}
-          sx={{ display: 'flex', justifyContent: 'center' }}
-        >
-          <Grid item>
-            <Link onClick={() => onClickYotei(other_user.id)}>
-              {/* <div className={classes.card}> */}
-              <Card className={classes.card}>
-                <CardMedia
-                  component="img"
-                  height="140"
-                  image={`${process.env.PUBLIC_URL}/yotei.jpg`}
-                  alt="green iguana"
-                />
-                <CardContent>
-                  <Typography gutterBottom variant="h5" component="div">
-                    開催予定のトレード
-                  </Typography>
-                  <Typography>
-                    {other_user.name}
-                    さんが開催予定のトレード一覧を表示します。
-                  </Typography>
-                </CardContent>
-                <CardActions></CardActions>
-              </Card>
-              {/* </div> */}
-            </Link>
-          </Grid>
-          <Grid item>
-            <Link onClick={onClickKako}>
-              {/* <div className={classes.card}> */}
-              <Card className={classes.card}>
-                <CardMedia
-                  component="img"
-                  height="140"
-                  image={`${process.env.PUBLIC_URL}/kako.jpg`}
-                  alt="green iguana"
-                />
-                <CardContent>
-                  <Typography gutterBottom variant="h5" component="div">
-                    過去のトレード
-                  </Typography>
-                  <Typography>
-                    過去に{other_user.name}
-                    さんが開催したトレードの一覧を表示します。
-                  </Typography>
-                </CardContent>
-                <CardActions></CardActions>
-              </Card>
-              {/* </div> */}
-            </Link>
-          </Grid>
-        </Grid>
+        </Card>
       </Container>
     </BaseLayout>
   );

@@ -1,5 +1,6 @@
+import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import { useHistory, useParams } from 'react-router-dom';
-import { Grid, Typography, Button } from '@mui/material';
+import { Grid, Typography, Button, Card, Container } from '@mui/material';
 import { BaseLayout } from 'layouts';
 import React from 'react';
 import { LinkButton } from 'templates';
@@ -8,7 +9,18 @@ import Detail from 'templates/detail/Detail';
 import { showConfirmedUsers, showPendingUsers } from 'store/thunks/trade_post2';
 import { SankaFlags } from 'models';
 
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    card: {
+      marginTop: theme.spacing(8),
+      marginBottom: theme.spacing(8),
+      padding: theme.spacing(3),
+    },
+  })
+);
+
 const MyTradeDetail = () => {
+  const classes = useStyles();
   const history = useHistory();
   const dispatch = useAppDispatch();
   //投稿情報用のパラメータ
@@ -55,66 +67,70 @@ const MyTradeDetail = () => {
 
   return (
     <BaseLayout subtitle="my-detail">
-      <Typography sx={{ marginTop: 10 }} />
-      <Grid
-        container
-        spacing={5}
-        sx={{ display: 'flex', justifyContent: 'center' }}
-      >
-        <Grid item>
-          <Button
-            disabled={isC}
-            size="large"
-            variant="contained"
-            onClick={() => onGetCUsers(params.id)}
+      <Container component="main" maxWidth="md">
+        <Card className={classes.card} elevation={2}>
+          <Typography sx={{ marginTop: 10 }} />
+          <Grid
+            container
+            spacing={5}
+            sx={{ display: 'flex', justifyContent: 'center' }}
           >
-            参加者一覧
-          </Button>
-        </Grid>
-        <Grid item>
-          <Button
-            disabled={isP}
-            size="large"
-            variant="contained"
-            onClick={() => onGetPUsers(params.id)}
-            //to={`/mytrade-juri/${params.id}`}
-          >
-            参加申請受理
-          </Button>
-        </Grid>
-        <Grid item>
-          <LinkButton size="large" to={`/mytrade-edit/${params.id}`}>
-            投稿の編集
-          </LinkButton>
-        </Grid>
-      </Grid>
+            <Grid item>
+              <Button
+                disabled={isC}
+                size="large"
+                variant="contained"
+                onClick={() => onGetCUsers(params.id)}
+              >
+                参加者一覧
+              </Button>
+            </Grid>
+            <Grid item>
+              <Button
+                disabled={isP}
+                size="large"
+                variant="contained"
+                onClick={() => onGetPUsers(params.id)}
+                //to={`/mytrade-juri/${params.id}`}
+              >
+                参加申請受理
+              </Button>
+            </Grid>
+            <Grid item>
+              <LinkButton size="large" to={`/mytrade-edit/${params.id}`}>
+                投稿の編集
+              </LinkButton>
+            </Grid>
+          </Grid>
 
-      <Detail
-        user={myUser}
-        // post={post}
-        // photos={photos}
-        id={params.id}
-        onClickIcon={onClickIcon}
-      />
+          <Detail
+            user={myUser}
+            // post={post}
+            // photos={photos}
+            id={params.id}
+            onClickIcon={onClickIcon}
+          />
 
-      <Grid container sx={{ mt: 15, mb: 8, justifyContent: 'center' }}>
-        <Grid item>
-          <Button
-            // eslint-disable-next-line eqeqeq
-            disabled //自分のトレードなので常に非活性
-            variant="contained"
-            color="primary"
-            sx={{ mr: 8 }}
-          >
-            参加申請
-          </Button>
-        </Grid>
-        <Grid item>
-          <Button variant="contained" color="primary" onClick={onClickBack}>
-            一覧に戻る
-          </Button>
-        </Grid>
-      </Grid>
+          <Grid container sx={{ mt: 15, mb: 8, justifyContent: 'center' }}>
+            <Grid item>
+              <Button
+                // eslint-disable-next-line eqeqeq
+                disabled //自分のトレードなので常に非活性
+                variant="contained"
+                color="primary"
+                sx={{ mr: 8 }}
+              >
+                参加申請
+              </Button>
+            </Grid>
+            <Grid item>
+              <Button variant="contained" color="primary" onClick={onClickBack}>
+                一覧に戻る
+              </Button>
+            </Grid>
+          </Grid>
+        </Card>
+      </Container>
     </BaseLayout>
   );
 };

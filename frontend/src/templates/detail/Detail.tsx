@@ -25,6 +25,23 @@ const Detail = (props: any) => {
   const id: string = props.id;
   const post = useAppSelector((state) => state.tradePost.dataOne);
   const photos: Image[] = useAppSelector((state) => state.tradePost.photos);
+  const date: Date = new Date(post.date);
+
+  //日付から文字列に変換する関数
+  // function getStringFromDate(date: Date) {
+
+  //   var year_str = date.getFullYear();
+  //   //月だけ+1すること
+  //   var month_str = 1 + date.getMonth();
+  //   var day_str = date.getDate();
+
+  //    var format_str = 'YYYY-MM-DD hh:mm:ss';
+  //   format_str = format_str.replace(/YYYY/g, year_str);
+  //   format_str = format_str.replace(/MM/g, month_str);
+  //   format_str = format_str.replace(/DD/g, day_str);
+
+  //   return format_str;
+  //  };
 
   // useEffect(() => {  //これでもリロードには対応できなかった
   //   console.log('aaa'); //これは動く
@@ -41,7 +58,7 @@ const Detail = (props: any) => {
   return (
     <Container maxWidth="md" className={classes.container}>
       <Grid container sx={{ marginBottom: 8 }}>
-        <Grid item>
+        <Grid item xs={3}>
           <Link
             className={classes.link}
             onClick={() => props.onClickIcon(user.id)}
@@ -53,9 +70,9 @@ const Detail = (props: any) => {
             />
           </Link>
         </Grid>
-        <Grid item>
-          <Typography variant="h4" color="textSecondary" sx={{ marginLeft: 8 }}>
-            {user.name} さんの投稿詳細
+        <Grid item xs={9}>
+          <Typography variant="h4" color="textSecondary">
+            {user.name}さんの投稿詳細
           </Typography>
         </Grid>
       </Grid>
@@ -63,7 +80,10 @@ const Detail = (props: any) => {
       <Grid container justifyContent="center" sx={{ marginBottom: 5 }}>
         <Grid item xs={4}>
           <Typography color="textSecondary" borderBottom={0.5}>
-            日付：{post.date}
+            日付：
+            {`${date.getFullYear()}年${
+              date.getMonth() + 1
+            }月${date.getDate()}日`}
           </Typography>
         </Grid>
         <Grid item xs={2}>
@@ -96,7 +116,7 @@ const Detail = (props: any) => {
       </Typography>
 
       <ImageList
-        sx={{ width: 600, height: 450, ml: 15 }}
+        sx={{ width: 600, height: 450, ml: 9 }}
         cols={3}
         rowHeight={164}
         //variant="woven"

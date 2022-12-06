@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useAppDispatch, useAppSelector, useQuery } from 'utils/hooks';
-import { useHistory, useParams } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { BaseLayout } from 'layouts';
 import {
   pastTradePost2,
@@ -13,9 +13,6 @@ const PastIchiran = () => {
   const dispatch = useAppDispatch();
   const history = useHistory();
   const userId = localStorage.getItem('userId');
-  const params: { id: string } = useParams();
-  const other_userId = params.id;
-  console.log('aa');
   const posts = useAppSelector((state) => state.tradePost.data);
   const query = { page: useQuery().get('page') || '' };
   const count = useAppSelector((state) => state.tradePost.meta.last_page);
@@ -25,13 +22,14 @@ const PastIchiran = () => {
   );
   useEffect(() => {
     const request: PastTradePost2Request = {
-      id: other_userId,
+      id: other_user.id,
       page: query.page,
     };
     dispatch(pastTradePost2(request));
-    dispatch(getOtherUser(other_userId));
+    //dispatch(getOtherUser(other_userId));
     console.log('PastIchiran in useEffect');
-  }, [dispatch, other_userId, query.page]);
+  }, [dispatch, other_user.id, query.page]);
+
   //戻る
   const onClickBack = () => {
     history.push(`/users/${userId}/top`);
@@ -44,7 +42,7 @@ const PastIchiran = () => {
   const onGetPhotos = async (index: number, id: string, userId: string) => {
     await dispatch(showoneTradePost(id)); //画像
     await dispatch(getOtherUser(userId));
-    history.push(`/past-trade-detail/${index}`);
+    history.push(`/past-trade-detail/${id}`);
   };
 
   //アイコン押下時

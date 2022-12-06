@@ -28,7 +28,6 @@ import {
   showPendingUsers,
   showConfirmedUsers,
 } from 'store/thunks/trade_post2';
-//import { AuthState, FlashNotificationProps } from './authSlice';
 
 export type TradePostState = {
   loading: boolean;
@@ -36,7 +35,6 @@ export type TradePostState = {
   message: string;
   url: string;
   users: User[]; //ShowPending&ConfirmedUserResponse用
-  //flash: FlashNotificationProps[];
 } & ShowAllTradePostResponse &
   ShowOneTradePostResponse &
   GetOtherUserResponse &
@@ -49,7 +47,6 @@ export const initialTradePostState = {
   success: false,
   message: '',
   url: '',
-  //flash: [] as AuthState['flash'],
   links: {} as TradePostState['links'],
   meta: {} as TradePostState['meta'],
 } as unknown as TradePostState;
@@ -92,7 +89,6 @@ export const tradePostSlice = createSlice({
       state.dataOne = action.payload.dataOne;
       state.photos = action.payload.photos;
       state.loading = false;
-      console.log('showone from slice');
     });
     builder.addCase(showoneTradePost.rejected, (state) => {
       state.loading = false;
@@ -154,7 +150,6 @@ export const tradePostSlice = createSlice({
     builder.addCase(updateTrade.fulfilled, (state, action) => {
       state.loading = false;
       state.dataOne = action.payload.dataOne;
-      console.log(state.dataOne);
     });
     builder.addCase(updateTrade.rejected, (state, action) => {
       state.loading = false;
@@ -166,7 +161,6 @@ export const tradePostSlice = createSlice({
     builder.addCase(updatePhotos.fulfilled, (state, action) => {
       state.loading = false;
       state.photos = action.payload.photos;
-      console.log(state.photos);
     });
     builder.addCase(updatePhotos.rejected, (state, action) => {
       state.loading = false;
@@ -225,7 +219,6 @@ export const tradePostSlice = createSlice({
     });
     builder.addCase(showConfirmedUsers.fulfilled, (state, action) => {
       state.users = action.payload.users;
-      console.log(state.users);
       state.loading = false;
     });
     builder.addCase(showConfirmedUsers.rejected, (state, action) => {
@@ -239,7 +232,6 @@ export const tradePostSlice = createSlice({
     builder.addCase(sankaSinsei.fulfilled, (state, action) => {
       state.success = action.payload.success;
       state.url = action.payload.url;
-      console.log('申請成功');
       state.loading = false;
     });
     builder.addCase(sankaSinsei.rejected, (state, action) => {
@@ -262,7 +254,6 @@ export const tradePostSlice = createSlice({
     });
     builder.addCase(delsyuSinsei.fulfilled, (state, action) => {
       state.users = action.payload.users;
-      console.log(state.users);
       state.loading = false;
     });
     builder.addCase(delsyuSinsei.rejected, (state, action) => {

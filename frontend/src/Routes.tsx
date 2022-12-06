@@ -74,7 +74,7 @@ const Routes = () => {
       <AuthRoute path="/trade-detail/:id" component={OtherUserDetail} />
       {/*URLによって表示ページが変わる(Dynamic Route)の場合、exactはいらない*/}
       <AuthRoute path="/past-trade-ichiran/:id" component={PastIchiran} />
-      <AuthRoute path="/past-trade-detail/:index" component={PastDetail} />
+      <AuthRoute path="/past-trade-detail/:id" component={PastDetail} />
       <AuthRoute exact path="/mypage" component={MyPage} />
       <AuthRoute exact path="/pending-ichiran" component={PendingIchiran} />
       <AuthRoute exact path="/pending-detail/:id" component={PendingDetail} />
