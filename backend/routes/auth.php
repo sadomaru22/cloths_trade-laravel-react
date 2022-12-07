@@ -28,6 +28,7 @@ use Laravel\Fortify\Http\Controllers\TwoFactorAuthenticationController;
 use Laravel\Fortify\Http\Controllers\TwoFactorQrCodeController;
 use Laravel\Fortify\Http\Controllers\TwoFactorSecretKeyController;
 use Laravel\Fortify\Http\Controllers\VerifyEmailController;
+use Illuminate\Support\Facades\Log;
 
 // prettier-ignore
 
@@ -57,6 +58,7 @@ Route::group(['middleware' => config('fortify.middleware', ['web'])], function (
    // Password Reset...
    if (Features::enabled(Features::resetPasswords())) {
       if ($enableViews) {
+         Log::debug("if (enableViews) の中");
          Route::get('/forgot-password', [PasswordResetLinkController::class, 'create'])
             ->middleware(['guest:' . config('fortify.guard')])
             ->name('password.request');
@@ -65,6 +67,7 @@ Route::group(['middleware' => config('fortify.middleware', ['web'])], function (
             ->middleware(['guest:' . config('fortify.guard')])
             ->name('password.reset');
       }
+      Log::debug("if (enableViews) の外");
 
       Route::post('/forgot-password', [PasswordResetLinkController::class, 'store'])
          ->middleware(['guest:' . config('fortify.guard')])
