@@ -15,6 +15,7 @@ import { showoneTradePost } from 'store/thunks/trade_post';
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from 'utils/hooks';
 import TradeDeletePhotos from './TradeDeletePhotos';
+import { useOnReloadAlert } from 'templates/detail/Detail';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -27,6 +28,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 const TradeEdit = () => {
+  useOnReloadAlert();
   const classes = useStyles();
   const dispatch = useAppDispatch();
   const params: { id: string } = useParams(); //投稿情報用のパラメータ

@@ -8,6 +8,7 @@ import React from 'react';
 import { useAppDispatch, useAppSelector } from 'utils/hooks';
 import { useHistory } from 'react-router-dom';
 import { getOtherUser } from 'store/thunks/trade_post';
+import { useOnReloadAlert } from 'templates/detail/Detail';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -40,6 +41,7 @@ const commonStyles = {
 };
 
 const OtheUserTop = () => {
+  useOnReloadAlert();
   const classes = useStyles();
   const dispatch = useAppDispatch();
   const history = useHistory();
