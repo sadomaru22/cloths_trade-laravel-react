@@ -31,6 +31,7 @@ import {
   JuriSinseiRequest,
 } from 'store/thunks/sinsei';
 import { showPendingUsers } from 'store/thunks/trade_post2/showPendingUsers';
+import { useOnReloadAlert } from 'templates/detail/Detail';
 import { useAppDispatch, useAppSelector } from 'utils/hooks';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -60,6 +61,7 @@ const Transition = React.forwardRef(function Transition(
 });
 
 const SankaJuri = () => {
+  useOnReloadAlert();
   const classes = useStyles();
   const history = useHistory();
   const dispatch = useAppDispatch();
@@ -69,11 +71,9 @@ const SankaJuri = () => {
   let message: string | null = null;
   const [open, setOpen] = React.useState(false);
   useEffect(() => {
-    console.log('aaa from SankaJuri.tsx');
     dispatch(showPendingUsers(params.id));
   }, [dispatch, params.id]);
   const users = useAppSelector((state) => state.tradePost.users);
-  console.log(users);
   if (users.length === 0) {
     message = '申請中のユーザは0件です。';
   }

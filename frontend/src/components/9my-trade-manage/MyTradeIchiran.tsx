@@ -60,6 +60,7 @@ const MyTradeIchiran = () => {
     (state) => state.tradePost.meta.current_page
   );
   useEffect(() => {
+    console.log('a');
     async function showAll() {
       const request: ShowAllTradePostRequest = {
         userId: userId,
@@ -84,9 +85,7 @@ const MyTradeIchiran = () => {
   const changeBackGround = (sankaflg: SankaFlags[]) => {
     //要素の個数分この関数を通るので、まずは初期化
     cardBG = '';
-    console.log(sankaflg);
     if (!sankaflg) return;
-    //console.log(isPflg);
     const cflg: number[] = [];
     const pflg: number[] = [];
     // eslint-disable-next-line array-callback-return
@@ -186,12 +185,21 @@ const MyTradeIchiran = () => {
                 className={classes.card}
                 sx={{ backgroundColor: cardBG }}
               >
-                <Typography>{row.title}</Typography>
-                <Typography>場所：{row.place}</Typography>
-                <Typography>日付：{row.date}</Typography>
+                <Typography sx={{ height: '45px', mt: 1 }}>
+                  <strong>{row.title}</strong>
+                </Typography>
+                <Typography sx={{ height: '30px' }}>
+                  場所：{row.place}
+                </Typography>
+                <Typography sx={{ height: '30px' }}>
+                  日付：{row.date}
+                </Typography>
                 <CardMedia
                   component="img"
-                  sx={{ pt: '26.25%' }}
+                  sx={{
+                    pt: '16.25%',
+                    height: '220px',
+                  }}
                   image={`${row.thumbnail}`}
                 />
                 <CardContent sx={{ flexGrow: 1 }}>

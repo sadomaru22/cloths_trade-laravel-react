@@ -23,7 +23,6 @@ const PastDetail = () => {
   const history = useHistory();
   const params: { id: string } = useParams();
   const other_user = useAppSelector((state) => state.tradePost.user);
-  console.log(other_user);
 
   const onClickBack = () => {
     history.goBack();

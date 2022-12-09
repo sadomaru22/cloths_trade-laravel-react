@@ -18,6 +18,7 @@ import React from 'react';
 import { BaseLayout } from 'layouts';
 import { useHistory } from 'react-router-dom';
 import { useAppSelector } from 'utils/hooks';
+import { useOnReloadAlert } from 'templates/detail/Detail';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -29,6 +30,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 const SankaIchiran = () => {
+  useOnReloadAlert();
   const classes = useStyles();
   const history = useHistory();
   const users = useAppSelector((state) => state.tradePost.users);

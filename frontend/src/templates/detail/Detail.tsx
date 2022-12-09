@@ -7,6 +7,21 @@ import { useAppDispatch, useAppSelector } from 'utils/hooks';
 import { showoneTradePost } from 'store/thunks/trade_post';
 import { Image } from 'models';
 
+//https://qiita.com/nitaking/items/7395e07d2e874dda53c8
+export const useOnReloadAlert = () => {
+  useEffect(() => {
+    //window.history.pushState(null, '', window.location.pathname);
+    const onReload = (event: BeforeUnloadEvent) => {
+      event.preventDefault();
+      event.returnValue = 'Check';
+    };
+    window.addEventListener('beforeunload', onReload);
+    return () => {
+      window.removeEventListener('beforeunload', onReload);
+    };
+  }, []);
+};
+
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     container: {
@@ -19,37 +34,22 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 const Detail = (props: any) => {
+  useOnReloadAlert();
   const classes = useStyles();
   const dispatch = useAppDispatch();
   const user = props.user;
   const id: string = props.id;
+  // if (post == undefined) {
+  //   console.log('あんで');
+  //   const sOne = async () => {
+  //     await dispatch(showoneTradePost(id));
+  //   };
+  //   sOne();
+  // }
   const post = useAppSelector((state) => state.tradePost.dataOne);
   const photos: Image[] = useAppSelector((state) => state.tradePost.photos);
   const date: Date = new Date(post.date);
 
-  //日付から文字列に変換する関数
-  // function getStringFromDate(date: Date) {
-
-  //   var year_str = date.getFullYear();
-  //   //月だけ+1すること
-  //   var month_str = 1 + date.getMonth();
-  //   var day_str = date.getDate();
-
-  //    var format_str = 'YYYY-MM-DD hh:mm:ss';
-  //   format_str = format_str.replace(/YYYY/g, year_str);
-  //   format_str = format_str.replace(/MM/g, month_str);
-  //   format_str = format_str.replace(/DD/g, day_str);
-
-  //   return format_str;
-  //  };
-
-  // useEffect(() => {  //これでもリロードには対応できなかった
-  //   console.log('aaa'); //これは動く
-  //   async function dispatchShow() {
-  //     await dispatch(showoneTradePost(id));
-  //   }
-  //   dispatchShow();
-  // }, [dispatch, id]);
   useEffect(() => {
     console.log('aaa'); //これは動く
     dispatch(showoneTradePost(id));

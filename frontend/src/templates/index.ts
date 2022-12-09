@@ -1,6 +1,5 @@
 export { default as AlertButton } from './AlertButton';
 export { default as LinkButton } from './LinkButton';
-export { default as LinkButton2 } from './LinkButton2';
 export { default as PopoverControl } from './PopoverControl';
 export { default as LabeledCheckbox } from './LabeledCheckbox';
 export { default as SubmitButton } from './SubmitButton';
@@ -9,4 +8,3 @@ export { default as LinkWrapper } from './LinkWrapper';
 export { default as ScrolledDiv } from './ScrolledDiv';
 export { default as ScrolledGridContainer } from './ScrolledGridContainer';
 export { default as yup } from './yup.locale';
-

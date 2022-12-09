@@ -6,6 +6,7 @@ use App\Models\TradePost;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
+//https://readouble.com/laravel/8.x/ja/authorization.html
 class TradePostPolicy
 {
     use HandlesAuthorization;
@@ -18,7 +19,12 @@ class TradePostPolicy
      */
     public function viewAny(User $user)
     {
-        //
+        // Allow viewing of only authenticated user data.
+        // ※ `originalParameter()` doesn't bind model. (cf. `parameter()`)
+        return $user->id ===
+            request()
+            ->route()
+            ->originalParameter('user');
     }
 
     /**
@@ -30,7 +36,7 @@ class TradePostPolicy
      */
     public function view(User $user, TradePost $tradePost)
     {
-        //
+        return $user->id === $tradePost->user_id;
     }
 
     /**
@@ -41,7 +47,11 @@ class TradePostPolicy
      */
     public function create(User $user)
     {
-        //
+        // Allow creating of only authenticated user data.
+        return $user->id ===
+            request()
+            ->route()
+            ->originalParameter('user');
     }
 
     /**

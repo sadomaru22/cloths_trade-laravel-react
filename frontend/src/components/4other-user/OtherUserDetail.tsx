@@ -73,12 +73,10 @@ const OtherUserDetail = () => {
   if (pflg.includes(1) && uidflg.includes(uIdNum)) {
     isCorP = false;
     messageCorP = '*すでに参加申請済のトレードです。';
-    console.log(messageCorP);
   }
   if (cflg.includes(1) && uidflg.includes(uIdNum)) {
     isCorP = false;
     messageCorP = '*すでに参加が確定しているトレードです。';
-    console.log(messageCorP);
   }
 
   const [open, setOpen] = React.useState(false);

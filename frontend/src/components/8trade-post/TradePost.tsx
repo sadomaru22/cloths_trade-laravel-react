@@ -98,8 +98,6 @@ const TradePost = () => {
   };
 
   const onSubmit = async (data: FormData) => {
-    console.log(data);
-    console.log(value);
     //画像を格納できる状態にする
     data.photos = [...images];
     // var imageData: [] = [];

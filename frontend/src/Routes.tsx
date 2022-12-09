@@ -22,7 +22,6 @@ import {
   PastDetail,
   PastIchiran,
 } from 'components/4other-user';
-import { MyPage } from 'components/account';
 import { PendingDetail, PendingIchiran } from 'components/6pending-trade';
 import { ConfirmedIchiran, ConfirmedDetail } from 'components/7confirmed-trade';
 import TradePost from 'components/8trade-post/TradePost';
@@ -75,7 +74,6 @@ const Routes = () => {
       {/*URLによって表示ページが変わる(Dynamic Route)の場合、exactはいらない*/}
       <AuthRoute path="/past-trade-ichiran/:id" component={PastIchiran} />
       <AuthRoute path="/past-trade-detail/:id" component={PastDetail} />
-      <AuthRoute exact path="/mypage" component={MyPage} />
       <AuthRoute exact path="/pending-ichiran" component={PendingIchiran} />
       <AuthRoute exact path="/pending-detail/:id" component={PendingDetail} />
       <AuthRoute exact path="/confirmed-ichiran" component={ConfirmedIchiran} />
