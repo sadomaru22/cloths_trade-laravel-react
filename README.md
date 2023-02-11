@@ -71,4 +71,14 @@
 - Faker (1.9.1) - テストデータ生成
 - Tinker (2.7) - DB操作
 
+## 使用技術 (その他)
+- [Docker](https://docs.docker.com/desktop/mac/release-notes/) - コンテナ管理
+- [GitHub Actions](https://docs.github.com/actions) - CI/CD
+
+アプリ→ [https://cloths-trade-laravel-react.vercel.app/](https://cloths-trade-laravel-react.vercel.app/)
+Herokuサーバを立ち上げていないため、ログインはできません。
+
+## 画面
+### ホーム
+
 
