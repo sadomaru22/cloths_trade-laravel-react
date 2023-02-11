@@ -76,7 +76,9 @@
 - [GitHub Actions](https://docs.github.com/actions) - CI/CD
 
 アプリ→ [https://cloths-trade-laravel-react.vercel.app/](https://cloths-trade-laravel-react.vercel.app/)
+
 Herokuサーバを立ち上げていないため、ログインはできません。
+
 
 ## 画面
 ### ホーム
