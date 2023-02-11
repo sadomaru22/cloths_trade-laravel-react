@@ -81,5 +81,8 @@
 
 ## 画面
 ### ホーム
+![home_page](https://user-images.githubusercontent.com/64412873/218245370-a14093a5-12ab-46ac-baf3-841d70536fcc.png)
+
+---
 
 
