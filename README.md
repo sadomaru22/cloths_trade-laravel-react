@@ -3,6 +3,23 @@
 主にスキル向上を目的に、ポートフォリオとしてフリマ開催用アプリ (**Cloths_Trade**) を作成しました。 
 これはシングルページアプリケーション (SPA) として作成しており、フロントエンドには、**TypeScript / React**、バックエンドには、**PHP / Laravel**、インフラには、**Vercel** (静的サイト) / **Heroku**  を使用しています。
 
+## 目次
+
+- [機能](#機能)
+- [フロントエンド](#フロントエンド)
+- [バックエンド](#バックエンド)
+- [使用技術その他](#使用技術その他)
+- [画面](#画面)
+  - [ホーム](#ホーム)
+  - [ログイン](#ログイン)
+  - [ユーザー登録](#ユーザー登録)
+  - [メールアドレス認証](#メールアドレス認証)
+  - [マイページ](#マイページ)
+  - [トレードの投稿](#トレードの投稿)
+  - [検索から参加申請](#検索から参加申請)
+  - [トレードの管理](#トレードの管理)
+  - [参加申請中のトレード](#参加申請中のトレード)
+
 
 
 ## 機能
@@ -80,12 +97,13 @@
 
 
 
-## 使用技術 (その他)
+## 使用技術その他
 - [Docker](https://docs.docker.com/desktop/mac/release-notes/) - コンテナ管理
 - [GitHub Actions](https://docs.github.com/actions) - CI/CD
 
 アプリ→ [https://cloths-trade-laravel-react.vercel.app/](https://cloths-trade-laravel-react.vercel.app/)
-(＊Herokuサーバを立ち上げていないため、ログインはできません。)
+
+(＊Herokuサーバを立ち上げていないため、ログインはできません。以下画面キャプチャにより基本的な動作を確認できます。)
 
 
 
@@ -139,37 +157,75 @@ https://user-images.githubusercontent.com/64412873/218252075-ed142146-13b0-44bf-
 
 ![mypage](https://user-images.githubusercontent.com/64412873/218248502-d24b59c1-0472-4150-be4d-9312cfdff9a3.png)
 
-・プロフィールの変更
+#### プロフィールの変更
 
-・パスワードの更新
+https://user-images.githubusercontent.com/64412873/218298177-3edae253-f385-4c67-b40f-6314c298e252.mp4
+
+#### パスワードの変更
+
+https://user-images.githubusercontent.com/64412873/218298420-a81c75c4-db81-4efc-98ea-c6e9951b45ff.mp4
 
 ---
 
 ### トレードの投稿
 
-https://user-images.githubusercontent.com/64412873/218297334-0c578e9a-718d-4dca-a2df-5cf46aeeb358.mp4
+まずは自分が開催したい日付や上限人数などを書き込み、必要な画像をアップロードしてトレードを投稿します。
 
+https://user-images.githubusercontent.com/64412873/218297334-0c578e9a-718d-4dca-a2df-5cf46aeeb358.mp4
 
 ---
 
-### 検索〜参加申請
+### 検索から参加申請
 
-・検索
+#### 検索
 
-・一覧から詳細→参加申請
+都道府県で絞り込み、各地で開催予定のトレードを検索できます。投稿の数が12件よりも多い場合、ページネーションが表示されます。
+
+https://user-images.githubusercontent.com/64412873/218315655-20eead32-37d3-4bf1-8292-489e6e1f0547.mp4
+
+#### 詳細ページから参加申請
+
+検索結果に表示されたトレードから参加したいトレードを選択し、参加申請を送ります。申請を送ると主催者に通知が行き、主催者が申請を受理すると参加決定となります。
+
+https://user-images.githubusercontent.com/64412873/218314999-52d262bf-1179-4d0b-9989-407ce903e2ef.mp4
 
 ---
 
 ### トレードの管理
 
-・一覧から詳細
+#### 一覧ページ
 
-・参加申請受理
+自分が開催予定のトレードが表示されます。
 
-・投稿の編集
+それぞれ色ごとに、
+
+黄色...受理待ちの参加申請のあるトレード
+
+オレンジ...受理待ちの参加申請があり、参加者もいるトレード
+
+ピンク...受理待ちの参加申請はなく、参加者がいるトレード
+
+となり、黄色とオレンジのトレードの参加申請を受理して、開催日を待ちます。(参加者がいるトレード内でのチャット機能の実装を検討中です。)
+
+
+![trade_manage](https://user-images.githubusercontent.com/64412873/218315264-e930b8a9-3f6c-4943-ae90-d4975e2f7c39.png)
+
+#### 参加申請受理
+
+参加申請を受理すると、申請した人の参加が決定します。
+
+https://user-images.githubusercontent.com/64412873/218315021-89ed7fd1-ccee-469b-84ab-a5610145399b.mp4
+
+#### 投稿の編集
+
+https://user-images.githubusercontent.com/64412873/218315035-f2359651-591a-4530-bcad-cdd2c880780f.mp4
 
 ---
 
 ### 参加申請中のトレード
+
+参加申請中のトレード一覧画面から、申請の取り消しができます。
+
+https://user-images.githubusercontent.com/64412873/218315052-6f8d36d5-f12c-4956-805e-ab1bdd277d3f.mp4
 
 ---
