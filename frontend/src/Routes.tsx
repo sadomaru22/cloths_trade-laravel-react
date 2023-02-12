@@ -60,12 +60,12 @@ const Routes = () => {
     <Switch>
       {/* `exact`を付与しないと`/`以外のパスも含まれる */}
       <Route exact path="/" component={Home} />
-      <Route exact path="/login" component={SignIn} />
-      <Route exact path="/register" component={SignUp} />
+      <GuestRoute exact path="/login" component={SignIn} />
+      <GuestRoute exact path="/register" component={SignUp} />
+      <GuestRoute exact path="/forgot-password" component={ForgotPassword} />
+      <GuestRoute exact path="/reset-password" component={ResetPassword} />
       <AuthRoute exact path="/account" component={Account} />
       <AuthRoute path="/email-verification" component={EmailVerification} />
-      <GuestRoute exact path="/forgot-password" component={ForgotPassword} />
-      <Route exact path="/reset-password" component={ResetPassword} />
       <AuthRoute exact path="/users/:userId/top" component={TopPage} />
       <AuthRoute path="/searchResult/:place" component={SearchResultIchiran} />
       <AuthRoute path="/other-user/:id" component={OtheUserTop} />

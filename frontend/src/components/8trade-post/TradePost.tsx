@@ -100,11 +100,6 @@ const TradePost = () => {
   const onSubmit = async (data: FormData) => {
     //画像を格納できる状態にする
     data.photos = [...images];
-    // var imageData: [] = [];
-    // images.map((image) => {
-    //   data.photos?.append('photos[]', image);
-    // });
-    //data.photos = imageData;
 
     const response = await dispatch(createTradePost(data));
     const success = store.getState().tradePost.success;
@@ -112,7 +107,7 @@ const TradePost = () => {
     if (success) {
       setTimeout(function () {
         window.location.href = url;
-      }, 2000); //これで自在にリダイレクトできる
+      }, 2000);
     }
 
     if (createTradePost.rejected.match(response)) {
@@ -161,7 +156,6 @@ const TradePost = () => {
               fullWidth
               id="title"
               label="タイトル"
-              //autoComplete={formdata.title.id}
               {...register('title')} //yupがここで紐付けてる
               helperText={errors?.title?.message}
               error={!!errors?.title}
@@ -239,7 +233,6 @@ const TradePost = () => {
                   id={inputId}
                   type="file"
                   multiple
-                  //name="photos[]"
                   accept="image/*,.png,.jpg,.jpeg,.gif"
                   {...register('photos')} //ここにnameも含まれてる
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -288,10 +281,8 @@ const TradePost = () => {
             {/* 説明文 */}
             <TextField
               variant="outlined"
-              //required
               id="description"
               label="説明文(開催場所の詳細などお書きください)"
-              //autoComplete={formdata.description.id}
               {...register('description')}
               helperText={errors?.description?.message}
               error={!!errors?.description}
@@ -299,7 +290,6 @@ const TradePost = () => {
               size="small"
               multiline
               rows={7}
-              //InputProps={{ style: { height: 60 } }}
             />
             <Box mt={3} mb={1}>
               {<SubmitButton>投稿する</SubmitButton>}

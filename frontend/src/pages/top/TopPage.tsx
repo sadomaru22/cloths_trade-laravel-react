@@ -33,6 +33,9 @@ const useStyles = makeStyles((theme: Theme) =>
       marginTop: theme.spacing(2),
       marginBottom: theme.spacing(2),
     },
+    youkoso: {
+      marginBottom: theme.spacing(4),
+    },
   })
 );
 
@@ -53,8 +56,12 @@ const TopPage = () => {
     <BaseLayout subtitle="Top Page">
       <Container component="main" maxWidth="md" className={classes.container}>
         <Card className={classes.card} elevation={2}>
-          <Typography variant="h1" gutterBottom>
-            Topページ
+          <Typography
+            variant="h3"
+            className={classes.youkoso}
+            color="textSecondary"
+          >
+            ようこそ、Cloth-Tradeへ。
           </Typography>
 
           <Typography color="textSecondary" paragraph>
@@ -80,7 +87,7 @@ const TopPage = () => {
                     <CardMedia
                       component="img"
                       height="140"
-                      image={`${process.env.PUBLIC_URL}/yotei.jpg`}
+                      image={`${process.env.PUBLIC_URL}/hero_new.svg`}
                       alt="green iguana"
                     />
                     <CardContent>
@@ -103,7 +110,7 @@ const TopPage = () => {
                     <CardMedia
                       component="img"
                       height="140"
-                      image={`${process.env.PUBLIC_URL}/yotei.jpg`}
+                      image={`${process.env.PUBLIC_URL}/haguruma.jpg`}
                       alt="green iguana"
                     />
                     <CardContent>
@@ -133,7 +140,7 @@ const TopPage = () => {
                     <CardMedia
                       component="img"
                       height="140"
-                      image={`${process.env.PUBLIC_URL}/yotei.jpg`}
+                      image={`${process.env.PUBLIC_URL}/unchecked.jpg`}
                       alt="green iguana"
                     />
                     <CardContent>
@@ -156,7 +163,7 @@ const TopPage = () => {
                     <CardMedia
                       component="img"
                       height="140"
-                      image={`${process.env.PUBLIC_URL}/yotei.jpg`}
+                      image={`${process.env.PUBLIC_URL}/checked.jpg`}
                       alt="green iguana"
                     />
                     <CardContent>

@@ -37,7 +37,7 @@ class TradePost2Controller extends Controller
             ['pending_flag', '=', 1],
         ])->pluck('trade_post_id');
         return new TradePostCollection(
-            TradePost::whereIn('id', $pflag)->orderBy('date', 'desc')->paginate(12)
+            TradePost::where([['date', '>', now()]])->whereIn('id', $pflag)->orderBy('date', 'desc')->paginate(12)
         );
     }
 
@@ -50,7 +50,7 @@ class TradePost2Controller extends Controller
         ])->pluck('trade_post_id');
         Log::debug($cflag . '=cflag');
         return new TradePostCollection(
-            TradePost::whereIn('id', $cflag)->orderBy('date', 'desc')->paginate(12)
+            TradePost::where([['date', '>', now()]])->whereIn('id', $cflag)->orderBy('date', 'desc')->paginate(12)
         );
     }
 
